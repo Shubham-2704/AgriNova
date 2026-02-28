@@ -42,8 +42,6 @@ class PredictionInput(BaseModel):
 
 class WeatherData(BaseModel):
     avg_temp: float
-    max_temp: float
-    min_temp: float
     rainfall: float
     precipitation: float
     vap_pressure: float
@@ -76,20 +74,21 @@ async def predict_crops(input_data: PredictionInput):
         water_encoded = label_encoders['Water_Availability'].transform([input_data.water_availability])[0]
         
         # Prepare features in the same order as training
-        features = np.array([[
-            season_encoded,
-            soil_encoded,
-            water_encoded,
-            weather_data.avg_temp,
-            weather_data.rainfall,
-            weather_data.ph,
-            weather_data.cloud_cover,
-            weather_data.precipitation,
-            weather_data.max_temp,
-            weather_data.min_temp,
-            weather_data.vap_pressure,
-            weather_data.wet_day_freq
-        ]])
+        features_dict = {
+            'Season': season_encoded,
+            'Soil Type': soil_encoded,
+            'Water_Availability': water_encoded,
+            'avgTemp': weather_data.avg_temp,
+            'Rainfall': weather_data.rainfall,
+            'pH': weather_data.ph,
+            'Cloud Cover': weather_data.cloud_cover,
+            'Precipitation': weather_data.precipitation,
+            'vapPressure': weather_data.vap_pressure,
+            'Wet Day Freq': weather_data.wet_day_freq
+        }
+        
+        # Create DataFrame with proper column names
+        features = pd.DataFrame([features_dict], columns=feature_cols)
         
         # Scale features
         features_scaled = scaler.transform(features)
@@ -159,8 +158,6 @@ async def fetch_weather_data(city: str, state: str) -> WeatherData:
             rain = weather_data.get('rain', {})
             
             avg_temp = main.get('temp', 27.0)
-            max_temp = main.get('temp_max', 30.0)
-            min_temp = main.get('temp_min', 22.0)
             humidity = main.get('humidity', 60.0)
             pressure = main.get('pressure', 1013.0)
             cloud_cover = clouds.get('all', 20.0)
@@ -181,8 +178,6 @@ async def fetch_weather_data(city: str, state: str) -> WeatherData:
             
             return WeatherData(
                 avg_temp=round(avg_temp, 2),
-                max_temp=round(max_temp, 2),
-                min_temp=round(min_temp, 2),
                 rainfall=round(rainfall, 2),
                 precipitation=round(precipitation, 2),
                 vap_pressure=round(vap_pressure, 2),
@@ -202,8 +197,6 @@ async def fetch_weather_data(city: str, state: str) -> WeatherData:
     if not city_data.empty:
         return WeatherData(
             avg_temp=round(city_data['avgTemp'].mean(), 2),
-            max_temp=round(city_data['maxTemp'].mean(), 2),
-            min_temp=round(city_data['minTemp'].mean(), 2),
             rainfall=round(city_data['Rainfall'].mean(), 2),
             precipitation=round(city_data['Precipitation'].mean(), 2),
             vap_pressure=round(city_data['vapPressure'].mean(), 2),
@@ -215,8 +208,6 @@ async def fetch_weather_data(city: str, state: str) -> WeatherData:
     # Ultimate fallback
     return WeatherData(
         avg_temp=27.0,
-        max_temp=30.0,
-        min_temp=22.0,
         rainfall=200.0,
         precipitation=20.0,
         vap_pressure=5.0,

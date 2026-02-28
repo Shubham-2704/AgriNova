@@ -13,8 +13,7 @@ df = df.dropna(subset=['Crop'])
 
 # Handle missing values in numerical columns
 numerical_cols = ['avgTemp', 'Rainfall', 'pH', 'Cloud Cover', 'Precipitation', 
-                  'Production', 'Area', 'AVG_Price', 'maxTemp', 'minTemp', 
-                  'vapPressure', 'Wet Day Freq']
+                  'Production', 'Area', 'AVG_Price', 'vapPressure', 'Wet Day Freq']
 for col in numerical_cols:
     if col in df.columns:
         df[col] = df[col].fillna(df[col].median())
@@ -35,8 +34,7 @@ for col in categorical_cols:
 
 # Enhanced features - using more environmental data
 feature_cols = ['Season', 'Soil Type', 'Water_Availability', 'avgTemp', 'Rainfall', 
-                'pH', 'Cloud Cover', 'Precipitation', 'maxTemp', 'minTemp', 
-                'vapPressure', 'Wet Day Freq']
+                'pH', 'Cloud Cover', 'Precipitation', 'vapPressure', 'Wet Day Freq']
 
 # Remove any remaining NaN values
 df = df.dropna(subset=feature_cols + ['Crop'])
