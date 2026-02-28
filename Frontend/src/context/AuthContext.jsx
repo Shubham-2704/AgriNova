@@ -1,42 +1,64 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import axiosInstance from '../utils/axiosInstance'
+import { API_PATHS } from '../utils/apiPaths'
 
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('user')
-    return savedUser ? JSON.parse(savedUser) : null
-  })
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user))
-    } else {
-      localStorage.removeItem('user')
+    const accessToken = localStorage.getItem('token')
+    if (!accessToken) {
+      setLoading(false)
+      return
     }
-  }, [user])
+
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get(API_PATHS.AUTH.GET_PROFILE)
+        setUser(response.data)
+      } catch (error) {
+        console.error('Failed to fetch user profile:', error)
+        clearUser()
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchUser()
+  }, []) // Run only once on mount
+
+  const updateUser = (userData) => {
+    setUser(userData)
+    localStorage.setItem('token', userData.token)
+    setLoading(false)
+  }
+
+  const clearUser = () => {
+    setUser(null)
+    localStorage.removeItem('token')
+    setLoading(false)
+  }
 
   const login = (userData) => {
-    setUser(userData)
+    updateUser(userData)
   }
 
   const logout = () => {
-    setUser(null)
-  }
-
-  const loginWithGoogle = async () => {
-    // Simulate Google OAuth
-    const mockUser = {
-      id: Date.now(),
-      name: 'Demo User',
-      email: 'demo@agrinova.com',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Demo'
-    }
-    setUser(mockUser)
+    clearUser()
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loginWithGoogle }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      loading, 
+      login, 
+      logout, 
+      updateUser, 
+      clearUser 
+    }}>
       {children}
     </AuthContext.Provider>
   )

@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Chrome, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, Chrome, ArrowRight, Eye, EyeOff, Check, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../components/ToastContainer';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 import './Auth.css';
 
 const Signup = () => {
@@ -9,27 +12,70 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
-  const { login, loginWithGoogle } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { login, user } = useAuth();
+  const { success, error: showError } = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  // Password validation
+  const passwordRequirements = {
+    minLength: password.length >= 8,
+    hasUpperCase: /[A-Z]/.test(password),
+    hasLowerCase: /[a-z]/.test(password),
+    hasNumber: /[0-9]/.test(password),
+    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+  };
+
+  const isPasswordValid = Object.values(passwordRequirements).every(Boolean);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
-      alert("Passwords don't match!");
+      showError("Passwords don't match!");
       return;
     }
     if (!agreeTerms) {
-      alert("Please agree to Terms and Conditions");
+      showError("Please agree to Terms and Conditions");
       return;
     }
-    login({ name, email });
-    navigate('/dashboard');
+    if (!isPasswordValid) {
+      showError("Password does not meet all requirements");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        name,
+        email,
+        password
+      });
+
+      login(response.data);
+      success('Account created successfully! Welcome to AgriNova.');
+      navigate('/dashboard');
+    } catch (err) {
+      showError(err.response?.data?.message || 'Signup failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGoogleSignup = async () => {
-    await loginWithGoogle();
-    navigate('/dashboard');
+    // TODO: Implement Google OAuth
+    alert('Google signup coming soon!');
   };
 
   return (
@@ -89,14 +135,24 @@ const Signup = () => {
                     <Lock size={16} />
                     Password
                   </label>
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Min. 6 characters"
-                    required
-                  />
+                  <div className="password-input-wrapper">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Min. 8 characters"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="password-toggle"
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="form-group">
@@ -104,16 +160,52 @@ const Signup = () => {
                     <Lock size={16} />
                     Confirm
                   </label>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm password"
-                    required
-                  />
+                  <div className="password-input-wrapper">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      id="confirmPassword"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="Confirm password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="password-toggle"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                    >
+                      {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
                 </div>
               </div>
+
+              {/* Compact Password Requirements - 2 columns */}
+              {password && (
+                <div className="password-requirements-compact">
+                  <div className={`requirement-item-compact ${passwordRequirements.minLength ? 'met' : ''}`}>
+                    {passwordRequirements.minLength ? <Check size={12} /> : <X size={12} />}
+                    <span>8+ chars</span>
+                  </div>
+                  <div className={`requirement-item-compact ${passwordRequirements.hasUpperCase ? 'met' : ''}`}>
+                    {passwordRequirements.hasUpperCase ? <Check size={12} /> : <X size={12} />}
+                    <span>Uppercase</span>
+                  </div>
+                  <div className={`requirement-item-compact ${passwordRequirements.hasLowerCase ? 'met' : ''}`}>
+                    {passwordRequirements.hasLowerCase ? <Check size={12} /> : <X size={12} />}
+                    <span>Lowercase</span>
+                  </div>
+                  <div className={`requirement-item-compact ${passwordRequirements.hasNumber ? 'met' : ''}`}>
+                    {passwordRequirements.hasNumber ? <Check size={12} /> : <X size={12} />}
+                    <span>Number</span>
+                  </div>
+                  <div className={`requirement-item-compact ${passwordRequirements.hasSpecialChar ? 'met' : ''}`}>
+                    {passwordRequirements.hasSpecialChar ? <Check size={12} /> : <X size={12} />}
+                    <span>Special (!@#$)</span>
+                  </div>
+                </div>
+              )}
 
               <div className="form-group checkbox">
                 <input
@@ -127,8 +219,8 @@ const Signup = () => {
                 </label>
               </div>
 
-              <button type="submit" className="btn btn-primary btn-block">
-                Sign Up <ArrowRight size={16} />
+              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                {loading ? 'Creating Account...' : 'Sign Up'} <ArrowRight size={16} />
               </button>
             </form>
 

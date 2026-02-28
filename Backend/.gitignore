@@ -6,6 +6,7 @@ trained_models/*.pkl
 *.onnx
 *.pb
 *.joblib
+*.env
 
 # Python cache
 __pycache__/
