@@ -1,5 +1,5 @@
 # Model files
-*.pkl
+trained_models/*.pkl
 *.h5
 *.pt
 *.pth

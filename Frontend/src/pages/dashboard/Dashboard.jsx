@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { TrendingUp, Loader, Cloud, MapPin, Droplets, Thermometer } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 import './Dashboard.css';
-
-const API_URL = 'http://localhost:8000';
 
 const Dashboard = () => {
   const [formData, setFormData] = useState({
@@ -44,7 +43,7 @@ const Dashboard = () => {
 
   const fetchOptions = async () => {
     try {
-      const response = await axios.get(`${API_URL}/options`);
+      const response = await axiosInstance.get(API_PATHS.PREDICTION.GET_OPTIONS);
       setOptions(response.data);
       if (response.data.states && response.data.states.length > 0) {
         setFormData(prev => ({
@@ -61,7 +60,9 @@ const Dashboard = () => {
   const fetchWeatherData = async () => {
     setLoadingWeather(true);
     try {
-      const response = await axios.get(`${API_URL}/weather/${formData.state}/${formData.city}`);
+      const response = await axiosInstance.get(
+        API_PATHS.PREDICTION.GET_WEATHER(formData.state, formData.city)
+      );
       setWeatherData(response.data);
     } catch (err) {
       console.error('Error fetching weather:', err);
@@ -93,7 +94,7 @@ const Dashboard = () => {
         area: parseFloat(formData.area)
       };
 
-      const response = await axios.post(`${API_URL}/predict`, payload);
+      const response = await axiosInstance.post(API_PATHS.PREDICTION.PREDICT_CROPS, payload);
       setRecommendations(response.data);
     } catch (err) {
       setError(err.response?.data?.detail || 'Error getting recommendations');
