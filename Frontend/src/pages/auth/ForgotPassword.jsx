@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, ArrowLeft, Send, CheckCircle, ArrowRight } from 'lucide-react';
+import { useToast } from '../../components/ToastContainer';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 import './Auth.css';
 
 const ForgotPassword = () => {
@@ -8,25 +11,41 @@ const ForgotPassword = () => {
   const [step, setStep] = useState(1); // 1: email, 2: otp
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [loading, setLoading] = useState(false);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(300); // 5 minutes in seconds
   const [canResend, setCanResend] = useState(false);
+  const [expiryTime, setExpiryTime] = useState(null);
+  const { success, error: showError } = useToast();
   const navigate = useNavigate();
 
-  const handleEmailSubmit = (e) => {
+  const handleEmailSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.FORGOT_PASSWORD, {
+        email
+      });
+      
+      // Store email in sessionStorage for reset password page
+      sessionStorage.setItem('resetEmail', email);
+      
       setStep(2);
-      startTimer();
-    }, 1500);
+      const expiresIn = response.data.expiresIn || 300; // Default 5 minutes
+      setTimer(expiresIn);
+      setExpiryTime(Date.now() + (expiresIn * 1000));
+      startTimer(expiresIn);
+      success('OTP sent to your email successfully!');
+    } catch (err) {
+      showError(err.response?.data?.message || 'Failed to send OTP. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const startTimer = () => {
-    setTimer(60);
+  const startTimer = (initialTime) => {
+    setTimer(initialTime);
     setCanResend(false);
+    
     const interval = setInterval(() => {
       setTimer((prev) => {
         if (prev <= 1) {
@@ -39,10 +58,27 @@ const ForgotPassword = () => {
     }, 1000);
   };
 
-  const handleResendOTP = () => {
+  const handleResendOTP = async () => {
     if (!canResend) return;
-    // Resend OTP logic
-    startTimer();
+    
+    setLoading(true);
+    
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.FORGOT_PASSWORD, {
+        email
+      });
+      
+      const expiresIn = response.data.expiresIn || 300;
+      setTimer(expiresIn);
+      setExpiryTime(Date.now() + (expiresIn * 1000));
+      startTimer(expiresIn);
+      setOtp(['', '', '', '', '', '']);
+      success('OTP resent successfully!');
+    } catch (err) {
+      showError(err.response?.data?.message || 'Failed to resend OTP.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleOtpChange = (index, value) => {
@@ -59,13 +95,38 @@ const ForgotPassword = () => {
     }
   };
 
-  const handleOtpSubmit = (e) => {
+  const handleOtpSubmit = async (e) => {
     e.preventDefault();
     const otpValue = otp.join('');
-    if (otpValue.length === 6) {
-      // Verify OTP
-      navigate('/reset-password');
+    
+    if (otpValue.length !== 6) {
+      showError('Please enter complete OTP');
+      return;
     }
+    
+    setLoading(true);
+    
+    try {
+      await axiosInstance.post(API_PATHS.AUTH.VERIFY_OTP, {
+        email,
+        otp: otpValue
+      });
+      
+      success('OTP verified successfully!');
+      // Navigate to reset password page
+      navigate('/reset-password');
+    } catch (err) {
+      showError(err.response?.data?.message || 'Invalid OTP. Please try again.');
+      setOtp(['', '', '', '', '', '']);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
   return (
@@ -107,9 +168,7 @@ const ForgotPassword = () => {
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                  {loading ? (
-                    <>Sending...</>
-                  ) : (
+                  {loading ? 'Sending...' : (
                     <>
                       Send Reset Code <Send size={16} />
                     </>
@@ -141,15 +200,16 @@ const ForgotPassword = () => {
                       maxLength="1"
                       value={digit}
                       onChange={(e) => handleOtpChange(index, e.target.value)}
+                      disabled={loading}
                     />
                   ))}
                 </div>
 
                 <div className="timer-text">
                   {timer > 0 ? (
-                    <>Resend code in <span>{timer}s</span></>
+                    <>Time remaining: <span>{formatTime(timer)}</span></>
                   ) : (
-                    <>You can resend the code now</>
+                    <>OTP expired. Please request a new one.</>
                   )}
                 </div>
 
@@ -157,18 +217,22 @@ const ForgotPassword = () => {
                   <button 
                     type="button" 
                     onClick={handleResendOTP}
-                    disabled={!canResend}
+                    disabled={!canResend || loading}
                   >
-                    Resend OTP
+                    {loading ? 'Sending...' : 'Resend OTP'}
                   </button>
                 </div>
 
                 <button 
                   type="submit" 
                   className="btn btn-primary btn-block"
-                  disabled={otp.join('').length !== 6}
+                  disabled={otp.join('').length !== 6 || loading}
                 >
-                  Verify & Continue <ArrowRight size={16} />
+                  {loading ? 'Verifying...' : (
+                    <>
+                      Verify & Continue <ArrowRight size={16} />
+                    </>
+                  )}
                 </button>
 
                 <div className="back-to-login">
