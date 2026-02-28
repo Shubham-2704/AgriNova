@@ -4,9 +4,14 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 import joblib
+import os
+
+# Create directories if they don't exist
+os.makedirs('trained_models', exist_ok=True)
+os.makedirs('data', exist_ok=True)
 
 # Load dataset
-df = pd.read_csv('Final_dataset.csv')
+df = pd.read_csv('data/Final_dataset.csv')
 
 # Remove rows with missing target (Crop)
 df = df.dropna(subset=['Crop'])
@@ -68,21 +73,21 @@ rf_model = RandomForestClassifier(
 rf_model.fit(X_train, y_train)
 
 # Save model, encoders, and scaler
-joblib.dump(rf_model, 'crop_model.pkl')
-joblib.dump(crop_encoder, 'crop_encoder.pkl')
-joblib.dump(label_encoders, 'label_encoders.pkl')
-joblib.dump(scaler, 'scaler.pkl')
-joblib.dump(feature_cols, 'feature_cols.pkl')
+joblib.dump(rf_model, 'trained_models/crop_model.pkl')
+joblib.dump(crop_encoder, 'trained_models/crop_encoder.pkl')
+joblib.dump(label_encoders, 'trained_models/label_encoders.pkl')
+joblib.dump(scaler, 'trained_models/scaler.pkl')
+joblib.dump(feature_cols, 'trained_models/feature_cols.pkl')
 
 # Save crop production and price data (using original crop names before encoding)
-df_original = pd.read_csv('Final_dataset.csv')
+df_original = pd.read_csv('data/Final_dataset.csv')
 df_original = df_original.dropna(subset=['Crop', 'Production', 'Area', 'AVG_Price'])
 crop_stats = df_original.groupby('Crop').agg({
     'Production': 'mean',
     'Area': 'mean',
     'AVG_Price': 'mean'
 }).reset_index()
-crop_stats.to_csv('crop_stats.csv', index=False)
+crop_stats.to_csv('data/crop_stats.csv', index=False)
 
 # Evaluate model
 train_accuracy = rf_model.score(X_train, y_train)
