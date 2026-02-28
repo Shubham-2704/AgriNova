@@ -1,30 +1,30 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { ArrowRight, Sparkles, TrendingUp, Shield, Star } from 'lucide-react'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import './LandingPage.css'
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Star } from 'lucide-react';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import './LandingPage.css';
 
 const heroSlides = [
   {
     title: "Transform Your Farming with AI",
     subtitle: "Get intelligent crop recommendations based on real-time weather data and soil conditions",
     image: "🌾",
-    gradient: "linear-gradient(135deg, #27ae60 0%, #229954 100%)"
+    gradient: "linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)"
   },
   {
     title: "Maximize Your Crop Yield",
-    subtitle: "Data-driven insights to help you make informed decisions and increase productivity by 30%",
+    subtitle: "Data-driven insights to help you make informed decisions and increase productivity",
     image: "📈",
-    gradient: "linear-gradient(135deg, #3498db 0%, #2980b9 100%)"
+    gradient: "linear-gradient(135deg, #0288D1 0%, #01579B 100%)"
   },
   {
     title: "Smart Agriculture for Everyone",
     subtitle: "Join thousands of farmers using AgriNova to revolutionize their farming operations",
     image: "🚜",
-    gradient: "linear-gradient(135deg, #f39c12 0%, #e67e22 100%)"
+    gradient: "linear-gradient(135deg, #F57C00 0%, #E65100 100%)"
   }
-]
+];
 
 const features = [
   {
@@ -47,38 +47,38 @@ const features = [
     title: "Detailed Analytics",
     description: "Comprehensive reports on suitability, production estimates, and market prices"
   }
-]
+];
 
 const testimonials = [
   {
-    quote: "AgriSmart transformed our farming operations. The crop monitoring system helped increase our yield by 30%.",
+    quote: "AgriNova transformed our farming operations. The AI recommendations helped increase our yield by 40%.",
     author: "Rajesh Patel",
     role: "Commercial Farmer",
     rating: 5
   },
   {
-    quote: "The analytics dashboard provides incredible insights. It's like having an agricultural expert available 24/7.",
+    quote: "The weather integration and profit calculations are incredibly accurate. Best investment for our farm.",
     author: "Priya Sharma",
     role: "Agricultural Consultant",
     rating: 5
   },
   {
-    quote: "Managing multiple farms has never been easier. AgriSmart streamlined our entire operation.",
+    quote: "Managing multiple farms has never been easier. AgriNova streamlined our entire operation.",
     author: "Amit Desai",
     role: "Cooperative Manager",
     rating: 5
   }
-]
+];
 
 const LandingPage = () => {
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [])
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="landing-page">
@@ -93,8 +93,8 @@ const LandingPage = () => {
               className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
               style={{ background: slide.gradient }}
             >
-              <div className="container hero-content">
-                <div className="hero-text fade-in">
+              <div className="hero-content">
+                <div className="hero-text">
                   <h1 className="hero-title">
                     {slide.title}
                   </h1>
@@ -103,7 +103,7 @@ const LandingPage = () => {
                   </p>
                   <div className="hero-actions">
                     <Link to="/signup" className="btn btn-primary btn-lg">
-                      Start Free Trial <ArrowRight size={20} />
+                      Start Free Trial <ArrowRight size={18} />
                     </Link>
                     <Link to="/about" className="btn btn-outline btn-lg">
                       Learn More
@@ -142,7 +142,7 @@ const LandingPage = () => {
           
           <div className="features-grid">
             {features.map((feature, index) => (
-              <div key={index} className="feature-card card">
+              <div key={index} className="feature-card">
                 <div className="feature-icon">{feature.icon}</div>
                 <h3 className="feature-title">{feature.title}</h3>
                 <p className="feature-description">{feature.description}</p>
@@ -164,10 +164,10 @@ const LandingPage = () => {
           
           <div className="testimonials-grid">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="testimonial-card card">
+              <div key={index} className="testimonial-card">
                 <div className="testimonial-rating">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} size={20} fill="var(--accent)" color="var(--accent)" />
+                    <Star key={i} size={18} fill="currentColor" />
                   ))}
                 </div>
                 <p className="testimonial-quote">"{testimonial.quote}"</p>
@@ -183,16 +183,16 @@ const LandingPage = () => {
 
       {/* CTA Section */}
       <section className="cta-section">
-        <div className="container cta-content">
+        <div className="cta-content">
           <h2 className="cta-title">Ready to Transform Your Farm?</h2>
           <p className="cta-subtitle">
             Join the agricultural revolution today. Start your free trial and experience the power of smart farming.
           </p>
           <div className="cta-actions">
             <Link to="/signup" className="btn btn-primary btn-lg">
-              Start Free Trial <ArrowRight size={20} />
+              Start Free Trial <ArrowRight size={18} />
             </Link>
-            <Link to="/about" className="btn btn-secondary btn-lg">
+            <Link to="/contact" className="btn btn-secondary btn-lg">
               Contact Sales
             </Link>
           </div>
@@ -201,7 +201,7 @@ const LandingPage = () => {
 
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default LandingPage
+export default LandingPage;
