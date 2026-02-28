@@ -1,17 +1,19 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { useAuth } from './context/AuthContext'
-import LandingPage from './pages/LandingPage'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import Dashboard from './pages/Dashboard'
-import AboutUs from './pages/AboutUs'
-import OurTeam from './pages/OurTeam'
-import FAQ from './pages/FAQ'
-import './App.css'
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
+import LandingPage from './pages/landing/LandingPage';
+import Login from './pages/auth/Login';
+import Signup from './pages/auth/Signup';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
+import Dashboard from './pages/dashboard/Dashboard';
+import AboutUs from './pages/info/AboutUs';
+import OurTeam from './pages/info/OurTeam';
+import FAQ from './pages/info/FAQ';
+import './App.css';
 
 function ProtectedRoute({ children }) {
-  const { user } = useAuth()
-  return user ? children : <Navigate to="/login" />
+  const { user } = useAuth();
+  return user ? children : <Navigate to="/login" />;
 }
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
       <Route path="/about" element={<AboutUs />} />
       <Route path="/team" element={<OurTeam />} />
       <Route path="/faq" element={<FAQ />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route 
         path="/dashboard" 
         element={
@@ -32,7 +36,7 @@ function App() {
         } 
       />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

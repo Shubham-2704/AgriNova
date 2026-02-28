@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { TrendingUp, Loader } from 'lucide-react'
-import Navbar from '../components/Navbar'
-import './Dashboard.css'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { TrendingUp, Loader, Cloud, MapPin, Droplets, Thermometer } from 'lucide-react';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import './Dashboard.css';
 
-const API_URL = 'http://localhost:8000'
+const API_URL = 'http://localhost:8000';
 
 const Dashboard = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,7 @@ const Dashboard = () => {
     soil_type: '',
     water_availability: '',
     area: ''
-  })
+  });
 
   const [options, setOptions] = useState({
     states: [],
@@ -22,65 +23,65 @@ const Dashboard = () => {
     seasons: [],
     soil_types: [],
     water_availability: []
-  })
+  });
 
-  const [weatherData, setWeatherData] = useState(null)
-  const [recommendations, setRecommendations] = useState([])
-  const [showAllCrops, setShowAllCrops] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [loadingWeather, setLoadingWeather] = useState(false)
-  const [error, setError] = useState('')
+  const [weatherData, setWeatherData] = useState(null);
+  const [recommendations, setRecommendations] = useState([]);
+  const [showAllCrops, setShowAllCrops] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadingWeather, setLoadingWeather] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchOptions()
-  }, [])
+    fetchOptions();
+  }, []);
 
   useEffect(() => {
     if (formData.city && formData.state) {
-      fetchWeatherData()
+      fetchWeatherData();
     }
-  }, [formData.city, formData.state])
+  }, [formData.city, formData.state]);
 
   const fetchOptions = async () => {
     try {
-      const response = await axios.get(`${API_URL}/options`)
-      setOptions(response.data)
+      const response = await axios.get(`${API_URL}/options`);
+      setOptions(response.data);
       if (response.data.states && response.data.states.length > 0) {
         setFormData(prev => ({
           ...prev,
           state: response.data.states[0]
-        }))
+        }));
       }
     } catch (err) {
-      console.error('Error fetching options:', err)
-      setError('Failed to load options. Please make sure the backend is running.')
+      console.error('Error fetching options:', err);
+      setError('Failed to load options. Please make sure the backend is running.');
     }
-  }
+  };
 
   const fetchWeatherData = async () => {
-    setLoadingWeather(true)
+    setLoadingWeather(true);
     try {
-      const response = await axios.get(`${API_URL}/weather/${formData.state}/${formData.city}`)
-      setWeatherData(response.data)
+      const response = await axios.get(`${API_URL}/weather/${formData.state}/${formData.city}`);
+      setWeatherData(response.data);
     } catch (err) {
-      console.error('Error fetching weather:', err)
+      console.error('Error fetching weather:', err);
     } finally {
-      setLoadingWeather(false)
+      setLoadingWeather(false);
     }
-  }
+  };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
-    setShowAllCrops(false)
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setShowAllCrops(false);
     
     try {
       const payload = {
@@ -90,19 +91,19 @@ const Dashboard = () => {
         soil_type: formData.soil_type,
         water_availability: formData.water_availability,
         area: parseFloat(formData.area)
-      }
+      };
 
-      const response = await axios.post(`${API_URL}/predict`, payload)
-      setRecommendations(response.data)
+      const response = await axios.post(`${API_URL}/predict`, payload);
+      setRecommendations(response.data);
     } catch (err) {
-      setError(err.response?.data?.detail || 'Error getting recommendations')
+      setError(err.response?.data?.detail || 'Error getting recommendations');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  const displayedCrops = showAllCrops ? recommendations : recommendations.slice(0, 3)
-  const hasMoreCrops = recommendations.length > 3
+  const displayedCrops = showAllCrops ? recommendations : recommendations.slice(0, 3);
+  const hasMoreCrops = recommendations.length > 3;
 
   return (
     <div className="dashboard-page">
@@ -115,8 +116,9 @@ const Dashboard = () => {
         </div>
 
         <div className="dashboard-content">
-          <form onSubmit={handleSubmit} className="prediction-form card">
-            <h2>Farm Details</h2>
+          {/* Form Section */}
+          <form onSubmit={handleSubmit} className="prediction-form">
+            <h2>📋 Farm Details</h2>
             
             <div className="form-grid">
               <div className="form-group">
@@ -186,63 +188,77 @@ const Dashboard = () => {
               </div>
             </div>
 
+            {/* Weather Data */}
             {weatherData && (
               <div className="weather-info">
-                <h3>🌤️ Live Weather Data for {formData.city}</h3>
+                <h3>
+                  <Cloud size={20} />
+                  Live Weather Data for {formData.city}
+                </h3>
                 <div className="weather-grid">
                   <div className="weather-item">
-                    <span className="weather-label">Avg Temp:</span>
+                    <span className="weather-label">
+                      <Thermometer size={16} style={{ marginRight: '4px' }} />
+                      Avg Temp:
+                    </span>
                     <span className="weather-value">{weatherData.avg_temp}°C</span>
-                  </div>
-                  <div className="weather-item">
-                    <span className="weather-label">Max Temp:</span>
-                    <span className="weather-value">{weatherData.max_temp}°C</span>
-                  </div>
-                  <div className="weather-item">
-                    <span className="weather-label">Min Temp:</span>
-                    <span className="weather-value">{weatherData.min_temp}°C</span>
-                  </div>
-                  <div className="weather-item">
-                    <span className="weather-label">Rainfall:</span>
-                    <span className="weather-value">{weatherData.rainfall} mm</span>
                   </div>
                   <div className="weather-item">
                     <span className="weather-label">Cloud Cover:</span>
                     <span className="weather-value">{weatherData.cloud_cover}%</span>
                   </div>
                   <div className="weather-item">
-                    <span className="weather-label">pH Level:</span>
-                    <span className="weather-value">{weatherData.ph}</span>
+                    <span className="weather-label">
+                      <Droplets size={16} style={{ marginRight: '4px' }} />
+                      Rainfall:
+                    </span>
+                    <span className="weather-value">{weatherData.rainfall} mm</span>
+                  </div>
+                  <div className="weather-item">
+                    <span className="weather-label">Vap Pressure:</span>
+                    <span className="weather-value">{weatherData.vap_pressure} mm</span>
                   </div>
                 </div>
               </div>
             )}
 
-            {loadingWeather && <div className="loading-weather">Fetching live weather data...</div>}
+            {loadingWeather && (
+              <div className="loading-weather">
+                <Loader className="spin" size={16} style={{ marginRight: '8px' }} />
+                Fetching live weather data...
+              </div>
+            )}
 
-            <button type="submit" className="btn btn-primary btn-block" disabled={loading || !weatherData}>
+            <button 
+              type="submit" 
+              className="btn btn-primary btn-block" 
+              disabled={loading || !weatherData}
+            >
               {loading ? (
                 <>
-                  <Loader className="spin" size={20} />
+                  <Loader className="spin" size={18} />
                   Analyzing...
                 </>
               ) : (
                 <>
-                  <TrendingUp size={20} />
+                  <TrendingUp size={18} />
                   Get Recommendations
                 </>
               )}
             </button>
           </form>
 
+          {/* Error Message */}
           {error && <div className="error-message">{error}</div>}
 
+          {/* Recommendations */}
           {recommendations.length > 0 && (
             <div className="recommendations-section">
-              <h2>🌟 TOP {showAllCrops ? '6' : '3'} RECOMMENDED CROPS</h2>
+              <h2>🌟 Top {showAllCrops ? '6' : '3'} Recommended Crops</h2>
+              
               <div className="crops-grid">
                 {displayedCrops.map((rec, idx) => (
-                  <div key={idx} className="crop-card card">
+                  <div key={idx} className="crop-card">
                     <div className="crop-header">
                       <span className="crop-rank">{idx + 1}</span>
                       <h3>{rec.crop}</h3>
@@ -273,13 +289,14 @@ const Dashboard = () => {
                 ))}
               </div>
               
+              {/* Show More Button */}
               {hasMoreCrops && (
                 <div className="show-more-container">
                   <button 
-                    className="btn btn-secondary" 
+                    className="btn-secondary" 
                     onClick={() => setShowAllCrops(!showAllCrops)}
                   >
-                    {showAllCrops ? '🔼 Show Less Crops' : '🔽 Show 3 More Crops'}
+                    {showAllCrops ? '🔼 Show Less' : '🔽 Show 3 More Crops'}
                   </button>
                 </div>
               )}
@@ -287,8 +304,10 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-    </div>
-  )
-}
 
-export default Dashboard
+      <Footer />
+    </div>
+  );
+};
+
+export default Dashboard;

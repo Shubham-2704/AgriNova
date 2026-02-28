@@ -1,0 +1,898 @@
+/* ========================================
+   PAGE.CSS - MASTER STYLES FOR ALL PAGES
+   Includes: About Us, Our Team, FAQ, and common elements
+   ======================================== */
+
+/* ----------------------------------------
+   BASE PAGE LAYOUT - Used by all pages
+   ---------------------------------------- */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-container {
+  flex: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  width: 100%;
+}
+
+/* ----------------------------------------
+   PAGE HERO SECTION - Used by all pages
+   The blue/green gradient header at top
+   ---------------------------------------- */
+.page-hero {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  padding: 4rem 2rem;
+  text-align: center;
+  color: white;
+}
+
+.page-hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.page-hero-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.95;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ----------------------------------------
+   SECTION TAG - Small badge above section titles
+   Used on all pages for section labels
+   ---------------------------------------- */
+.section-tag {
+  display: inline-block;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ----------------------------------------
+   ========== ABOUT US PAGE STYLES ==========
+   ---------------------------------------- */
+
+/* Mission Section - Split layout with text and emoji */
+.mission-section {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  margin-bottom: 4rem;
+  background: var(--bg-secondary);
+  border-radius: 2rem;
+  padding: 3rem;
+  border: 1px solid var(--border);
+}
+
+.mission-content {
+  flex: 1;
+}
+
+.mission-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.mission-text {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.mission-features {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.mission-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.mission-feature-icon {
+  color: var(--primary);
+}
+
+.mission-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mission-emoji {
+  font-size: 10rem;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Stats Section - 4 stats in one line */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.stat-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Section Header Center - For centered titles */
+.section-header-center {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-title-large {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.section-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Process Grid - 3 step process cards */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.process-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.process-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.process-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary-soft);
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.process-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.process-text {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Values Grid - 4 values in one line */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.value-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.value-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--primary-soft);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--primary);
+}
+
+.value-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.value-text {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Technology Section - Split layout with list */
+.tech-section {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  background: var(--bg-secondary);
+  border-radius: 2rem;
+  padding: 3rem;
+  border: 1px solid var(--border);
+}
+
+.tech-content {
+  flex: 1;
+}
+
+.tech-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.tech-text {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.tech-list {
+  list-style: none;
+  padding: 0;
+}
+
+.tech-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.tech-check {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.tech-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tech-emoji {
+  font-size: 10rem;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ----------------------------------------
+   ========== OUR TEAM PAGE STYLES ==========
+   ---------------------------------------- */
+
+/* Team Intro Section */
+.team-intro {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+}
+
+.team-intro-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.team-intro-text {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+/* Team Grid - 4 members in one line */
+.team-grid-four {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+/* Team Member Card */
+.team-member-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 1.2rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.team-member-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+/* Avatar Section with Gradient */
+.team-member-avatar {
+  background: linear-gradient(135deg, var(--primary-soft) 0%, var(--secondary) 100%);
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 3.5rem;
+}
+
+/* Member Info Section */
+.team-member-info {
+  padding: 1.2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.team-member-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.team-member-role {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.team-member-bio {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+/* Expertise Tags */
+.team-member-expertise {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.expertise-tag {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+}
+
+/* Social Links */
+.team-member-social {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+.social-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 0.4rem;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border);
+}
+
+.social-icon:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* Join Us Section - Call to Action */
+.team-join-section {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 2rem;
+  padding: 3rem;
+  text-align: center;
+  color: white;
+  margin-top: 3rem;
+}
+
+.team-join-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.team-join-text {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-join-section .btn-primary {
+  background: white;
+  color: var(--primary);
+  border: none;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+}
+
+.team-join-section .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ----------------------------------------
+   ========== FAQ PAGE STYLES ==========
+   ---------------------------------------- */
+
+/* Search Bar */
+.faq-search-container {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.faq-search {
+  position: relative;
+}
+
+.faq-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+}
+
+.faq-search-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid var(--border);
+  border-radius: 3rem;
+  font-size: 1rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.faq-search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+}
+
+/* Category Tabs */
+.faq-categories {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.faq-category-btn {
+  padding: 0.5rem 1.2rem;
+  border: 2px solid var(--border);
+  border-radius: 2rem;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.faq-category-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.faq-category-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* FAQ List */
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-category-section {
+  margin-bottom: 3rem;
+}
+
+.faq-category-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+
+/* FAQ Items - Accordion Style */
+.faq-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.faq-item {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.faq-question:hover {
+  color: var(--primary);
+}
+
+.faq-icon {
+  transition: transform 0.3s ease;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.faq-icon.open {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  padding: 0 1.5rem 1.5rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 0.95rem;
+  border-top: 1px solid var(--border);
+  margin-top: -0.5rem;
+}
+
+/* No Results State */
+.faq-no-results {
+  text-align: center;
+  padding: 3rem;
+  background: var(--bg-secondary);
+  border-radius: 1rem;
+  border: 2px dashed var(--border);
+}
+
+.faq-no-results svg {
+  color: var(--text-tertiary);
+  margin-bottom: 1rem;
+}
+
+.faq-no-results h3 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.faq-no-results p {
+  color: var(--text-secondary);
+}
+
+/* Contact Section - Still have questions? */
+.faq-contact-section {
+  margin-top: 4rem;
+}
+
+.faq-contact-card {
+  background: var(--bg-secondary);
+  border-radius: 2rem;
+  padding: 3rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.faq-contact-icon {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.faq-contact-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.faq-contact-text {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.faq-contact-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ----------------------------------------
+   ========== ANIMATIONS ==========
+   ---------------------------------------- */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* ----------------------------------------
+   ========== RESPONSIVE DESIGN ==========
+   For tablets and mobile devices
+   ---------------------------------------- */
+
+@media (max-width: 1024px) {
+  /* About Us - Tablet */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mission-section,
+  .tech-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .mission-features {
+    justify-content: center;
+  }
+
+  /* Team - Tablet */
+  .team-grid-four {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* General - Tablet */
+  .page-hero-title {
+    font-size: 2.2rem;
+  }
+
+  .page-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .section-title-large,
+  .mission-title,
+  .tech-title,
+  .team-intro-title,
+  .team-join-title,
+  .faq-contact-title {
+    font-size: 1.8rem;
+  }
+
+  .mission-text,
+  .tech-text,
+  .team-intro-text,
+  .faq-contact-text {
+    font-size: 1rem;
+  }
+
+  .mission-emoji,
+  .tech-emoji {
+    font-size: 8rem;
+  }
+
+  /* About Us - Mobile */
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* FAQ - Mobile */
+  .faq-category-title {
+    font-size: 1.3rem;
+  }
+
+  .faq-question {
+    font-size: 0.95rem;
+    padding: 1rem;
+  }
+
+  .faq-answer {
+    padding: 0 1rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .faq-contact-card {
+    padding: 2rem;
+  }
+
+  .faq-contact-buttons {
+    flex-direction: column;
+  }
+
+  .faq-contact-buttons .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Team - Mobile */
+  .team-grid-four {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .team-member-avatar {
+    font-size: 3rem;
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* General - Small Mobile */
+  .page-container {
+    padding: 2rem 1rem;
+  }
+
+  /* About Us - Small Mobile */
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mission-features {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mission-section,
+  .tech-section {
+    padding: 1.5rem;
+  }
+
+  /* Team - Small Mobile */
+  .team-join-section {
+    padding: 2rem 1rem;
+  }
+
+  /* FAQ - Small Mobile */
+  .faq-categories {
+    gap: 0.5rem;
+  }
+
+  .faq-category-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+  }
+}
