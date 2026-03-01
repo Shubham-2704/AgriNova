@@ -29,8 +29,9 @@ const Footer = () => {
   ];
 
   const legal = [
-    { label: 'Privacy Policy', path: '/privacy' },
+    { label: 'Privacy Policy', path: '/privacy-policy' },
     { label: 'Terms of Service', path: '/terms' },
+    { label: 'Cookie Policy', path: '/cookie-policy' },
   ];
 
   const socialLinks = [
@@ -124,25 +125,6 @@ const Footer = () => {
               </li>
             </ul>
 
-            <div className="newsletter">
-              <h3>Newsletter</h3>
-              <p className="footer-description">
-                Subscribe for updates and farming tips.
-              </p>
-              <form onSubmit={handleSubscribe} className="newsletter-input">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <button type="submit">
-                  <Send size={16} style={{ marginRight: '4px' }} />
-                  Subscribe
-                </button>
-              </form>
-            </div>
           </div>
         </div>
 
@@ -152,9 +134,9 @@ const Footer = () => {
             © {currentYear} AgriNova. All rights reserved.
           </p>
           <div className="footer-bottom-links">
-            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/privacy-policy">Privacy Policy</Link>
             <Link to="/terms">Terms of Service</Link>
-            <Link to="/cookies">Cookie Policy</Link>
+            <Link to="/cookie-policy">Cookie Policy</Link>
           </div>
         </div>
       </div>

@@ -293,6 +293,29 @@
   transform: translateY(-2px);
 }
 
+/* Google Login Wrapper */
+.google-login-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.google-login-wrapper > div {
+  width: 100% !important;
+}
+
+.google-login-wrapper > div > div {
+  width: 100% !important;
+}
+
+.google-login-wrapper iframe {
+  width: 100% !important;
+}
+
+.google-login-wrapper button {
+  width: 100% !important;
+}
+
 /* Footer Links */
 .auth-footer {
   text-align: center;

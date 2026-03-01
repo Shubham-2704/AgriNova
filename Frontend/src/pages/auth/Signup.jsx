@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Chrome, ArrowRight, Eye, EyeOff, Check, X } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Eye, EyeOff, Check, X } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/ToastContainer';
 import axiosInstance from '../../utils/axiosInstance';
@@ -16,6 +17,7 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const { login, user } = useAuth();
   const { success, error: showError } = useToast();
   const navigate = useNavigate();
@@ -73,9 +75,26 @@ const Signup = () => {
     }
   };
 
-  const handleGoogleSignup = async () => {
-    // TODO: Implement Google OAuth
-    alert('Google signup coming soon!');
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setGoogleLoading(true);
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.GOOGLE_AUTH, {
+        token: credentialResponse.credential
+      });
+
+      login(response.data);
+      success('Account created successfully! Welcome to AgriNova.');
+      navigate('/dashboard');
+    } catch (err) {
+      showError(err.response?.data?.message || 'Google signup failed. Please try again.');
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    showError('Google signup failed. Please try again.');
+    setGoogleLoading(false);
   };
 
   return (
@@ -215,7 +234,7 @@ const Signup = () => {
                   onChange={(e) => setAgreeTerms(e.target.checked)}
                 />
                 <label htmlFor="terms">
-                  I agree to the <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>
+                  I agree to the <Link to="/terms">Terms</Link> and <Link to="/privacy-policy">Privacy Policy</Link>
                 </label>
               </div>
 
@@ -228,10 +247,22 @@ const Signup = () => {
               <span>OR</span>
             </div>
 
-            <button onClick={handleGoogleSignup} className="btn-google">
-              <Chrome size={18} />
-              Sign up with Google
-            </button>
+            <div className="google-login-wrapper">
+              {googleLoading ? (
+                <button className="btn-google" disabled>
+                  Signing up with Google...
+                </button>
+              ) : (
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleError}
+                  theme="outline"
+                  size="large"
+                  text="signup_with"
+                  width="100%"
+                />
+              )}
+            </div>
 
             <div className="auth-footer">
               <p>

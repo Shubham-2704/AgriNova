@@ -9,6 +9,9 @@ import Dashboard from './pages/dashboard/Dashboard';
 import AboutUs from './pages/info/AboutUs';
 import OurTeam from './pages/info/OurTeam';
 import FAQ from './pages/info/FAQ';
+import { PrivacyPolicy, TermsOfService, CookiePolicy } from './pages/legal';
+import { ContactUs } from './pages/contact';
+import CookieConsent from './components/CookieConsent';
 import './App.css';
 
 function ProtectedRoute({ children }) {
@@ -32,24 +35,31 @@ function ProtectedRoute({ children }) {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/about" element={<AboutUs />} />
-      <Route path="/team" element={<OurTeam />} />
-      <Route path="/faq" element={<FAQ />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
-      <Route 
-        path="/dashboard" 
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } 
-      />
-    </Routes>
+    <>
+      <CookieConsent />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/team" element={<OurTeam />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
+    </>
   );
 }
 
