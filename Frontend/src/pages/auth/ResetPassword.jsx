@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Lock, ArrowLeft, Check, X, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useToast } from '../../components/ToastContainer';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import './Auth.css';
 
 const ResetPassword = () => {
+  const { t } = useTranslation();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -43,7 +45,7 @@ const ResetPassword = () => {
     e.preventDefault();
     
     if (!isPasswordValid || !passwordsMatch) {
-      showError('Please meet all password requirements');
+      showError(t('messages.passwordRequirements'));
       return;
     }
     
@@ -61,14 +63,14 @@ const ResetPassword = () => {
       // Clear email from sessionStorage
       sessionStorage.removeItem('resetEmail');
       
-      success('Password reset successfully! Please login with your new password.');
+      success(t('messages.passwordResetSuccess'));
       
       // Navigate to login with success message
       setTimeout(() => {
         navigate('/login', { replace: true });
       }, 1000);
     } catch (err) {
-      showError(err.response?.data?.message || 'Failed to reset password. Please try again.');
+      showError(err.response?.data?.message || t('messages.passwordResetFailed'));
     } finally {
       setLoading(false);
     }
@@ -86,15 +88,15 @@ const ResetPassword = () => {
             </Link>
 
             <div className="auth-header">
-              <h1>Set New Password</h1>
-              <p>Create a strong password for your account</p>
+              <h1>{t('auth.resetPasswordTitle')}</h1>
+              <p>{t('auth.resetPasswordSubtitle')}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form">
               <div className="form-group">
                 <label htmlFor="password">
                   <Lock size={16} />
-                  New Password
+                  {t('auth.newPassword')}
                 </label>
                 <div className="password-input-wrapper">
                   <input
@@ -102,7 +104,7 @@ const ResetPassword = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter new password"
+                    placeholder={t('auth.newPasswordPlaceholder')}
                     required
                   />
                   <button
@@ -119,7 +121,7 @@ const ResetPassword = () => {
               <div className="form-group">
                 <label htmlFor="confirmPassword">
                   <Lock size={16} />
-                  Confirm Password
+                  {t('auth.confirmPassword')}
                 </label>
                 <div className="password-input-wrapper">
                   <input
@@ -127,7 +129,7 @@ const ResetPassword = () => {
                     id="confirmPassword"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm new password"
+                    placeholder={t('auth.confirmPasswordPlaceholder')}
                     required
                   />
                   <button
@@ -146,23 +148,23 @@ const ResetPassword = () => {
                 <div className="password-requirements-compact">
                   <div className={`requirement-item-compact ${passwordRequirements.minLength ? 'met' : ''}`}>
                     {passwordRequirements.minLength ? <Check size={12} /> : <X size={12} />}
-                    <span>8+ chars</span>
+                    <span>{t('auth.minLength')}</span>
                   </div>
                   <div className={`requirement-item-compact ${passwordRequirements.hasUpperCase ? 'met' : ''}`}>
                     {passwordRequirements.hasUpperCase ? <Check size={12} /> : <X size={12} />}
-                    <span>Uppercase</span>
+                    <span>{t('auth.uppercase')}</span>
                   </div>
                   <div className={`requirement-item-compact ${passwordRequirements.hasLowerCase ? 'met' : ''}`}>
                     {passwordRequirements.hasLowerCase ? <Check size={12} /> : <X size={12} />}
-                    <span>Lowercase</span>
+                    <span>{t('auth.lowercase')}</span>
                   </div>
                   <div className={`requirement-item-compact ${passwordRequirements.hasNumber ? 'met' : ''}`}>
                     {passwordRequirements.hasNumber ? <Check size={12} /> : <X size={12} />}
-                    <span>Number</span>
+                    <span>{t('auth.number')}</span>
                   </div>
                   <div className={`requirement-item-compact ${passwordRequirements.hasSpecialChar ? 'met' : ''}`}>
                     {passwordRequirements.hasSpecialChar ? <Check size={12} /> : <X size={12} />}
-                    <span>Special (!@#$)</span>
+                    <span>{t('auth.specialChar')}</span>
                   </div>
                 </div>
               )}
@@ -172,7 +174,7 @@ const ResetPassword = () => {
                 <div className={`password-match-indicator ${passwordsMatch ? 'match' : 'no-match'}`}>
                   {passwordsMatch ? <Check size={14} /> : <X size={14} />}
                   <span>
-                    {passwordsMatch ? 'Passwords match' : 'Passwords do not match'}
+                    {passwordsMatch ? t('auth.passwordsMatch') : t('auth.passwordsNoMatch')}
                   </span>
                 </div>
               )}
@@ -182,13 +184,13 @@ const ResetPassword = () => {
                 className="btn btn-primary btn-block"
                 disabled={loading || !isPasswordValid || !passwordsMatch}
               >
-                {loading ? 'Updating...' : 'Reset Password'} <ArrowRight size={16} />
+                {loading ? t('auth.updating') : t('auth.resetPassword')} <ArrowRight size={16} />
               </button>
 
               <div className="back-to-login">
                 <Link to="/login">
                   <ArrowLeft size={16} />
-                  Back to Login
+                  {t('auth.backToLogin')}
                 </Link>
               </div>
             </form>
@@ -199,22 +201,22 @@ const ResetPassword = () => {
         <div className="auth-image-side">
           <div className="auth-image-content">
             <div className="auth-image-emoji">🔒</div>
-            <h2 className="auth-image-title">Create New Password</h2>
+            <h2 className="auth-image-title">{t('auth.createNewPasswordTitle')}</h2>
             <p className="auth-image-text">
-              Make sure your new password is strong and secure
+              {t('auth.createNewPasswordText')}
             </p>
             <div className="auth-image-features">
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Encrypted Security</span>
+                <span>{t('auth.encryptedSecurity')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Password Strength Check</span>
+                <span>{t('auth.passwordStrengthCheck')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Instant Update</span>
+                <span>{t('auth.instantUpdate')}</span>
               </div>
             </div>
           </div>

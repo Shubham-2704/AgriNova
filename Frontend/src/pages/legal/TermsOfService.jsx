@@ -1,73 +1,74 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import './Legal.css';
 
 const TermsOfService = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="legal-page">
       <div className="legal-container">
         <Link to="/" className="back-link">
           <ArrowLeft size={20} />
-          Back to Home
+          {t('legal.backToHome')}
         </Link>
 
         <div className="legal-header">
-          <h1>Terms of Service</h1>
-          <p className="last-updated">Last Updated: March 1, 2026</p>
+          <h1>{t('legal.termsTitle')}</h1>
+          <p className="last-updated">{t('legal.lastUpdated')} March 1, 2026</p>
         </div>
 
         <div className="legal-content">
           <section>
-            <h2>1. Service Description & Disclaimer</h2>
+            <h2>{t('legal.terms.section1Title')}</h2>
             <div className="disclaimer-box">
-              <h3>⚠️ Important Notice</h3>
+              <h3>{t('legal.terms.importantNotice')}</h3>
               <p>
-                <strong>AgriNova provides AI-powered crop predictions based on historical data. These predictions are NOT guarantees and should NOT replace professional agricultural advice.</strong>
+                <strong>{t('legal.terms.disclaimer')}</strong>
               </p>
               <ul>
-                <li>Predictions may not account for unforeseen weather, market, or environmental changes</li>
-                <li>Results vary based on local conditions and farming practices</li>
-                <li>Always consult qualified agricultural professionals before making farming decisions</li>
-                <li>AgriNova is a decision-support tool, not a replacement for expertise</li>
+                <li>{t('legal.terms.disclaimer1')}</li>
+                <li>{t('legal.terms.disclaimer2')}</li>
+                <li>{t('legal.terms.disclaimer3')}</li>
+                <li>{t('legal.terms.disclaimer4')}</li>
               </ul>
             </div>
           </section>
 
           <section>
-            <h2>2. User Responsibilities</h2>
-            <p>
-              By using AgriNova, you agree to provide accurate information, keep your account secure, and not misuse the service. You are responsible for all activities under your account. We reserve the right to suspend accounts that violate these terms.
-            </p>
+            <h2>{t('legal.terms.section2Title')}</h2>
+            <p>{t('legal.terms.section2Text')}</p>
           </section>
 
           <section>
-            <h2>3. Limitation of Liability</h2>
+            <h2>{t('legal.terms.section3Title')}</h2>
             <div className="disclaimer-box">
               <p>
-                <strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW:</strong>
+                <strong>{t('legal.terms.maxExtent')}</strong>
               </p>
               <ul>
-                <li>AgriNova is provided "AS IS" without warranties of any kind</li>
-                <li>We are NOT liable for crop failures, financial losses, or damages from using our predictions</li>
-                <li>We are NOT responsible for decisions made based on our recommendations</li>
-                <li>Our total liability shall not exceed the amount you paid for the service (if any)</li>
+                <li>{t('legal.terms.liability1')}</li>
+                <li>{t('legal.terms.liability2')}</li>
+                <li>{t('legal.terms.liability3')}</li>
+                <li>{t('legal.terms.liability4')}</li>
               </ul>
             </div>
           </section>
 
           <section>
-            <h2>4. Contact & Changes</h2>
+            <h2>{t('legal.terms.section4Title')}</h2>
             <p>
-              We may update these Terms at any time. Continued use after changes means you accept the new terms. For questions, contact us at <strong>support@agrinova.com</strong>
+              {t('legal.terms.section4Text')} <strong>support@agrinova.com</strong>
             </p>
             <p className="legal-footer-text">
-              Read our <Link to="/privacy-policy">Privacy Policy</Link> and <Link to="/cookie-policy">Cookie Policy</Link> for more information.
+              {t('legal.terms.readMore')} <Link to="/privacy-policy">{t('legal.privacyTitle')}</Link> {t('legal.terms.and')} <Link to="/cookie-policy">{t('legal.cookieTitle')}</Link> {t('legal.terms.forMore')}
             </p>
           </section>
 
           <section>
             <p className="legal-acknowledgment">
-              BY USING AGRINOVA, YOU ACKNOWLEDGE THAT YOU HAVE READ AND AGREE TO THESE TERMS.
+              {t('legal.terms.acknowledgment')}
             </p>
           </section>
         </div>

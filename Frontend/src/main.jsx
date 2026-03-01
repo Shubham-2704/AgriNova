@@ -6,6 +6,7 @@ import App from './App.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { ToastProvider } from './components/ToastContainer.jsx'
+import './i18n'
 import './index.css'
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID

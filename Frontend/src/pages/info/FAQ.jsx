@@ -1,85 +1,57 @@
 import { useState } from 'react';
 import { ChevronDown, Search, HelpCircle, MessageCircle, Mail } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import './Page.css';
 
-const faqs = [
-  {
-    category: "General",
-    questions: [
-      {
-        question: "How accurate are the crop recommendations?",
-        answer: "Our AI model has been trained on extensive agricultural data and achieves over 90% accuracy in crop recommendations. The system considers multiple factors including weather, soil type, water availability, and historical data to provide reliable suggestions."
-      },
-      {
-        question: "How does the weather integration work?",
-        answer: "We integrate with OpenWeatherMap API to fetch real-time weather data for your selected location. This includes temperature, rainfall, humidity, cloud cover, and other meteorological factors that influence crop growth."
-      },
-      {
-        question: "Can I use AgriNova for any location in India?",
-        answer: "Currently, AgriNova is optimized for Gujarat state with data from 26+ cities. We're continuously expanding our coverage to include more states and regions across India."
-      }
-    ]
-  },
-  {
-    category: "Pricing & Plans",
-    questions: [
-      {
-        question: "Is AgriNova free to use?",
-        answer: "Yes! We offer a free tier that includes basic crop recommendations. For advanced features like detailed analytics, historical data, and priority support, we offer affordable premium plans."
-      },
-      {
-        question: "Are there any hidden charges?",
-        answer: "No hidden charges whatsoever. All our pricing is transparent and clearly displayed. You only pay for the plan you choose."
-      }
-    ]
-  },
-  {
-    category: "Technical",
-    questions: [
-      {
-        question: "How are profit calculations determined?",
-        answer: "Profit calculations are based on historical production data, current market prices, and your specified land area. We provide both per-acre and total profit estimates to help you make informed decisions."
-      },
-      {
-        question: "Do I need technical knowledge to use AgriNova?",
-        answer: "Not at all! AgriNova is designed with farmers in mind. The interface is intuitive and easy to use. Simply input your farm details, and our system will provide recommendations in a clear, understandable format."
-      },
-      {
-        question: "Can I get recommendations for multiple crops?",
-        answer: "Yes! Our system provides the top 6 crop recommendations ranked by suitability. You can view the top 3 initially and expand to see 3 more alternatives."
-      }
-    ]
-  },
-  {
-    category: "Data & Privacy",
-    questions: [
-      {
-        question: "Is my data secure?",
-        answer: "Yes, we take data security seriously. All user data is encrypted and stored securely. We never share your personal information with third parties without your explicit consent."
-      },
-      {
-        question: "How often is the data updated?",
-        answer: "Weather data is fetched in real-time whenever you make a prediction. Our crop database and pricing information are updated regularly to ensure accuracy."
-      }
-    ]
-  }
-];
-
 const FAQ = () => {
+  const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState(t('faq.all'));
 
-  const categories = ['All', ...new Set(faqs.map(f => f.category))];
+  const faqs = [
+    {
+      category: t('faq.general'),
+      questions: [
+        { question: t('faq.q1'), answer: t('faq.a1') },
+        { question: t('faq.q2'), answer: t('faq.a2') },
+        { question: t('faq.q3'), answer: t('faq.a3') }
+      ]
+    },
+    {
+      category: t('faq.pricing'),
+      questions: [
+        { question: t('faq.q4'), answer: t('faq.a4') },
+        { question: t('faq.q5'), answer: t('faq.a5') }
+      ]
+    },
+    {
+      category: t('faq.technical'),
+      questions: [
+        { question: t('faq.q6'), answer: t('faq.a6') },
+        { question: t('faq.q7'), answer: t('faq.a7') },
+        { question: t('faq.q8'), answer: t('faq.a8') }
+      ]
+    },
+    {
+      category: t('faq.dataPrivacy'),
+      questions: [
+        { question: t('faq.q9'), answer: t('faq.a9') },
+        { question: t('faq.q10'), answer: t('faq.a10') }
+      ]
+    }
+  ];
+
+  const categories = [t('faq.all'), ...new Set(faqs.map(f => f.category))];
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   const filteredFaqs = faqs.filter(faq => 
-    activeCategory === 'All' || faq.category === activeCategory
+    activeCategory === t('faq.all') || faq.category === activeCategory
   ).map(faq => ({
     ...faq,
     questions: faq.questions.filter(q => 
@@ -95,9 +67,9 @@ const FAQ = () => {
       {/* Hero Section */}
       <div className="page-hero">
         <div className="container">
-          <h1 className="page-hero-title">Frequently Asked Questions</h1>
+          <h1 className="page-hero-title">{t('faq.title')}</h1>
           <p className="page-hero-subtitle">
-            Find answers to common questions about AgriNova
+            {t('faq.subtitle')}
           </p>
         </div>
       </div>
@@ -109,7 +81,7 @@ const FAQ = () => {
             <Search size={20} className="faq-search-icon" />
             <input
               type="text"
-              placeholder="Search your question..."
+              placeholder={t('faq.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="faq-search-input"
@@ -165,8 +137,8 @@ const FAQ = () => {
           {filteredFaqs.length === 0 && (
             <div className="faq-no-results">
               <HelpCircle size={48} />
-              <h3>No results found</h3>
-              <p>Try searching with different keywords</p>
+              <h3>{t('faq.noResults')}</h3>
+              <p>{t('faq.tryDifferent')}</p>
             </div>
           )}
         </div>
@@ -175,18 +147,18 @@ const FAQ = () => {
         <div className="faq-contact-section">
           <div className="faq-contact-card">
             <MessageCircle size={32} className="faq-contact-icon" />
-            <h2 className="faq-contact-title">Still have questions?</h2>
+            <h2 className="faq-contact-title">{t('faq.stillQuestions')}</h2>
             <p className="faq-contact-text">
-              Can't find the answer you're looking for? Please chat with our friendly team.
+              {t('faq.stillQuestionsDesc')}
             </p>
             <div className="faq-contact-buttons">
               <a href="/contact" className="btn btn-primary">
                 <MessageCircle size={18} />
-                Contact Support
+                {t('faq.contactSupport')}
               </a>
               <a href="mailto:support@agrinova.com" className="btn btn-outline">
                 <Mail size={18} />
-                Email Us
+                {t('faq.emailUs')}
               </a>
             </div>
           </div>

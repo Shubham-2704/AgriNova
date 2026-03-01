@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, ArrowLeft, Send, CheckCircle, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useToast } from '../../components/ToastContainer';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import './Auth.css';
 
 const ForgotPassword = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [step, setStep] = useState(1); // 1: email, 2: otp
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -34,9 +36,9 @@ const ForgotPassword = () => {
       setTimer(expiresIn);
       setExpiryTime(Date.now() + (expiresIn * 1000));
       startTimer(expiresIn);
-      success('OTP sent to your email successfully!');
+      success(t('messages.otpSent'));
     } catch (err) {
-      showError(err.response?.data?.message || 'Failed to send OTP. Please try again.');
+      showError(err.response?.data?.message || t('messages.otpSendFailed'));
     } finally {
       setLoading(false);
     }
@@ -73,9 +75,9 @@ const ForgotPassword = () => {
       setExpiryTime(Date.now() + (expiresIn * 1000));
       startTimer(expiresIn);
       setOtp(['', '', '', '', '', '']);
-      success('OTP resent successfully!');
+      success(t('messages.otpResent'));
     } catch (err) {
-      showError(err.response?.data?.message || 'Failed to resend OTP.');
+      showError(err.response?.data?.message || t('messages.otpResendFailed'));
     } finally {
       setLoading(false);
     }
@@ -100,7 +102,7 @@ const ForgotPassword = () => {
     const otpValue = otp.join('');
     
     if (otpValue.length !== 6) {
-      showError('Please enter complete OTP');
+      showError(t('messages.otpIncomplete'));
       return;
     }
     
@@ -112,11 +114,11 @@ const ForgotPassword = () => {
         otp: otpValue
       });
       
-      success('OTP verified successfully!');
+      success(t('messages.otpVerified'));
       // Navigate to reset password page
       navigate('/reset-password');
     } catch (err) {
-      showError(err.response?.data?.message || 'Invalid OTP. Please try again.');
+      showError(err.response?.data?.message || t('messages.otpInvalid'));
       setOtp(['', '', '', '', '', '']);
     } finally {
       setLoading(false);
@@ -141,11 +143,11 @@ const ForgotPassword = () => {
             </Link>
 
             <div className="auth-header">
-              <h1>{step === 1 ? 'Forgot Password?' : 'Verify OTP'}</h1>
+              <h1>{step === 1 ? t('auth.forgotPasswordTitle') : t('auth.verifyOtpTitle')}</h1>
               <p>
                 {step === 1 
-                  ? 'Enter your email to reset your password' 
-                  : `We've sent a 6-digit code to ${email}`}
+                  ? t('auth.forgotPasswordSubtitle')
+                  : `${t('auth.verifyOtpSubtitle')} ${email}`}
               </p>
             </div>
 
@@ -155,22 +157,22 @@ const ForgotPassword = () => {
                 <div className="form-group">
                   <label htmlFor="email">
                     <Mail size={16} />
-                    Email Address
+                    {t('auth.emailAddress')}
                   </label>
                   <input
                     type="email"
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your registered email"
+                    placeholder={t('auth.emailAddressPlaceholder')}
                     required
                   />
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                  {loading ? 'Sending...' : (
+                  {loading ? t('auth.sending') : (
                     <>
-                      Send Reset Code <Send size={16} />
+                      {t('auth.sendResetCode')} <Send size={16} />
                     </>
                   )}
                 </button>
@@ -178,7 +180,7 @@ const ForgotPassword = () => {
                 <div className="back-to-login">
                   <Link to="/login">
                     <ArrowLeft size={16} />
-                    Back to Login
+                    {t('auth.backToLogin')}
                   </Link>
                 </div>
               </form>
@@ -187,7 +189,7 @@ const ForgotPassword = () => {
               <form onSubmit={handleOtpSubmit} className="auth-form">
                 <div className="success-message">
                   <CheckCircle size={40} />
-                  <p>Verification code sent to {email}</p>
+                  <p>{t('auth.verificationCodeSent')} {email}</p>
                 </div>
 
                 <div className="otp-group">
@@ -207,9 +209,9 @@ const ForgotPassword = () => {
 
                 <div className="timer-text">
                   {timer > 0 ? (
-                    <>Time remaining: <span>{formatTime(timer)}</span></>
+                    <>{t('auth.timeRemaining')} <span>{formatTime(timer)}</span></>
                   ) : (
-                    <>OTP expired. Please request a new one.</>
+                    <>{t('auth.otpExpired')}</>
                   )}
                 </div>
 
@@ -219,7 +221,7 @@ const ForgotPassword = () => {
                     onClick={handleResendOTP}
                     disabled={!canResend || loading}
                   >
-                    {loading ? 'Sending...' : 'Resend OTP'}
+                    {loading ? t('auth.sending') : t('auth.resendOtp')}
                   </button>
                 </div>
 
@@ -228,9 +230,9 @@ const ForgotPassword = () => {
                   className="btn btn-primary btn-block"
                   disabled={otp.join('').length !== 6 || loading}
                 >
-                  {loading ? 'Verifying...' : (
+                  {loading ? t('auth.verifying') : (
                     <>
-                      Verify & Continue <ArrowRight size={16} />
+                      {t('auth.verifyAndContinue')} <ArrowRight size={16} />
                     </>
                   )}
                 </button>
@@ -238,7 +240,7 @@ const ForgotPassword = () => {
                 <div className="back-to-login">
                   <Link to="/login">
                     <ArrowLeft size={16} />
-                    Back to Login
+                    {t('auth.backToLogin')}
                   </Link>
                 </div>
               </form>
@@ -250,22 +252,22 @@ const ForgotPassword = () => {
         <div className="auth-image-side">
           <div className="auth-image-content">
             <div className="auth-image-emoji">🔐</div>
-            <h2 className="auth-image-title">Reset Password</h2>
+            <h2 className="auth-image-title">{t('auth.resetPasswordImageTitle')}</h2>
             <p className="auth-image-text">
-              We'll help you regain access to your account securely
+              {t('auth.resetPasswordImageText')}
             </p>
             <div className="auth-image-features">
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Secure Verification</span>
+                <span>{t('auth.secureVerification')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Quick & Easy</span>
+                <span>{t('auth.quickAndEasy')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>24/7 Support</span>
+                <span>{t('auth.support247')}</span>
               </div>
             </div>
           </div>

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Sun, Moon, Menu, X, User, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react';
+import { Sun, Moon, Menu, X, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import LanguageSwitcher from './LanguageSwitcher';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -11,6 +13,7 @@ const Navbar = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,11 +41,11 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/about', label: 'About Us' },
-    { path: '/team', label: 'Our Team' },
-    { path: '/faq', label: 'FAQ' },
-    { path: '/contact', label: 'Contact Us' },
+    { path: '/', label: t('nav.home') },
+    { path: '/about', label: t('nav.about') },
+    { path: '/team', label: t('nav.team') },
+    { path: '/faq', label: t('nav.faq') },
+    { path: '/contact', label: t('nav.contact') },
   ];
 
   return (
@@ -73,6 +76,8 @@ const Navbar = () => {
 
         {/* RIGHT SECTION - Actions */}
         <div className="navbar-right">
+          <LanguageSwitcher />
+          
           <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
             {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </button>
@@ -82,7 +87,13 @@ const Navbar = () => {
               <div className="user-avatar">
                 {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
               </div>
-              <span className="user-name">{user.name || 'User'}</span>
+              <span className="user-name">
+                {user.name 
+                  ? user.name.length > 8 
+                    ? user.name.substring(0, 8) + '...' 
+                    : user.name 
+                  : 'User'}
+              </span>
               <ChevronDown size={16} style={{ color: 'var(--text-secondary)' }} />
               
               {/* DROPDOWN MENU - OPENS WHEN CLICKED */}
@@ -90,19 +101,19 @@ const Navbar = () => {
                 <div className="user-dropdown" onClick={(e) => e.stopPropagation()}>
                   <Link to="/dashboard" className="dropdown-item">
                     <LayoutDashboard size={16} />
-                    Dashboard
+                    {t('nav.dashboard')}
                   </Link>
                   <button className="dropdown-item logout" onClick={handleLogout}>
                     <LogOut size={16} />
-                    Logout
+                    {t('nav.logout')}
                   </button>
                 </div>
               )}
             </div>
           ) : (
             <div className="auth-buttons">
-              <Link to="/login" className="btn btn-outline">Login</Link>
-              <Link to="/signup" className="btn btn-primary">Sign Up</Link>
+              <Link to="/login" className="btn btn-outline">{t('nav.login')}</Link>
+              <Link to="/signup" className="btn btn-primary">{t('nav.signup')}</Link>
             </div>
           )}
 
@@ -133,7 +144,7 @@ const Navbar = () => {
             <>
               <Link to="/dashboard" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
                 <LayoutDashboard size={16} style={{ marginRight: '8px' }} />
-                Dashboard
+                {t('nav.dashboard')}
               </Link>
               <button 
                 className="nav-link logout" 
@@ -143,16 +154,16 @@ const Navbar = () => {
                 }}
               >
                 <LogOut size={16} style={{ marginRight: '8px' }} />
-                Logout
+                {t('nav.logout')}
               </button>
             </>
           ) : (
             <div className="mobile-buttons">
               <Link to="/login" className="btn btn-outline btn-block" onClick={() => setIsMobileMenuOpen(false)}>
-                Login
+                {t('nav.login')}
               </Link>
               <Link to="/signup" className="btn btn-primary btn-block" onClick={() => setIsMobileMenuOpen(false)}>
-                Sign Up
+                {t('nav.signup')}
               </Link>
             </div>
           )}

@@ -298,22 +298,41 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  pointer-events: auto !important;
+  z-index: 100;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.google-login-wrapper * {
+  pointer-events: auto !important;
 }
 
 .google-login-wrapper > div {
   width: 100% !important;
+  pointer-events: auto !important;
+  display: block !important;
 }
 
 .google-login-wrapper > div > div {
   width: 100% !important;
+  pointer-events: auto !important;
+  display: block !important;
 }
 
 .google-login-wrapper iframe {
   width: 100% !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  display: block !important;
 }
 
 .google-login-wrapper button {
   width: 100% !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  display: block !important;
 }
 
 /* Footer Links */

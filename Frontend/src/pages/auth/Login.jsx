@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/ToastContainer';
 import axiosInstance from '../../utils/axiosInstance';
@@ -9,6 +10,7 @@ import { API_PATHS } from '../../utils/apiPaths';
 import './Auth.css';
 
 const Login = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -36,10 +38,10 @@ const Login = () => {
       });
 
       login(response.data);
-      success('Welcome back! Login successful.');
+      success(t('messages.loginSuccess'));
       navigate('/dashboard');
     } catch (err) {
-      showError(err.response?.data?.message || 'Login failed. Please try again.');
+      showError(err.response?.data?.message || t('messages.loginFailed'));
     } finally {
       setLoading(false);
     }
@@ -53,17 +55,17 @@ const Login = () => {
       });
 
       login(response.data);
-      success('Welcome! Login successful with Google.');
+      success(t('messages.googleLoginSuccess'));
       navigate('/dashboard');
     } catch (err) {
-      showError(err.response?.data?.message || 'Google login failed. Please try again.');
+      showError(err.response?.data?.message || t('messages.googleLoginFailed'));
     } finally {
       setGoogleLoading(false);
     }
   };
 
   const handleGoogleError = () => {
-    showError('Google login failed. Please try again.');
+    showError(t('messages.googleLoginFailed'));
     setGoogleLoading(false);
   };
 
@@ -79,22 +81,22 @@ const Login = () => {
             </Link>
 
             <div className="auth-header">
-              <h1>Welcome Back</h1>
-              <p>Login to your account</p>
+              <h1>{t('auth.loginTitle')}</h1>
+              <p>{t('auth.loginSubtitle')}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form">
               <div className="form-group">
                 <label htmlFor="email">
                   <Mail size={16} />
-                  Email Address
+                  {t('auth.email')}
                 </label>
                 <input
                   type="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
+                  placeholder={t('auth.emailPlaceholder')}
                   required
                 />
               </div>
@@ -103,10 +105,10 @@ const Login = () => {
                 <div className="password-label-row">
                   <label htmlFor="password">
                     <Lock size={16} />
-                    Password
+                    {t('auth.password')}
                   </label>
                   <Link to="/forgot-password" className="forgot-password-link">
-                    Forgot Password?
+                    {t('auth.forgotPassword')}
                   </Link>
                 </div>
                 <div className="password-input-wrapper">
@@ -115,7 +117,7 @@ const Login = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
+                    placeholder={t('auth.passwordPlaceholder')}
                     required
                   />
                   <button
@@ -130,18 +132,18 @@ const Login = () => {
               </div>
 
               <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                {loading ? 'Logging in...' : 'Login'} <ArrowRight size={16} />
+                {loading ? t('auth.loggingIn') : t('auth.login')} <ArrowRight size={16} />
               </button>
             </form>
 
             <div className="auth-divider">
-              <span>OR</span>
+              <span>{t('auth.orContinueWith')}</span>
             </div>
 
             <div className="google-login-wrapper">
               {googleLoading ? (
                 <button className="btn-google" disabled>
-                  Signing in with Google...
+                  {t('auth.signInWithGoogle')}
                 </button>
               ) : (
                 <GoogleLogin
@@ -158,8 +160,8 @@ const Login = () => {
 
             <div className="auth-footer">
               <p>
-                Don't have an account?
-                <Link to="/signup">Sign up</Link>
+                {t('auth.noAccount')}
+                <Link to="/signup">{t('nav.signup')}</Link>
               </p>
             </div>
           </div>
@@ -169,22 +171,22 @@ const Login = () => {
         <div className="auth-image-side">
           <div className="auth-image-content">
             <div className="auth-image-emoji">🌾</div>
-            <h2 className="auth-image-title">Hello, Farmer!</h2>
+            <h2 className="auth-image-title">{t('auth.helloFarmer')}</h2>
             <p className="auth-image-text">
-              Access your personalized crop recommendations and farming insights
+              {t('auth.loginImageText')}
             </p>
             <div className="auth-image-features">
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>90%+ Prediction Accuracy</span>
+                <span>{t('auth.predictionAccuracy')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Real-time Weather Data</span>
+                <span>{t('auth.realTimeWeather')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Profit Calculations</span>
+                <span>{t('auth.profitCalculations')}</span>
               </div>
             </div>
           </div>

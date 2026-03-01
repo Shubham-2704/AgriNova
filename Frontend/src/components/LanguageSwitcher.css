@@ -1,0 +1,90 @@
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  transition: all 0.2s ease;
+  height: 38px;
+  white-space: nowrap;
+  pointer-events: auto;
+  z-index: 100;
+}
+
+.language-switcher:hover {
+  background: var(--bg-secondary);
+  border-color: var(--primary);
+}
+
+.language-switcher svg {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.language-current {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  writing-mode: horizontal-tb;
+}
+
+.language-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-dark);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-lg);
+  min-width: 140px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  writing-mode: horizontal-tb;
+}
+
+.language-option:hover {
+  background: var(--bg-tertiary);
+  color: var(--primary);
+}
+
+.language-option.active {
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .language-switcher {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
+  }
+  
+  .language-dropdown {
+    left: 0;
+    right: 0;
+    min-width: 100%;
+  }
+}
