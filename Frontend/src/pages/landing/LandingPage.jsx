@@ -236,6 +236,183 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section className="how-it-works-section">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">{t('landing.simpleProcess')}</span>
+            <h2 className="section-title">{t('landing.howItWorks')}</h2>
+            <p className="section-subtitle">
+              {t('landing.howItWorksSubtitle')}
+            </p>
+          </div>
+          
+          <div className="steps-grid">
+            <div className="step-card">
+              <div className="step-number">1</div>
+              <div className="step-icon">📝</div>
+              <h3 className="step-title">{t('landing.step1Title')}</h3>
+              <p className="step-description">{t('landing.step1Desc')}</p>
+            </div>
+            
+            <div className="step-card">
+              <div className="step-number">2</div>
+              <div className="step-icon">🌍</div>
+              <h3 className="step-title">{t('landing.step2Title')}</h3>
+              <p className="step-description">{t('landing.step2Desc')}</p>
+            </div>
+            
+            <div className="step-card">
+              <div className="step-number">3</div>
+              <div className="step-icon">🤖</div>
+              <h3 className="step-title">{t('landing.step3Title')}</h3>
+              <p className="step-description">{t('landing.step3Desc')}</p>
+            </div>
+            
+            <div className="step-card">
+              <div className="step-number">4</div>
+              <div className="step-icon">🌱</div>
+              <h3 className="step-title">{t('landing.step4Title')}</h3>
+              <p className="step-description">{t('landing.step4Desc')}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ML Model & Technology Section */}
+      <section className="technology-section">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">{t('landing.poweredByAI')}</span>
+            <h2 className="section-title">{t('landing.mlModelTitle')}</h2>
+            <p className="section-subtitle">
+              {t('landing.mlModelSubtitle')}
+            </p>
+          </div>
+          
+          <div className="technology-grid">
+            <div className="tech-feature-card">
+              <div className="tech-icon">🧠</div>
+              <h3 className="tech-title">{t('landing.mlAlgorithm')}</h3>
+              <p className="tech-description">{t('landing.mlAlgorithmDesc')}</p>
+              <div className="tech-tags">
+                <span className="tech-tag">Random Forest</span>
+                <span className="tech-tag">XGBoost</span>
+                <span className="tech-tag">Neural Networks</span>
+              </div>
+            </div>
+            
+            <div className="tech-feature-card">
+              <div className="tech-icon">📊</div>
+              <h3 className="tech-title">{t('landing.dataAnalysis')}</h3>
+              <p className="tech-description">{t('landing.dataAnalysisDesc')}</p>
+              <div className="tech-tags">
+                <span className="tech-tag">Weather Data</span>
+                <span className="tech-tag">Soil Analysis</span>
+                <span className="tech-tag">Market Trends</span>
+              </div>
+            </div>
+            
+            <div className="tech-feature-card">
+              <div className="tech-icon">🎯</div>
+              <h3 className="tech-title">{t('landing.accuratePredictions')}</h3>
+              <p className="tech-description">{t('landing.accuratePredictionsDesc')}</p>
+              <div className="tech-tags">
+                <span className="tech-tag">95% Accuracy</span>
+                <span className="tech-tag">Real-time</span>
+                <span className="tech-tag">Validated</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Data Insights Section */}
+      <section className="insights-section">
+        <div className="container">
+          <div className="insights-content">
+            <div className="insights-left">
+              <span className="section-tag">{t('landing.dataInsightsTag')}</span>
+              <h2 className="insights-title">{t('landing.dataInsightsTitle')}</h2>
+              <p className="insights-description">
+                {t('landing.dataInsightsDescription')}
+              </p>
+              
+              <div className="insights-features">
+                <div className="insight-item">
+                  <div className="insight-icon">🌡️</div>
+                  <div className="insight-content">
+                    <h4>{t('landing.weatherIntegration')}</h4>
+                    <p>{t('landing.weatherIntegrationDesc')}</p>
+                  </div>
+                </div>
+                
+                <div className="insight-item">
+                  <div className="insight-icon">💹</div>
+                  <div className="insight-content">
+                    <h4>{t('landing.profitCalculation')}</h4>
+                    <p>{t('landing.profitCalculationDesc')}</p>
+                  </div>
+                </div>
+                
+                <div className="insight-item">
+                  <div className="insight-icon">📈</div>
+                  <div className="insight-content">
+                    <h4>{t('landing.yieldPrediction')}</h4>
+                    <p>{t('landing.yieldPredictionDesc')}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="insights-right">
+              <div className="insights-visual">
+                <div className="visual-card">
+                  <div className="visual-header">
+                    <span className="visual-icon">🌾</span>
+                    <span className="visual-title">{t('landing.cropRecommendation')}</span>
+                  </div>
+                  <div className="visual-body">
+                    <div className="prediction-item">
+                      <span className="crop-name">{t('landing.sampleCrop1')}</span>
+                      <div className="prediction-bar">
+                        <div className="prediction-fill" style={{width: '95%'}}></div>
+                      </div>
+                      <span className="prediction-value">95%</span>
+                    </div>
+                    <div className="prediction-item">
+                      <span className="crop-name">{t('landing.sampleCrop2')}</span>
+                      <div className="prediction-bar">
+                        <div className="prediction-fill" style={{width: '88%'}}></div>
+                      </div>
+                      <span className="prediction-value">88%</span>
+                    </div>
+                    <div className="prediction-item">
+                      <span className="crop-name">{t('landing.sampleCrop3')}</span>
+                      <div className="prediction-bar">
+                        <div className="prediction-fill" style={{width: '82%'}}></div>
+                      </div>
+                      <span className="prediction-value">82%</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="visual-stats">
+                  <div className="stat-box">
+                    <div className="stat-value">30+</div>
+                    <div className="stat-label">{t('landing.cropsSupported')}</div>
+                  </div>
+                  <div className="stat-box">
+                    <div className="stat-value">26</div>
+                    <div className="stat-label">{t('landing.gujaratCities')}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
       <section className="testimonials-section">
         <div className="container">

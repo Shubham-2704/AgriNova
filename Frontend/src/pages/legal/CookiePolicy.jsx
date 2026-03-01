@@ -81,7 +81,7 @@ const CookiePolicy = () => {
             <h2>{t('legal.cookie.section7Title')}</h2>
             <p>{t('legal.cookie.section7Text')}</p>
             <div className="contact-info">
-              <p><strong>{t('legal.cookie.email')}</strong> privacy@agrinova.com</p>
+              <p><strong>{t('legal.cookie.email')}</strong> support@agrinova.me</p>
             </div>
           </section>
 

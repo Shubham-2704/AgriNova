@@ -175,7 +175,7 @@ const ContactUs = () => {
                   </div>
                   <div className="contact-detail-text">
                     <h4>{t('contact.email')}</h4>
-                    <p>support@agrinova.com</p>
+                    <p>support@agrinova.me</p>
                   </div>
                 </div>
 

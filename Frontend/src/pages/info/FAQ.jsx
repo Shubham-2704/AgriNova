@@ -156,7 +156,7 @@ const FAQ = () => {
                 <MessageCircle size={18} />
                 {t('faq.contactSupport')}
               </a>
-              <a href="mailto:support@agrinova.com" className="btn btn-outline">
+              <a href="mailto:support@agrinova.me" className="btn btn-outline">
                 <Mail size={18} />
                 {t('faq.emailUs')}
               </a>

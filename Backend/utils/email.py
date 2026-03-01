@@ -116,7 +116,7 @@ def send_contact_admin_email(
         )
         
         # Get admin email from environment
-        admin_email = os.getenv("ADMIN_EMAIL", "support@agrinova.com")
+        admin_email = os.getenv("ADMIN_EMAIL", "support@agrinova.me")
         
         return send_email(
             admin_email,

@@ -38,7 +38,7 @@ const PrivacyPolicy = () => {
           <section>
             <h2>{t('legal.privacy.section4Title')}</h2>
             <p>
-              {t('legal.privacy.section4Text')} <strong>privacy@agrinova.com</strong>
+              {t('legal.privacy.section4Text')} <strong>support@agrinova.me</strong>
             </p>
             <p className="legal-footer-text">
               {t('legal.privacy.forDetails')} <Link to="/terms">{t('legal.termsTitle')}</Link> {t('legal.terms.and')} <Link to="/cookie-policy">{t('legal.cookieTitle')}</Link>.
