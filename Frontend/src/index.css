@@ -111,6 +111,11 @@ body {
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
+  pointer-events: auto;
+  position: relative;
+  z-index: 10;
+  white-space: nowrap;
+  writing-mode: horizontal-tb;
 }
 
 .btn-primary {

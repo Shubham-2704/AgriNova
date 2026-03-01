@@ -1,35 +1,102 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Chrome, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Eye, EyeOff, Check, X } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../components/ToastContainer';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 import './Auth.css';
 
 const Signup = () => {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
-  const { login, loginWithGoogle } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const { login, user } = useAuth();
+  const { success, error: showError } = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  // Password validation
+  const passwordRequirements = {
+    minLength: password.length >= 8,
+    hasUpperCase: /[A-Z]/.test(password),
+    hasLowerCase: /[a-z]/.test(password),
+    hasNumber: /[0-9]/.test(password),
+    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+  };
+
+  const isPasswordValid = Object.values(passwordRequirements).every(Boolean);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
-      alert("Passwords don't match!");
+      showError(t('messages.passwordMismatch'));
       return;
     }
     if (!agreeTerms) {
-      alert("Please agree to Terms and Conditions");
+      showError(t('messages.agreeTerms'));
       return;
     }
-    login({ name, email });
-    navigate('/dashboard');
+    if (!isPasswordValid) {
+      showError(t('messages.passwordRequirements'));
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        name,
+        email,
+        password
+      });
+
+      login(response.data);
+      success(t('messages.signupSuccess'));
+      navigate('/dashboard');
+    } catch (err) {
+      showError(err.response?.data?.message || t('messages.signupFailed'));
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleGoogleSignup = async () => {
-    await loginWithGoogle();
-    navigate('/dashboard');
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setGoogleLoading(true);
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.GOOGLE_AUTH, {
+        token: credentialResponse.credential
+      });
+
+      login(response.data);
+      success(t('messages.signupSuccess'));
+      navigate('/dashboard');
+    } catch (err) {
+      showError(err.response?.data?.message || t('messages.googleSignupFailed'));
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    showError(t('messages.googleSignupFailed'));
+    setGoogleLoading(false);
   };
 
   return (
@@ -44,8 +111,8 @@ const Signup = () => {
             </Link>
 
             <div className="auth-header">
-              <h1>Create Account</h1>
-              <p>Join AgriNova today</p>
+              <h1>{t('auth.signupTitle')}</h1>
+              <p>{t('auth.signupSubtitle')}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form">
@@ -54,14 +121,14 @@ const Signup = () => {
                 <div className="form-group">
                   <label htmlFor="name">
                     <User size={16} />
-                    Full Name
+                    {t('auth.fullName')}
                   </label>
                   <input
                     type="text"
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
+                    placeholder={t('auth.fullNamePlaceholder')}
                     required
                   />
                 </div>
@@ -69,14 +136,14 @@ const Signup = () => {
                 <div className="form-group">
                   <label htmlFor="email">
                     <Mail size={16} />
-                    Email
+                    {t('auth.email')}
                   </label>
                   <input
                     type="email"
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email"
+                    placeholder={t('auth.emailPlaceholder')}
                     required
                   />
                 </div>
@@ -87,33 +154,79 @@ const Signup = () => {
                 <div className="form-group">
                   <label htmlFor="password">
                     <Lock size={16} />
-                    Password
+                    {t('auth.password')}
                   </label>
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Min. 6 characters"
-                    required
-                  />
+                  <div className="password-input-wrapper">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder={t('auth.passwordPlaceholder')}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="password-toggle"
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="confirmPassword">
                     <Lock size={16} />
-                    Confirm
+                    {t('auth.confirmPassword')}
                   </label>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm password"
-                    required
-                  />
+                  <div className="password-input-wrapper">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      id="confirmPassword"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder={t('auth.confirmPasswordPlaceholder')}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="password-toggle"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                    >
+                      {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
                 </div>
               </div>
+
+              {/* Compact Password Requirements - 2 columns */}
+              {password && (
+                <div className="password-requirements-compact">
+                  <div className={`requirement-item-compact ${passwordRequirements.minLength ? 'met' : ''}`}>
+                    {passwordRequirements.minLength ? <Check size={12} /> : <X size={12} />}
+                    <span>{t('auth.minLength')}</span>
+                  </div>
+                  <div className={`requirement-item-compact ${passwordRequirements.hasUpperCase ? 'met' : ''}`}>
+                    {passwordRequirements.hasUpperCase ? <Check size={12} /> : <X size={12} />}
+                    <span>{t('auth.uppercase')}</span>
+                  </div>
+                  <div className={`requirement-item-compact ${passwordRequirements.hasLowerCase ? 'met' : ''}`}>
+                    {passwordRequirements.hasLowerCase ? <Check size={12} /> : <X size={12} />}
+                    <span>{t('auth.lowercase')}</span>
+                  </div>
+                  <div className={`requirement-item-compact ${passwordRequirements.hasNumber ? 'met' : ''}`}>
+                    {passwordRequirements.hasNumber ? <Check size={12} /> : <X size={12} />}
+                    <span>{t('auth.number')}</span>
+                  </div>
+                  <div className={`requirement-item-compact ${passwordRequirements.hasSpecialChar ? 'met' : ''}`}>
+                    {passwordRequirements.hasSpecialChar ? <Check size={12} /> : <X size={12} />}
+                    <span>{t('auth.specialChar')}</span>
+                  </div>
+                </div>
+              )}
 
               <div className="form-group checkbox">
                 <input
@@ -123,28 +236,40 @@ const Signup = () => {
                   onChange={(e) => setAgreeTerms(e.target.checked)}
                 />
                 <label htmlFor="terms">
-                  I agree to the <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>
+                  {t('auth.agreeToTerms')} <Link to="/terms">{t('auth.terms')}</Link> {t('auth.and')} <Link to="/privacy-policy">{t('auth.privacyPolicy')}</Link>
                 </label>
               </div>
 
-              <button type="submit" className="btn btn-primary btn-block">
-                Sign Up <ArrowRight size={16} />
+              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                {loading ? t('auth.creatingAccount') : t('auth.signup')} <ArrowRight size={16} />
               </button>
             </form>
 
             <div className="auth-divider">
-              <span>OR</span>
+              <span>{t('auth.orContinueWith')}</span>
             </div>
 
-            <button onClick={handleGoogleSignup} className="btn-google">
-              <Chrome size={18} />
-              Sign up with Google
-            </button>
+            <div className="google-login-wrapper">
+              {googleLoading ? (
+                <button className="btn-google" disabled>
+                  {t('auth.signUpWithGoogle')}
+                </button>
+              ) : (
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleError}
+                  theme="outline"
+                  size="large"
+                  text="signup_with"
+                  width="100%"
+                />
+              )}
+            </div>
 
             <div className="auth-footer">
               <p>
-                Already have an account?
-                <Link to="/login">Login</Link>
+                {t('auth.haveAccount')}
+                <Link to="/login">{t('nav.login')}</Link>
               </p>
             </div>
           </div>
@@ -154,22 +279,22 @@ const Signup = () => {
         <div className="auth-image-side">
           <div className="auth-image-content">
             <div className="auth-image-emoji">🌱</div>
-            <h2 className="auth-image-title">Start Growing!</h2>
+            <h2 className="auth-image-title">{t('auth.startGrowing')}</h2>
             <p className="auth-image-text">
-              Join thousands of farmers using AI to maximize their yields
+              {t('auth.signupImageText')}
             </p>
             <div className="auth-image-features">
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Free Account</span>
+                <span>{t('auth.freeAccount')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>No Credit Card</span>
+                <span>{t('auth.noCreditCard')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Cancel Anytime</span>
+                <span>{t('auth.cancelAnytime')}</span>
               </div>
             </div>
           </div>

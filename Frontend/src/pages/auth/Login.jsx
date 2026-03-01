@@ -1,24 +1,72 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, Chrome, ArrowRight } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../components/ToastContainer';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 import './Auth.css';
 
 const Login = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, loginWithGoogle } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const { login, user } = useAuth();
+  const { success, error: showError } = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login({ name: email.split('@')[0], email });
-    navigate('/dashboard');
+    setLoading(true);
+
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email,
+        password
+      });
+
+      login(response.data);
+      success(t('messages.loginSuccess'));
+      navigate('/dashboard');
+    } catch (err) {
+      showError(err.response?.data?.message || t('messages.loginFailed'));
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleGoogleLogin = async () => {
-    await loginWithGoogle();
-    navigate('/dashboard');
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setGoogleLoading(true);
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.GOOGLE_AUTH, {
+        token: credentialResponse.credential
+      });
+
+      login(response.data);
+      success(t('messages.googleLoginSuccess'));
+      navigate('/dashboard');
+    } catch (err) {
+      showError(err.response?.data?.message || t('messages.googleLoginFailed'));
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    showError(t('messages.googleLoginFailed'));
+    setGoogleLoading(false);
   };
 
   return (
@@ -33,63 +81,87 @@ const Login = () => {
             </Link>
 
             <div className="auth-header">
-              <h1>Welcome Back</h1>
-              <p>Login to your account</p>
+              <h1>{t('auth.loginTitle')}</h1>
+              <p>{t('auth.loginSubtitle')}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form">
               <div className="form-group">
                 <label htmlFor="email">
                   <Mail size={16} />
-                  Email Address
+                  {t('auth.email')}
                 </label>
                 <input
                   type="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
+                  placeholder={t('auth.emailPlaceholder')}
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="password">
-                  <Lock size={16} />
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
-                  required
-                />
+                <div className="password-label-row">
+                  <label htmlFor="password">
+                    <Lock size={16} />
+                    {t('auth.password')}
+                  </label>
+                  <Link to="/forgot-password" className="forgot-password-link">
+                    {t('auth.forgotPassword')}
+                  </Link>
+                </div>
+                <div className="password-input-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder={t('auth.passwordPlaceholder')}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
 
-              <div className="forgot-password">
-                <a href="/forgot-password">Forgot Password?</a>
-              </div>
-
-              <button type="submit" className="btn btn-primary btn-block">
-                Login <ArrowRight size={16} />
+              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                {loading ? t('auth.loggingIn') : t('auth.login')} <ArrowRight size={16} />
               </button>
             </form>
 
             <div className="auth-divider">
-              <span>OR</span>
+              <span>{t('auth.orContinueWith')}</span>
             </div>
 
-            <button onClick={handleGoogleLogin} className="btn-google">
-              <Chrome size={18} />
-              Continue with Google
-            </button>
+            <div className="google-login-wrapper">
+              {googleLoading ? (
+                <button className="btn-google" disabled>
+                  {t('auth.signInWithGoogle')}
+                </button>
+              ) : (
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleError}
+                  useOneTap
+                  theme="outline"
+                  size="large"
+                  text="signin_with"
+                  width="100%"
+                />
+              )}
+            </div>
 
             <div className="auth-footer">
               <p>
-                Don't have an account?
-                <Link to="/signup">Sign up</Link>
+                {t('auth.noAccount')}
+                <Link to="/signup">{t('nav.signup')}</Link>
               </p>
             </div>
           </div>
@@ -99,22 +171,22 @@ const Login = () => {
         <div className="auth-image-side">
           <div className="auth-image-content">
             <div className="auth-image-emoji">🌾</div>
-            <h2 className="auth-image-title">Hello, Farmer!</h2>
+            <h2 className="auth-image-title">{t('auth.helloFarmer')}</h2>
             <p className="auth-image-text">
-              Access your personalized crop recommendations and farming insights
+              {t('auth.loginImageText')}
             </p>
             <div className="auth-image-features">
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>90%+ Prediction Accuracy</span>
+                <span>{t('auth.predictionAccuracy')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Real-time Weather Data</span>
+                <span>{t('auth.realTimeWeather')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Profit Calculations</span>
+                <span>{t('auth.profitCalculations')}</span>
               </div>
             </div>
           </div>

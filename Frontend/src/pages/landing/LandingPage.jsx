@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import './LandingPage.css';
@@ -72,6 +73,72 @@ const testimonials = [
 
 const LandingPage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { t } = useTranslation();
+
+  const heroSlides = [
+    {
+      title: t('landing.heroTitle'),
+      subtitle: t('landing.heroSubtitle'),
+      image: "🌾",
+      gradient: "linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)"
+    },
+    {
+      title: t('landing.maximizeYield'),
+      subtitle: t('landing.dataInsights'),
+      image: "📈",
+      gradient: "linear-gradient(135deg, #0288D1 0%, #01579B 100%)"
+    },
+    {
+      title: t('landing.smartAgriculture'),
+      subtitle: t('landing.joinFarmers'),
+      image: "🚜",
+      gradient: "linear-gradient(135deg, #F57C00 0%, #E65100 100%)"
+    }
+  ];
+
+  const features = [
+    {
+      icon: "🤖",
+      title: t('landing.aiPowered'),
+      description: t('landing.aiPoweredDesc')
+    },
+    {
+      icon: "🌤️",
+      title: t('landing.realTimeWeather'),
+      description: t('landing.realTimeWeatherDesc')
+    },
+    {
+      icon: "💰",
+      title: t('landing.profitOptimization'),
+      description: t('landing.profitOptimizationDesc')
+    },
+    {
+      icon: "📊",
+      title: t('landing.detailedAnalytics'),
+      description: t('landing.detailedAnalyticsDesc')
+    }
+  ];
+
+  const testimonials = [
+    {
+      quote: t('landing.testimonial1'),
+      author: t('landing.testimonial1Author'),
+      role: t('landing.testimonial1Role'),
+      rating: 5
+    },
+    {
+      quote: t('landing.testimonial2'),
+      author: t('landing.testimonial2Author'),
+      role: t('landing.testimonial2Role'),
+      rating: 5
+    },
+    {
+      quote: t('landing.testimonial3'),
+      author: t('landing.testimonial3Author'),
+      role: t('landing.testimonial3Role'),
+      rating: 5
+    }
+  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -103,10 +170,10 @@ const LandingPage = () => {
                   </p>
                   <div className="hero-actions">
                     <Link to="/signup" className="btn btn-primary btn-lg">
-                      Start Free Trial <ArrowRight size={18} />
+                      {t('landing.startFreeTrial')} <ArrowRight size={18} />
                     </Link>
                     <Link to="/about" className="btn btn-outline btn-lg">
-                      Learn More
+                      {t('landing.learnMore')}
                     </Link>
                   </div>
                 </div>
@@ -134,9 +201,9 @@ const LandingPage = () => {
       <section className="features-section">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Why Choose AgriNova?</h2>
+            <h2 className="section-title">{t('landing.whyChoose')}</h2>
             <p className="section-subtitle">
-              Powerful features designed to help you grow smarter
+              {t('landing.whyChooseSubtitle')}
             </p>
           </div>
           
@@ -156,9 +223,9 @@ const LandingPage = () => {
       <section className="testimonials-section">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">What Our Users Say</h2>
+            <h2 className="section-title">{t('landing.whatUsersSay')}</h2>
             <p className="section-subtitle">
-              Join thousands of satisfied farmers
+              {t('landing.whatUsersSaySubtitle')}
             </p>
           </div>
           
@@ -184,16 +251,16 @@ const LandingPage = () => {
       {/* CTA Section */}
       <section className="cta-section">
         <div className="cta-content">
-          <h2 className="cta-title">Ready to Transform Your Farm?</h2>
+          <h2 className="cta-title">{t('landing.readyToTransform')}</h2>
           <p className="cta-subtitle">
-            Join the agricultural revolution today. Start your free trial and experience the power of smart farming.
+            {t('landing.heroSubtitle')}
           </p>
           <div className="cta-actions">
             <Link to="/signup" className="btn btn-primary btn-lg">
-              Start Free Trial <ArrowRight size={18} />
+              {t('landing.startFreeTrial')} <ArrowRight size={18} />
             </Link>
             <Link to="/contact" className="btn btn-secondary btn-lg">
-              Contact Sales
+              {t('landing.contactSales')}
             </Link>
           </div>
         </div>

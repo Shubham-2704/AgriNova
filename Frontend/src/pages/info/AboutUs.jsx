@@ -1,36 +1,39 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { Target, Zap, Users, TrendingUp, Shield, Leaf } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import './Page.css';
 
 const AboutUs = () => {
+  const { t } = useTranslation();
+  
   const stats = [
-    { value: '95%', label: 'Prediction Accuracy' },
-    { value: '50K+', label: 'Happy Farmers' },
-    { value: '26+', label: 'Cities Covered' },
-    { value: '15+', label: 'Crop Types' },
+    { value: '95%', label: t('about.predictionAccuracy') },
+    { value: '50K+', label: t('about.happyFarmers') },
+    { value: '26+', label: t('about.citiesCovered') },
+    { value: '15+', label: t('about.cropTypes') },
   ];
 
   const values = [
     {
       icon: <Target size={24} />,
-      title: 'Mission-Driven',
-      description: 'We exist to empower farmers with AI technology for sustainable agriculture.'
+      title: t('about.missionDriven'),
+      description: t('about.missionDrivenDesc')
     },
     {
       icon: <Zap size={24} />,
-      title: 'Innovation First',
-      description: 'Constantly improving our algorithms to provide the most accurate recommendations.'
+      title: t('about.innovationFirst'),
+      description: t('about.innovationFirstDesc')
     },
     {
       icon: <Users size={24} />,
-      title: 'Farmer-Centric',
-      description: 'Every feature we build is designed with farmers\' needs in mind.'
+      title: t('about.farmerCentric'),
+      description: t('about.farmerCentricDesc')
     },
     {
       icon: <Shield size={24} />,
-      title: 'Trust & Transparency',
-      description: 'Clear, honest recommendations you can rely on for your farming decisions.'
+      title: t('about.trustTransparency'),
+      description: t('about.trustTransparencyDesc')
     },
   ];
 
@@ -41,9 +44,9 @@ const AboutUs = () => {
       {/* Hero Section */}
       <div className="page-hero">
         <div className="container">
-          <h1 className="page-hero-title">About AgriNova</h1>
+          <h1 className="page-hero-title">{t('about.title')}</h1>
           <p className="page-hero-subtitle">
-            Revolutionizing agriculture with AI-powered insights for a sustainable future
+            {t('about.subtitle')}
           </p>
         </div>
       </div>
@@ -52,25 +55,23 @@ const AboutUs = () => {
       <div className="page-container">
         <div className="mission-section">
           <div className="mission-content">
-            <span className="section-tag">Our Mission</span>
-            <h2 className="mission-title">Empowering Farmers with Intelligent Technology</h2>
+            <span className="section-tag">{t('about.ourMission')}</span>
+            <h2 className="mission-title">{t('about.missionTitle')}</h2>
             <p className="mission-text">
-              At AgriNova, we're on a mission to transform traditional farming into smart, 
-              data-driven agriculture. We believe that every farmer deserves access to cutting-edge 
-              technology that can help them make better decisions, increase yields, and maximize profits.
+              {t('about.missionText')}
             </p>
             <div className="mission-features">
               <div className="mission-feature">
                 <Leaf size={20} className="mission-feature-icon" />
-                <span>Sustainable Farming</span>
+                <span>{t('about.sustainableFarming')}</span>
               </div>
               <div className="mission-feature">
                 <TrendingUp size={20} className="mission-feature-icon" />
-                <span>Higher Yields</span>
+                <span>{t('about.higherYields')}</span>
               </div>
               <div className="mission-feature">
                 <Zap size={20} className="mission-feature-icon" />
-                <span>AI-Powered</span>
+                <span>{t('about.aiPowered')}</span>
               </div>
             </div>
           </div>
@@ -92,34 +93,33 @@ const AboutUs = () => {
         {/* What We Do Section */}
         <div className="content-section">
           <div className="section-header-center">
-            <span className="section-tag">What We Do</span>
-            <h2 className="section-title-large">AI-Powered Crop Recommendations</h2>
+            <span className="section-tag">{t('about.whatWeDo')}</span>
+            <h2 className="section-title-large">{t('about.whatWeDoTitle')}</h2>
             <p className="section-description">
-              We combine real-time weather data, soil conditions, and historical patterns to provide 
-              the most accurate crop recommendations for your farm.
+              {t('about.whatWeDoDesc')}
             </p>
           </div>
 
           <div className="process-grid">
             <div className="process-card">
               <div className="process-number">01</div>
-              <h3 className="process-title">Data Collection</h3>
+              <h3 className="process-title">{t('about.dataCollection')}</h3>
               <p className="process-text">
-                We gather real-time weather data, soil information, and historical agricultural patterns.
+                {t('about.dataCollectionDesc')}
               </p>
             </div>
             <div className="process-card">
               <div className="process-number">02</div>
-              <h3 className="process-title">AI Analysis</h3>
+              <h3 className="process-title">{t('about.aiAnalysis')}</h3>
               <p className="process-text">
-                Our machine learning models analyze multiple factors to find the best crop matches.
+                {t('about.aiAnalysisDesc')}
               </p>
             </div>
             <div className="process-card">
               <div className="process-number">03</div>
-              <h3 className="process-title">Recommendations</h3>
+              <h3 className="process-title">{t('about.recommendations')}</h3>
               <p className="process-text">
-                We provide detailed insights on suitability, profit estimates, and production forecasts.
+                {t('about.recommendationsDesc')}
               </p>
             </div>
           </div>
@@ -128,8 +128,8 @@ const AboutUs = () => {
         {/* Our Values Section */}
         <div className="content-section">
           <div className="section-header-center">
-            <span className="section-tag">Our Values</span>
-            <h2 className="section-title-large">What Drives Us Forward</h2>
+            <span className="section-tag">{t('about.ourValues')}</span>
+            <h2 className="section-title-large">{t('about.ourValuesTitle')}</h2>
           </div>
 
           <div className="values-grid">
@@ -146,30 +146,27 @@ const AboutUs = () => {
         {/* Technology Section */}
         <div className="tech-section">
           <div className="tech-content">
-            <span className="section-tag">Our Technology</span>
-            <h2 className="tech-title">Powered by Advanced Machine Learning</h2>
+            <span className="section-tag">{t('about.ourTechnology')}</span>
+            <h2 className="tech-title">{t('about.technologyTitle')}</h2>
             <p className="tech-text">
-              We use advanced machine learning algorithms trained on extensive agricultural datasets 
-              to provide accurate crop recommendations. Our system integrates live weather APIs, 
-              soil analysis, and market price data to give you comprehensive insights for 
-              informed decision-making.
+              {t('about.technologyDesc')}
             </p>
             <ul className="tech-list">
               <li className="tech-list-item">
                 <span className="tech-check">✓</span>
-                90%+ prediction accuracy with Random Forest ML models
+                {t('about.tech1')}
               </li>
               <li className="tech-list-item">
                 <span className="tech-check">✓</span>
-                Real-time weather integration for up-to-date recommendations
+                {t('about.tech2')}
               </li>
               <li className="tech-list-item">
                 <span className="tech-check">✓</span>
-                Comprehensive profit and production calculations
+                {t('about.tech3')}
               </li>
               <li className="tech-list-item">
                 <span className="tech-check">✓</span>
-                Continuous learning and improvement of algorithms
+                {t('about.tech4')}
               </li>
             </ul>
           </div>
