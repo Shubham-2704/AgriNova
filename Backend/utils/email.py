@@ -83,3 +83,86 @@ def send_otp_email(
     except Exception as e:
         print(f"Error sending OTP email: {e}")
         return False
+
+
+
+# 🔹 Contact Form Email (Admin Notification)
+def send_contact_admin_email(
+    name: str,
+    email: str,
+    phone: str,
+    message: str
+):
+    """
+    Send contact form submission notification to admin
+    """
+    try:
+        template_path = "templates/contact_admin_email.html"
+        if not os.path.exists(template_path):
+            print(f"Template file not found: {template_path}")
+            return False
+            
+        with open(template_path, "r", encoding="utf-8") as file:
+            html_template = file.read()
+
+        html_content = (
+            html_template
+            .replace("{{user_name}}", name)
+            .replace("{{user_email}}", email)
+            .replace("{{user_phone}}", phone)
+            .replace("{{user_message}}", message)
+            .replace("{{submission_date}}", datetime.now().strftime("%B %d, %Y at %I:%M %p"))
+            .replace("{{current_year}}", str(datetime.now().year))
+        )
+        
+        # Get admin email from environment
+        admin_email = os.getenv("ADMIN_EMAIL", "support@agrinova.com")
+        
+        return send_email(
+            admin_email,
+            f"New Contact Form: {name}",
+            html_content
+        )
+        
+    except Exception as e:
+        print(f"Error sending admin contact email: {e}")
+        return False
+
+
+# 🔹 Contact Form Email (User Confirmation)
+def send_contact_user_email(
+    name: str,
+    email: str,
+    message: str
+):
+    """
+    Send thank you email to user who submitted contact form
+    """
+    try:
+        template_path = "templates/contact_user_email.html"
+        if not os.path.exists(template_path):
+            print(f"Template file not found: {template_path}")
+            return False
+            
+        with open(template_path, "r", encoding="utf-8") as file:
+            html_template = file.read()
+
+        # Truncate message if too long for email
+        display_message = message if len(message) <= 200 else message[:200] + "..."
+
+        html_content = (
+            html_template
+            .replace("{{user_name}}", name)
+            .replace("{{user_message}}", display_message)
+            .replace("{{current_year}}", str(datetime.now().year))
+        )
+        
+        return send_email(
+            email,
+            "Thank You for Contacting AgriNova",
+            html_content
+        )
+        
+    except Exception as e:
+        print(f"Error sending user contact email: {e}")
+        return False

@@ -55,6 +55,10 @@ async def login_user(data: UserLogin):
     user = await users.find_one({"email": data.email})
     if not user:
         return error_response(400, "Invalid email or password")
+    
+    # 🚫 BLOCK: Google OAuth users must use Google Sign-In
+    if user.get("authProvider") == "google":
+        return error_response(400, "This account uses Google Sign-In. Please use the 'Sign in with Google' button.")
 
     if not verify_password(data.password, user["password"]):
         return error_response(400, "Invalid email or password")
@@ -101,6 +105,10 @@ async def forgot_password(data: ForgotPasswordRequest):
     user = await users.find_one({"email": data.email})
     if not user:
         return error_response(404, "User not found")
+    
+    # 🚫 BLOCK: Google OAuth users cannot reset password
+    if user.get("authProvider") == "google":
+        return error_response(400, "This account uses Google Sign-In. Please login with Google.")
 
     now = datetime.now(timezone.utc)
     block_duration = timedelta(hours=PASSWORD_RESET_BLOCK_DURATION_HOURS)
@@ -164,6 +172,11 @@ async def verify_reset_otp(data: VerifyOtpRequest):
     record = await reset_otps.find_one({"email": data.email})
     if not record:
         return error_response(400, "OTP expired or invalid")
+    
+    # 🚫 BLOCK: Double-check Google OAuth users
+    user = await users.find_one({"_id": record["userId"]})
+    if user and user.get("authProvider") == "google":
+        return error_response(400, "This account uses Google Sign-In. Password reset is not available.")
 
     now = datetime.now(timezone.utc)
 
@@ -232,6 +245,10 @@ async def reset_password(data: ResetPasswordRequest):
     if not user:
         return error_response(404, "User not found")
     
+    # 🚫 BLOCK: Google OAuth users cannot reset password
+    if user.get("authProvider") == "google":
+        return error_response(400, "This account uses Google Sign-In. Password reset is not available.")
+    
     record = await reset_otps.find_one({"email": data.email})
     if not record:
         return error_response(400, "Please verify OTP first")
@@ -247,3 +264,92 @@ async def reset_password(data: ResetPasswordRequest):
     await reset_otps.delete_one({"_id": record["_id"]})
 
     return {"message": "Password reset successfully"}
+
+#  Google Auth (handles both login and signup)
+async def google_auth(data: GoogleSignupRequest):
+    """
+    Industry-standard Google OAuth handler
+    - Automatically handles both login and signup
+    - Uses Google ID token for security
+    - Validates email verification
+    - Creates or updates user as needed
+    """
+    try:
+        # Verify Google token
+        google_user = await verify_google_token(data.token)
+        
+        if not google_user:
+            return error_response(401, "Invalid or expired Google token")
+        
+        # Ensure email is verified by Google
+        if not google_user.get("email_verified", False):
+            return error_response(400, "Please use a verified Google account")
+        
+        email = google_user["email"]
+        name = google_user.get("name", "").strip() or email.split('@')[0]
+        picture = google_user.get("picture")
+        google_id = google_user.get("sub")
+        
+        now = datetime.now(timezone.utc)
+        
+        # Check if user exists
+        existing_user = await users.find_one({"email": email})
+        
+        if existing_user:
+            # LOGIN: User exists
+            
+            # � BLOCK: If user has email/password account, don't allow Google login
+            if existing_user.get("authProvider") != "google":
+                return error_response(400, "An account with this email already exists. Please login with your email and password.")
+            
+            # Regular Google login - update last login
+            await users.update_one(
+                {"_id": existing_user["_id"]},
+                {"$set": {
+                    "updatedAt": now,
+                    "lastLogin": now,
+                    "profileImageUrl": picture
+                }}
+            )
+            
+            return UserResponse(
+                id=str(existing_user["_id"]),
+                name=existing_user["name"],
+                email=existing_user["email"],
+                token=generate_token(str(existing_user["_id"])),
+                createdAt=existing_user.get("createdAt", now),
+                updatedAt=now,
+                role=existing_user.get("role", "user")
+            )
+        else:
+            # SIGNUP: Create new user
+            new_user = {
+                "name": name,
+                "email": email,
+                "password": None,  # No password for Google auth users
+                "profileImageUrl": picture,
+                "authProvider": "google",
+                "googleId": google_id,
+                "role": "user",
+                "emailVerified": True,
+                "createdAt": now,
+                "updatedAt": now,
+                "lastLogin": now
+            }
+            
+            result = await users.insert_one(new_user)
+            user_id = str(result.inserted_id)
+            
+            return UserResponse(
+                id=user_id,
+                name=name,
+                email=email,
+                token=generate_token(user_id),
+                createdAt=now,
+                updatedAt=now,
+                role="user"
+            )
+            
+    except Exception as e:
+        print(f"Google auth error: {e}")
+        return error_response(500, "Authentication failed. Please try again.")

@@ -42,6 +42,7 @@ const Navbar = () => {
     { path: '/about', label: 'About Us' },
     { path: '/team', label: 'Our Team' },
     { path: '/faq', label: 'FAQ' },
+    { path: '/contact', label: 'Contact Us' },
   ];
 
   return (

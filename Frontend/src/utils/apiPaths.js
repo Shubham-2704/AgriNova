@@ -13,5 +13,9 @@ export const API_PATHS = {
     FORGOT_PASSWORD: "/api/auth/forgot-password",
     VERIFY_OTP: "/api/auth/verify-reset-otp",
     RESET_PASSWORD: "/api/auth/reset-password",
+    GOOGLE_AUTH: "/api/auth/google",
+  },
+  CONTACT: {
+    SUBMIT: "/api/contact/submit",
   },
 };

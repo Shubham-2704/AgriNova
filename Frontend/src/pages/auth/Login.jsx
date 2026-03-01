@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, Chrome, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/ToastContainer';
 import axiosInstance from '../../utils/axiosInstance';
@@ -12,6 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const { login, user } = useAuth();
   const { success, error: showError } = useToast();
   const navigate = useNavigate();
@@ -43,9 +45,26 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    // TODO: Implement Google OAuth
-    alert('Google login coming soon!');
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setGoogleLoading(true);
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.GOOGLE_AUTH, {
+        token: credentialResponse.credential
+      });
+
+      login(response.data);
+      success('Welcome! Login successful with Google.');
+      navigate('/dashboard');
+    } catch (err) {
+      showError(err.response?.data?.message || 'Google login failed. Please try again.');
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    showError('Google login failed. Please try again.');
+    setGoogleLoading(false);
   };
 
   return (
@@ -119,10 +138,23 @@ const Login = () => {
               <span>OR</span>
             </div>
 
-            <button onClick={handleGoogleLogin} className="btn-google">
-              <Chrome size={18} />
-              Continue with Google
-            </button>
+            <div className="google-login-wrapper">
+              {googleLoading ? (
+                <button className="btn-google" disabled>
+                  Signing in with Google...
+                </button>
+              ) : (
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleError}
+                  useOneTap
+                  theme="outline"
+                  size="large"
+                  text="signin_with"
+                  width="100%"
+                />
+              )}
+            </div>
 
             <div className="auth-footer">
               <p>
