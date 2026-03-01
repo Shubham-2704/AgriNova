@@ -26,3 +26,5 @@ class CropRecommendation(BaseModel):
     expected_production: float
     total_production: float
     avg_price: float
+    profit_per_acre_formatted: Optional[str] = None
+    total_profit_formatted: Optional[str] = None

@@ -43,8 +43,12 @@
 **/logs/
 
 # Data files
-**/data/*.csv
+**/data/Final_dataset.csv
+**/data/crop_stats.csv
 **/*.csv
+
+# Allow important config files
+!**/data/gujarat_crop_calendar.json
 
 # Build outputs
 **/dist/

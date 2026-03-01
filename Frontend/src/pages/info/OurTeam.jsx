@@ -116,17 +116,6 @@ const OurTeam = () => {
             </div>
           ))}
         </div>
-
-        {/* Join Us Section */}
-        <div className="team-join-section">
-          <div className="team-join-content">
-            <h2 className="team-join-title">{t('team.joinTeam')}</h2>
-            <p className="team-join-text">
-              {t('team.joinTeamDesc')}
-            </p>
-            <a href="/careers" className="btn btn-primary">{t('team.viewPositions')}</a>
-          </div>
-        </div>
       </div>
 
       <Footer />

@@ -18,6 +18,8 @@
     "contactUs": "Contact Us",
     "blog": "Blog",
     "support": "Support",
+    "kaggleDataset": "Kaggle Dataset",
+    "prices": "Prices",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "cookiePolicy": "Cookie Policy",
@@ -127,10 +129,7 @@
     "agtech": "AgTech",
     "uiuxDesign": "UI/UX Design",
     "userResearch": "User Research",
-    "accessibility": "Accessibility",
-    "joinTeam": "Join Our Team",
-    "joinTeamDesc": "We're always looking for passionate individuals to help us revolutionize agriculture.",
-    "viewPositions": "View Open Positions"
+    "accessibility": "Accessibility"
   },
   "faq": {
     "title": "Frequently Asked Questions",

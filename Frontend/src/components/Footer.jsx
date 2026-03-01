@@ -11,13 +11,12 @@ const Footer = () => {
     { path: '/about', label: t('nav.about') },
     { path: '/team', label: t('nav.team') },
     { path: '/faq', label: t('nav.faq') },
-    { path: '/dashboard', label: t('nav.dashboard') },
+    { path: '/contact', label: t('nav.contact') },
   ];
 
   const resources = [
-    { label: t('footer.blog'), path: '/blog' },
-    { label: t('footer.support'), path: '/support' },
-    { label: t('nav.contact'), path: '/contact' },
+    { label: t('footer.kaggleDataset'), path: 'https://www.kaggle.com/datasets/kpkhant007/gujarat-crop-related-weather-data-19972012/data', external: true },
+    { label: t('footer.prices'), path: 'https://desagri.gov.in/wp-content/uploads/2021/04/Gujarat-.pdf', external: true },
   ];
 
   const legal = [
@@ -60,7 +59,13 @@ const Footer = () => {
               <ul className="footer-links">
                 {resources.map((resource, index) => (
                   <li key={index}>
-                    <Link to={resource.path}>{resource.label}</Link>
+                    {resource.external ? (
+                      <a href={resource.path} target="_blank" rel="noopener noreferrer">
+                        {resource.label}
+                      </a>
+                    ) : (
+                      <Link to={resource.path}>{resource.label}</Link>
+                    )}
                   </li>
                 ))}
               </ul>

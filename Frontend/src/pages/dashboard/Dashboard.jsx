@@ -281,11 +281,11 @@ const Dashboard = () => {
                       </div>
                       <div className="crop-stat">
                         <span className="stat-label">{t('dashboard.profitPerAcre')}</span>
-                        <span className="stat-value">₹{rec.profit_per_acre.toLocaleString('en-IN', {maximumFractionDigits: 0})}</span>
+                        <span className="stat-value">{rec.profit_per_acre_formatted || `₹${rec.profit_per_acre.toLocaleString('en-IN', {maximumFractionDigits: 0})}`}</span>
                       </div>
                       <div className="crop-stat highlight">
                         <span className="stat-label">{t('dashboard.totalProfit')}</span>
-                        <span className="stat-value">₹{rec.total_profit.toLocaleString('en-IN', {maximumFractionDigits: 0})}</span>
+                        <span className="stat-value">{rec.total_profit_formatted || `₹${rec.total_profit.toLocaleString('en-IN', {maximumFractionDigits: 0})}`}</span>
                       </div>
                       <div className="crop-stat">
                         <span className="stat-label">{t('dashboard.productionPerAcre')}</span>

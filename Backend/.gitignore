@@ -36,8 +36,12 @@ ENV/
 Thumbs.db
 
 # Data files (can be large)
-data/*.csv
+data/Final_dataset.csv
+data/crop_stats.csv
 *.csv
+
+# Allow important config files
+!data/gujarat_crop_calendar.json
 
 # Logs
 *.log

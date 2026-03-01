@@ -18,6 +18,8 @@
     "contactUs": "અમારો સંપર્ક કરો",
     "blog": "બ્લોગ",
     "support": "સપોર્ટ",
+    "kaggleDataset": "Kaggle ડેટાસેટ",
+    "prices": "ભાવો",
     "privacyPolicy": "ગોપનીયતા નીતિ",
     "termsOfService": "સેવાની શરતો",
     "cookiePolicy": "કુકી નીતિ",
@@ -127,10 +129,7 @@
     "agtech": "એગટેક",
     "uiuxDesign": "UI/UX ડિઝાઇન",
     "userResearch": "વપરાશકર્તા સંશોધન",
-    "accessibility": "સુલભતા",
-    "joinTeam": "અમારી ટીમમાં જોડાઓ",
-    "joinTeamDesc": "અમે હંમેશા કૃષિમાં ક્રાંતિ લાવવામાં અમને મદદ કરવા માટે જુસ્સાદાર વ્યક્તિઓની શોધમાં છીએ.",
-    "viewPositions": "ખુલ્લી જગ્યાઓ જુઓ"
+    "accessibility": "સુલભતા"
   },
   "faq": {
     "title": "વારંવાર પૂછાતા પ્રશ્નો",
