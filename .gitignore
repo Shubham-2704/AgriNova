@@ -1,0 +1,52 @@
+# Large model files (>100MB - GitHub limit)
+**/*.pkl
+**/trained_models/
+**/crop_model.pkl
+**/production_model.pkl
+**/price_model.pkl
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/*.so
+**/venv/
+**/env/
+**/ENV/
+
+# Node.js
+**/node_modules/
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/.pnpm-debug.log*
+
+# IDE
+**/.vscode/
+**/.idea/
+**/*.swp
+**/*.swo
+
+# OS
+**/.DS_Store
+**/Thumbs.db
+
+# Environment files
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
+# Logs
+**/*.log
+**/logs/
+
+# Data files
+**/data/*.csv
+**/*.csv
+
+# Build outputs
+**/dist/
+**/build/
+**/.next/

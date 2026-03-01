@@ -1,4 +1,4 @@
-# Model files
+# Model files (Large files - excluded from Git)
 trained_models/*.pkl
 *.h5
 *.pt
@@ -6,6 +6,13 @@ trained_models/*.pkl
 *.onnx
 *.pb
 *.joblib
+*.env
+
+# Large model files specifically
+crop_model.pkl
+production_model.pkl
+price_model.pkl
+*.pkl
 
 # Python cache
 __pycache__/
@@ -27,3 +34,11 @@ ENV/
 # OS
 .DS_Store
 Thumbs.db
+
+# Data files (can be large)
+data/*.csv
+*.csv
+
+# Logs
+*.log
+logs/
