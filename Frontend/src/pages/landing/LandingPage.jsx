@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import './LandingPage.css';
+import image01 from '../../assets/01.png';
+import image02 from '../../assets/02.png';
+import image03 from '../../assets/03.png';
 
 const heroSlides = [
   {
@@ -77,22 +80,34 @@ const LandingPage = () => {
 
   const heroSlides = [
     {
-      title: t('landing.heroTitle'),
-      subtitle: t('landing.heroSubtitle'),
-      image: "🌾",
-      gradient: "linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)"
+      title: t('landing.smartFarming'),
+      subtitle: t('landing.sustainableHarvests'),
+      description: t('landing.sustainableHarvestsDesc'),
+      getStarted: t('landing.started'),
+      image: image01,
+      gradient: "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(46, 125, 50, 0.5) 100%)",
+      primaryColor: "rgba(76, 175, 80, 0.03)", // Almost invisible green
+      textBgColor: "rgba(0, 0, 0, 0.05)" // Nearly invisible
     },
     {
-      title: t('landing.maximizeYield'),
-      subtitle: t('landing.dataInsights'),
-      image: "📈",
-      gradient: "linear-gradient(135deg, #0288D1 0%, #01579B 100%)"
+      title: t('landing.aiPoweredAgriculture'),
+      subtitle: t('landing.dataDrivenDecisions'),
+      description: t('landing.dataDrivenDecisionsDesc'),
+      getStarted: t('landing.started'),
+      image: image02,
+      gradient: "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(2, 136, 209, 0.5) 100%)",
+      primaryColor: "rgba(33, 150, 243, 0.03)", // Almost invisible blue
+      textBgColor: "rgba(0, 0, 0, 0.05)" // Nearly invisible
     },
     {
-      title: t('landing.smartAgriculture'),
-      subtitle: t('landing.joinFarmers'),
-      image: "🚜",
-      gradient: "linear-gradient(135deg, #F57C00 0%, #E65100 100%)"
+      title: t('landing.precisionFarming'),
+      subtitle: t('landing.futureOfAgriculture'),
+      description: t('landing.futureOfAgricultureDesc'),
+      getStarted: t('landing.started'),
+      image: image03,
+      gradient: "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(245, 124, 0, 0.5) 100%)",
+      primaryColor: "rgba(255, 152, 0, 0.03)", // Almost invisible orange
+      textBgColor: "rgba(0, 0, 0, 0.05)" // Nearly invisible
     }
   ];
 
@@ -145,40 +160,42 @@ const LandingPage = () => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [heroSlides.length]);
 
   return (
     <div className="landing-page">
       <Navbar />
       
-      {/* Hero Section with Carousel */}
+      {/* Hero Section with Background Image Carousel */}
       <section className="hero-section">
         <div className="hero-carousel">
           {heroSlides.map((slide, index) => (
             <div
               key={index}
               className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
-              style={{ background: slide.gradient }}
+              style={{ 
+                backgroundImage: `${slide.gradient}, url(${slide.image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                '--primary-color': slide.primaryColor,
+                '--text-bg-color': slide.textBgColor
+              }}
             >
               <div className="hero-content">
                 <div className="hero-text">
-                  <h1 className="hero-title">
-                    {slide.title}
-                  </h1>
-                  <p className="hero-subtitle">
+                  <div className="hero-badge">{slide.title}</div>
+                  <h1 className="hero-main-title">
                     {slide.subtitle}
+                  </h1>
+                  <p className="hero-description">
+                    {slide.description}
                   </p>
                   <div className="hero-actions">
-                    <Link to="/signup" className="btn btn-primary btn-lg">
-                      {t('landing.startFreeTrial')} <ArrowRight size={18} />
-                    </Link>
-                    <Link to="/about" className="btn btn-outline btn-lg">
-                      {t('landing.learnMore')}
+                    <Link to="/signup" className="btn btn-hero-primary">
+                      {slide.getStarted}
                     </Link>
                   </div>
-                </div>
-                <div className="hero-image">
-                  <span className="hero-emoji">{slide.image}</span>
                 </div>
               </div>
             </div>
