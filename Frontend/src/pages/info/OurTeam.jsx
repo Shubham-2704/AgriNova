@@ -1,60 +1,62 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { Mail, Linkedin, Twitter } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import './Page.css';
 
-const teamMembers = [
-  {
-    name: "Dr. Rajesh Kumar",
-    role: "Chief Agricultural Scientist",
-    image: "👨‍🔬",
-    bio: "20+ years of experience in agricultural research and crop optimization. PhD in Agricultural Science from IARI.",
-    expertise: ["Crop Science", "Research", "Sustainability"],
-    social: {
-      email: "rajesh.kumar@agrinova.com",
-      linkedin: "#",
-      twitter: "#"
-    }
-  },
-  {
-    name: "Priya Sharma",
-    role: "Lead Data Scientist",
-    image: "👩‍💻",
-    bio: "Expert in machine learning and AI applications in agriculture. Previously led ML teams at tech startups.",
-    expertise: ["Machine Learning", "AI", "Data Analytics"],
-    social: {
-      email: "priya.sharma@agrinova.com",
-      linkedin: "#",
-      twitter: "#"
-    }
-  },
-  {
-    name: "Amit Patel",
-    role: "Product Manager",
-    image: "👨‍💼",
-    bio: "Passionate about bringing technology to farmers. 10+ years in agtech product development.",
-    expertise: ["Product Strategy", "UX Design", "AgTech"],
-    social: {
-      email: "amit.patel@agrinova.com",
-      linkedin: "#",
-      twitter: "#"
-    }
-  },
-  {
-    name: "Sneha Desai",
-    role: "UX Designer",
-    image: "👩‍🎨",
-    bio: "Creating intuitive experiences for agricultural technology. Focus on farmer-centric design.",
-    expertise: ["UI/UX Design", "User Research", "Accessibility"],
-    social: {
-      email: "sneha.desai@agrinova.com",
-      linkedin: "#",
-      twitter: "#"
-    }
-  }
-];
-
 const OurTeam = () => {
+  const { t } = useTranslation();
+  
+  const teamMembers = [
+    {
+      name: t('team.member1Name'),
+      role: t('team.member1Role'),
+      image: "👨‍🔬",
+      bio: t('team.member1Bio'),
+      expertise: [t('team.cropScience'), t('team.research'), t('team.sustainability')],
+      social: {
+        email: "rajesh.kumar@agrinova.com",
+        linkedin: "#",
+        twitter: "#"
+      }
+    },
+    {
+      name: t('team.member2Name'),
+      role: t('team.member2Role'),
+      image: "👩‍💻",
+      bio: t('team.member2Bio'),
+      expertise: [t('team.machineLearning'), t('team.ai'), t('team.dataAnalytics')],
+      social: {
+        email: "priya.sharma@agrinova.com",
+        linkedin: "#",
+        twitter: "#"
+      }
+    },
+    {
+      name: t('team.member3Name'),
+      role: t('team.member3Role'),
+      image: "👨‍💼",
+      bio: t('team.member3Bio'),
+      expertise: [t('team.productStrategy'), t('team.uxDesign'), t('team.agtech')],
+      social: {
+        email: "amit.patel@agrinova.com",
+        linkedin: "#",
+        twitter: "#"
+      }
+    },
+    {
+      name: t('team.member4Name'),
+      role: t('team.member4Role'),
+      image: "👩‍🎨",
+      bio: t('team.member4Bio'),
+      expertise: [t('team.uiuxDesign'), t('team.userResearch'), t('team.accessibility')],
+      social: {
+        email: "sneha.desai@agrinova.com",
+        linkedin: "#",
+        twitter: "#"
+      }
+    }
+  ];
   return (
     <div className="page">
       <Navbar />
@@ -62,9 +64,9 @@ const OurTeam = () => {
       {/* Hero Section */}
       <div className="page-hero">
         <div className="container">
-          <h1 className="page-hero-title">Our Team</h1>
+          <h1 className="page-hero-title">{t('team.title')}</h1>
           <p className="page-hero-subtitle">
-            Meet the passionate experts behind AgriNova dedicated to transforming agriculture
+            {t('team.subtitle')}
           </p>
         </div>
       </div>
@@ -73,12 +75,10 @@ const OurTeam = () => {
         {/* Team Intro */}
         <div className="team-intro">
           <div className="team-intro-content">
-            <span className="section-tag">Who We Are</span>
-            <h2 className="team-intro-title">Experts in Agriculture & Technology</h2>
+            <span className="section-tag">{t('team.whoWeAre')}</span>
+            <h2 className="team-intro-title">{t('team.expertsTitle')}</h2>
             <p className="team-intro-text">
-              Our team combines decades of agricultural expertise with cutting-edge technology 
-              to deliver the best solutions for farmers. From soil scientists to AI engineers, 
-              we're united by a common goal: making farming smarter and more profitable.
+              {t('team.expertsDesc')}
             </p>
           </div>
         </div>
@@ -120,11 +120,11 @@ const OurTeam = () => {
         {/* Join Us Section */}
         <div className="team-join-section">
           <div className="team-join-content">
-            <h2 className="team-join-title">Join Our Team</h2>
+            <h2 className="team-join-title">{t('team.joinTeam')}</h2>
             <p className="team-join-text">
-              We're always looking for passionate individuals to help us revolutionize agriculture.
+              {t('team.joinTeamDesc')}
             </p>
-            <a href="/careers" className="btn btn-primary">View Open Positions</a>
+            <a href="/careers" className="btn btn-primary">{t('team.viewPositions')}</a>
           </div>
         </div>
       </div>

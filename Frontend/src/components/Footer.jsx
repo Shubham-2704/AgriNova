@@ -1,44 +1,29 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Send, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
-import { useState } from 'react';
+import { Mail, MapPin, Linkedin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import './Footer.css';
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
   const currentYear = new Date().getFullYear();
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email) {
-      alert(`Thanks for subscribing! We'll send updates to ${email}`);
-      setEmail('');
-    }
-  };
+  const { t } = useTranslation();
 
   const quickLinks = [
-    { path: '/about', label: 'About Us' },
-    { path: '/team', label: 'Our Team' },
-    { path: '/faq', label: 'FAQ' },
-    { path: '/dashboard', label: 'Dashboard' },
+    { path: '/about', label: t('nav.about') },
+    { path: '/team', label: t('nav.team') },
+    { path: '/faq', label: t('nav.faq') },
+    { path: '/dashboard', label: t('nav.dashboard') },
   ];
 
   const resources = [
-    { label: 'Blog', path: '/blog' },
-    { label: 'Support', path: '/support' },
-    { label: 'Contact', path: '/contact' },
+    { label: t('footer.blog'), path: '/blog' },
+    { label: t('footer.support'), path: '/support' },
+    { label: t('nav.contact'), path: '/contact' },
   ];
 
   const legal = [
-    { label: 'Privacy Policy', path: '/privacy-policy' },
-    { label: 'Terms of Service', path: '/terms' },
-    { label: 'Cookie Policy', path: '/cookie-policy' },
-  ];
-
-  const socialLinks = [
-    { icon: <Facebook size={18} />, label: 'Facebook', url: 'https://facebook.com/agrinova' },
-    { icon: <Twitter size={18} />, label: 'Twitter', url: 'https://twitter.com/agrinova' },
-    { icon: <Instagram size={18} />, label: 'Instagram', url: 'https://instagram.com/agrinova' },
-    { icon: <Linkedin size={18} />, label: 'LinkedIn', url: 'https://linkedin.com/company/agrinova' },
+    { label: t('footer.privacyPolicy'), path: '/privacy-policy' },
+    { label: t('footer.termsOfService'), path: '/terms' },
+    { label: t('footer.cookiePolicy'), path: '/cookie-policy' },
   ];
 
   return (
@@ -53,28 +38,14 @@ const Footer = () => {
               <span className="logo-text">AgriNova</span>
             </Link>
             <p className="footer-description">
-              Revolutionizing agriculture with AI-powered insights. Making smart farming accessible to every farmer.
+              {t('footer.description')}
             </p>
-            <div className="social-links">
-              {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.url}
-                  className="social-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* CENTER SECTION - Links */}
           <div className="footer-center">
             <div className="footer-links-section">
-              <h3>Company</h3>
+              <h3>{t('footer.company')}</h3>
               <ul className="footer-links">
                 {quickLinks.map((link, index) => (
                   <li key={index}>
@@ -85,7 +56,7 @@ const Footer = () => {
             </div>
 
             <div className="footer-links-section">
-              <h3>Resources</h3>
+              <h3>{t('footer.resources')}</h3>
               <ul className="footer-links">
                 {resources.map((resource, index) => (
                   <li key={index}>
@@ -96,7 +67,7 @@ const Footer = () => {
             </div>
 
             <div className="footer-links-section">
-              <h3>Legal</h3>
+              <h3>{t('footer.legal')}</h3>
               <ul className="footer-links">
                 {legal.map((item, index) => (
                   <li key={index}>
@@ -109,19 +80,21 @@ const Footer = () => {
 
           {/* RIGHT SECTION - Contact & Newsletter */}
           <div className="footer-right">
-            <h3>Contact Us</h3>
+            <h3>{t('footer.contactUs')}</h3>
             <ul className="contact-info">
               <li className="contact-item">
                 <MapPin size={16} />
-                <span>Ahmedabad, Gujarat, India</span>
+                <span>{t('footer.location')}</span>
               </li>
               <li className="contact-item">
-                <Phone size={16} />
-                <span>+91 98765 43210</span>
+                <Linkedin size={16} />
+                <a href="https://linkedin.com/company/agrinova" target="_blank" rel="noopener noreferrer">
+                  linkedin.com/company/agrinova
+                </a>
               </li>
               <li className="contact-item">
                 <Mail size={16} />
-                <span>support@agrinova.com</span>
+                <span>{t('footer.email')}</span>
               </li>
             </ul>
 
@@ -131,12 +104,12 @@ const Footer = () => {
         {/* BOTTOM BAR */}
         <div className="footer-bottom">
           <p className="copyright">
-            © {currentYear} AgriNova. All rights reserved.
+            © {currentYear} {t('footer.copyright')}
           </p>
           <div className="footer-bottom-links">
-            <Link to="/privacy-policy">Privacy Policy</Link>
-            <Link to="/terms">Terms of Service</Link>
-            <Link to="/cookie-policy">Cookie Policy</Link>
+            <Link to="/privacy-policy">{t('footer.privacyPolicy')}</Link>
+            <Link to="/terms">{t('footer.termsOfService')}</Link>
+            <Link to="/cookie-policy">{t('footer.cookiePolicy')}</Link>
           </div>
         </div>
       </div>

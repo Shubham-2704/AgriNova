@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, User, MessageSquare, Clock } from 'lucide-react';
+import { Mail, MapPin, Send, User, MessageSquare, Clock, Linkedin, Phone } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useToast } from '../../components/ToastContainer';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
@@ -9,6 +10,7 @@ import '../info/Page.css';
 import './ContactUs.css';
 
 const ContactUs = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -80,9 +82,9 @@ const ContactUs = () => {
       {/* Hero Section */}
       <div className="page-hero">
         <div className="container">
-          <h1 className="page-hero-title">Get In Touch</h1>
+          <h1 className="page-hero-title">{t('contact.title')}</h1>
           <p className="page-hero-subtitle">
-            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            {t('contact.subtitle')}
           </p>
         </div>
       </div>
@@ -96,7 +98,7 @@ const ContactUs = () => {
               <div className="form-group">
                 <label htmlFor="name">
                   <User size={16} />
-                  Full Name
+                  {t('contact.name')}
                 </label>
                 <input
                   type="text"
@@ -104,14 +106,14 @@ const ContactUs = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Enter your full name"
+                  placeholder={t('contact.namePlaceholder')}
                 />
               </div>
 
               <div className="form-group">
                 <label htmlFor="email">
                   <Mail size={16} />
-                  Email Address
+                  {t('contact.email')}
                 </label>
                 <input
                   type="email"
@@ -119,14 +121,14 @@ const ContactUs = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Enter your email"
+                  placeholder={t('contact.emailPlaceholder')}
                 />
               </div>
 
               <div className="form-group">
                 <label htmlFor="phone">
                   <Phone size={16} />
-                  Phone Number
+                  {t('contact.phone')}
                 </label>
                 <input
                   type="tel"
@@ -134,7 +136,7 @@ const ContactUs = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="Enter 10-digit phone number"
+                  placeholder={t('contact.phonePlaceholder')}
                   maxLength="10"
                 />
               </div>
@@ -142,20 +144,20 @@ const ContactUs = () => {
               <div className="form-group">
                 <label htmlFor="message">
                   <MessageSquare size={16} />
-                  Message
+                  {t('contact.message')}
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Tell us how we can help you... (minimum 10 characters)"
+                  placeholder={t('contact.messagePlaceholder')}
                   rows="5"
                 />
               </div>
 
               <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                {loading ? 'Sending...' : 'Send Message'} <Send size={16} />
+                {loading ? t('contact.sending') : t('contact.sendMessage')} <Send size={16} />
               </button>
             </form>
           </div>
@@ -163,8 +165,8 @@ const ContactUs = () => {
           {/* Right Side - Contact Info */}
           <div className="contact-info-section">
             <div className="contact-info-card">
-              <h3>Contact Information</h3>
-              <p>Feel free to reach out to us through any of these channels.</p>
+              <h3>{t('contact.contactInfo')}</h3>
+              <p>{t('contact.contactInfoDesc')}</p>
 
               <div className="contact-details">
                 <div className="contact-detail-item">
@@ -172,18 +174,20 @@ const ContactUs = () => {
                     <Mail size={20} />
                   </div>
                   <div className="contact-detail-text">
-                    <h4>Email</h4>
+                    <h4>{t('contact.email')}</h4>
                     <p>support@agrinova.com</p>
                   </div>
                 </div>
 
                 <div className="contact-detail-item">
                   <div className="contact-icon">
-                    <Phone size={20} />
+                    <Linkedin size={20} />
                   </div>
                   <div className="contact-detail-text">
-                    <h4>Phone</h4>
-                    <p>+91 98765 43210</p>
+                    <h4>{t('contact.linkedin')}</h4>
+                    <a href="https://linkedin.com/company/agrinova" target="_blank" rel="noopener noreferrer">
+                      linkedin.com/company/agrinova
+                    </a>
                   </div>
                 </div>
 
@@ -192,8 +196,8 @@ const ContactUs = () => {
                     <MapPin size={20} />
                   </div>
                   <div className="contact-detail-text">
-                    <h4>Location</h4>
-                    <p>Ahmedabad, Gujarat, India</p>
+                    <h4>{t('footer.location')}</h4>
+                    <p>{t('footer.location')}</p>
                   </div>
                 </div>
               </div>
@@ -201,11 +205,11 @@ const ContactUs = () => {
               <div className="contact-hours">
                 <div className="contact-hours-header">
                   <Clock size={20} />
-                  <h4>Business Hours</h4>
+                  <h4>{t('contact.businessHours')}</h4>
                 </div>
-                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                <p>Saturday: 10:00 AM - 4:00 PM</p>
-                <p>Sunday: Closed</p>
+                <p>{t('contact.mondayFriday')}</p>
+                <p>{t('contact.saturday')}</p>
+                <p>{t('contact.sunday')}</p>
               </div>
             </div>
           </div>

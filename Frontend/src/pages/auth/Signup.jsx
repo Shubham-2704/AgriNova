@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, ArrowRight, Eye, EyeOff, Check, X } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/ToastContainer';
 import axiosInstance from '../../utils/axiosInstance';
@@ -9,6 +10,7 @@ import { API_PATHS } from '../../utils/apiPaths';
 import './Auth.css';
 
 const Signup = () => {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,15 +46,15 @@ const Signup = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      showError("Passwords don't match!");
+      showError(t('messages.passwordMismatch'));
       return;
     }
     if (!agreeTerms) {
-      showError("Please agree to Terms and Conditions");
+      showError(t('messages.agreeTerms'));
       return;
     }
     if (!isPasswordValid) {
-      showError("Password does not meet all requirements");
+      showError(t('messages.passwordRequirements'));
       return;
     }
 
@@ -66,10 +68,10 @@ const Signup = () => {
       });
 
       login(response.data);
-      success('Account created successfully! Welcome to AgriNova.');
+      success(t('messages.signupSuccess'));
       navigate('/dashboard');
     } catch (err) {
-      showError(err.response?.data?.message || 'Signup failed. Please try again.');
+      showError(err.response?.data?.message || t('messages.signupFailed'));
     } finally {
       setLoading(false);
     }
@@ -83,17 +85,17 @@ const Signup = () => {
       });
 
       login(response.data);
-      success('Account created successfully! Welcome to AgriNova.');
+      success(t('messages.signupSuccess'));
       navigate('/dashboard');
     } catch (err) {
-      showError(err.response?.data?.message || 'Google signup failed. Please try again.');
+      showError(err.response?.data?.message || t('messages.googleSignupFailed'));
     } finally {
       setGoogleLoading(false);
     }
   };
 
   const handleGoogleError = () => {
-    showError('Google signup failed. Please try again.');
+    showError(t('messages.googleSignupFailed'));
     setGoogleLoading(false);
   };
 
@@ -109,8 +111,8 @@ const Signup = () => {
             </Link>
 
             <div className="auth-header">
-              <h1>Create Account</h1>
-              <p>Join AgriNova today</p>
+              <h1>{t('auth.signupTitle')}</h1>
+              <p>{t('auth.signupSubtitle')}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form">
@@ -119,14 +121,14 @@ const Signup = () => {
                 <div className="form-group">
                   <label htmlFor="name">
                     <User size={16} />
-                    Full Name
+                    {t('auth.fullName')}
                   </label>
                   <input
                     type="text"
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
+                    placeholder={t('auth.fullNamePlaceholder')}
                     required
                   />
                 </div>
@@ -134,14 +136,14 @@ const Signup = () => {
                 <div className="form-group">
                   <label htmlFor="email">
                     <Mail size={16} />
-                    Email
+                    {t('auth.email')}
                   </label>
                   <input
                     type="email"
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email"
+                    placeholder={t('auth.emailPlaceholder')}
                     required
                   />
                 </div>
@@ -152,7 +154,7 @@ const Signup = () => {
                 <div className="form-group">
                   <label htmlFor="password">
                     <Lock size={16} />
-                    Password
+                    {t('auth.password')}
                   </label>
                   <div className="password-input-wrapper">
                     <input
@@ -160,7 +162,7 @@ const Signup = () => {
                       id="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Min. 8 characters"
+                      placeholder={t('auth.passwordPlaceholder')}
                       required
                     />
                     <button
@@ -177,7 +179,7 @@ const Signup = () => {
                 <div className="form-group">
                   <label htmlFor="confirmPassword">
                     <Lock size={16} />
-                    Confirm
+                    {t('auth.confirmPassword')}
                   </label>
                   <div className="password-input-wrapper">
                     <input
@@ -185,7 +187,7 @@ const Signup = () => {
                       id="confirmPassword"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      placeholder="Confirm password"
+                      placeholder={t('auth.confirmPasswordPlaceholder')}
                       required
                     />
                     <button
@@ -205,23 +207,23 @@ const Signup = () => {
                 <div className="password-requirements-compact">
                   <div className={`requirement-item-compact ${passwordRequirements.minLength ? 'met' : ''}`}>
                     {passwordRequirements.minLength ? <Check size={12} /> : <X size={12} />}
-                    <span>8+ chars</span>
+                    <span>{t('auth.minLength')}</span>
                   </div>
                   <div className={`requirement-item-compact ${passwordRequirements.hasUpperCase ? 'met' : ''}`}>
                     {passwordRequirements.hasUpperCase ? <Check size={12} /> : <X size={12} />}
-                    <span>Uppercase</span>
+                    <span>{t('auth.uppercase')}</span>
                   </div>
                   <div className={`requirement-item-compact ${passwordRequirements.hasLowerCase ? 'met' : ''}`}>
                     {passwordRequirements.hasLowerCase ? <Check size={12} /> : <X size={12} />}
-                    <span>Lowercase</span>
+                    <span>{t('auth.lowercase')}</span>
                   </div>
                   <div className={`requirement-item-compact ${passwordRequirements.hasNumber ? 'met' : ''}`}>
                     {passwordRequirements.hasNumber ? <Check size={12} /> : <X size={12} />}
-                    <span>Number</span>
+                    <span>{t('auth.number')}</span>
                   </div>
                   <div className={`requirement-item-compact ${passwordRequirements.hasSpecialChar ? 'met' : ''}`}>
                     {passwordRequirements.hasSpecialChar ? <Check size={12} /> : <X size={12} />}
-                    <span>Special (!@#$)</span>
+                    <span>{t('auth.specialChar')}</span>
                   </div>
                 </div>
               )}
@@ -234,23 +236,23 @@ const Signup = () => {
                   onChange={(e) => setAgreeTerms(e.target.checked)}
                 />
                 <label htmlFor="terms">
-                  I agree to the <Link to="/terms">Terms</Link> and <Link to="/privacy-policy">Privacy Policy</Link>
+                  {t('auth.agreeToTerms')} <Link to="/terms">{t('auth.terms')}</Link> {t('auth.and')} <Link to="/privacy-policy">{t('auth.privacyPolicy')}</Link>
                 </label>
               </div>
 
               <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                {loading ? 'Creating Account...' : 'Sign Up'} <ArrowRight size={16} />
+                {loading ? t('auth.creatingAccount') : t('auth.signup')} <ArrowRight size={16} />
               </button>
             </form>
 
             <div className="auth-divider">
-              <span>OR</span>
+              <span>{t('auth.orContinueWith')}</span>
             </div>
 
             <div className="google-login-wrapper">
               {googleLoading ? (
                 <button className="btn-google" disabled>
-                  Signing up with Google...
+                  {t('auth.signUpWithGoogle')}
                 </button>
               ) : (
                 <GoogleLogin
@@ -266,8 +268,8 @@ const Signup = () => {
 
             <div className="auth-footer">
               <p>
-                Already have an account?
-                <Link to="/login">Login</Link>
+                {t('auth.haveAccount')}
+                <Link to="/login">{t('nav.login')}</Link>
               </p>
             </div>
           </div>
@@ -277,22 +279,22 @@ const Signup = () => {
         <div className="auth-image-side">
           <div className="auth-image-content">
             <div className="auth-image-emoji">🌱</div>
-            <h2 className="auth-image-title">Start Growing!</h2>
+            <h2 className="auth-image-title">{t('auth.startGrowing')}</h2>
             <p className="auth-image-text">
-              Join thousands of farmers using AI to maximize their yields
+              {t('auth.signupImageText')}
             </p>
             <div className="auth-image-features">
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Free Account</span>
+                <span>{t('auth.freeAccount')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>No Credit Card</span>
+                <span>{t('auth.noCreditCard')}</span>
               </div>
               <div className="auth-image-feature">
                 <span>✅</span>
-                <span>Cancel Anytime</span>
+                <span>{t('auth.cancelAnytime')}</span>
               </div>
             </div>
           </div>

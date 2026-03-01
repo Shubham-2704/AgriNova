@@ -144,6 +144,18 @@
   margin: 0;
 }
 
+.contact-detail-text a {
+  font-size: 0.9rem;
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-detail-text a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
 /* Business Hours */
 .contact-hours {
   background: var(--bg-primary);
