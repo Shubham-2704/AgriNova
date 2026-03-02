@@ -2,16 +2,18 @@
   "Kharif": [
     "Rice",
     "Cotton(lint)",
-    "Groundnut",
     "Maize",
     "Bajra",
-    "Soybean",
-    "Sugarcane",
-    "Jowar"
+    "Jowar",
+    "Groundnut",
+    "Soyabean",
+    "Sugarcane"
   ],
   "Rabi": [
     "Wheat",
     "Gram",
+    "Potato",
+    "Onion",
     "Mustard",
     "Cumin",
     "Coriander",
@@ -19,16 +21,8 @@
     "Barley"
   ],
   "Summer": [
-    "Fodder crops",
-    "Watermelon",
-    "Muskmelon"
+    "Bajra",
+    "Jowar"
   ],
-  "Whole Year": [
-    "Onion",
-    "Potato",
-    "Tomato",
-    "Brinjal",
-    "Okra",
-    "Chilli"
-  ]
+  "Whole Year": []
 }

@@ -1,0 +1,182 @@
+{
+  "Ahmedabad": {
+    "Kharif": 480,
+    "Rabi": 45,
+    "Summer": 25,
+    "Whole Year": 550
+  },
+  "Surat": {
+    "Kharif": 1020,
+    "Rabi": 120,
+    "Summer": 60,
+    "Whole Year": 1200
+  },
+  "Vadodara": {
+    "Kharif": 765,
+    "Rabi": 90,
+    "Summer": 45,
+    "Whole Year": 900
+  },
+  "Rajkot": {
+    "Kharif": 550,
+    "Rabi": 65,
+    "Summer": 35,
+    "Whole Year": 650
+  },
+  "Bhavnagar": {
+    "Kharif": 425,
+    "Rabi": 50,
+    "Summer": 25,
+    "Whole Year": 500
+  },
+  "Jamnagar": {
+    "Kharif": 380,
+    "Rabi": 45,
+    "Summer": 25,
+    "Whole Year": 450
+  },
+  "Junagadh": {
+    "Kharif": 765,
+    "Rabi": 90,
+    "Summer": 45,
+    "Whole Year": 900
+  },
+  "Gandhinagar": {
+    "Kharif": 510,
+    "Rabi": 60,
+    "Summer": 30,
+    "Whole Year": 600
+  },
+  "Anand": {
+    "Kharif": 680,
+    "Rabi": 80,
+    "Summer": 40,
+    "Whole Year": 800
+  },
+  "Nadiad": {
+    "Kharif": 635,
+    "Rabi": 75,
+    "Summer": 40,
+    "Whole Year": 750
+  },
+  "Valsad": {
+    "Kharif": 1530,
+    "Rabi": 180,
+    "Summer": 90,
+    "Whole Year": 1800
+  },
+  "Navsari": {
+    "Kharif": 1275,
+    "Rabi": 150,
+    "Summer": 75,
+    "Whole Year": 1500
+  },
+  "Bharuch": {
+    "Kharif": 850,
+    "Rabi": 100,
+    "Summer": 50,
+    "Whole Year": 1000
+  },
+  "Bhuj": {
+    "Kharif": 295,
+    "Rabi": 35,
+    "Summer": 20,
+    "Whole Year": 350
+  },
+  "Gandhidham": {
+    "Kharif": 255,
+    "Rabi": 30,
+    "Summer": 15,
+    "Whole Year": 300
+  },
+  "Mandvi": {
+    "Kharif": 340,
+    "Rabi": 40,
+    "Summer": 20,
+    "Whole Year": 400
+  },
+  "Rapar": {
+    "Kharif": 240,
+    "Rabi": 28,
+    "Summer": 12,
+    "Whole Year": 280
+  },
+  "Porbandar": {
+    "Kharif": 510,
+    "Rabi": 60,
+    "Summer": 30,
+    "Whole Year": 600
+  },
+  "Dwarka": {
+    "Kharif": 425,
+    "Rabi": 50,
+    "Summer": 25,
+    "Whole Year": 500
+  },
+  "Veraval": {
+    "Kharif": 550,
+    "Rabi": 65,
+    "Summer": 35,
+    "Whole Year": 650
+  },
+  "Amreli": {
+    "Kharif": 595,
+    "Rabi": 70,
+    "Summer": 35,
+    "Whole Year": 700
+  },
+  "Surendranagar": {
+    "Kharif": 380,
+    "Rabi": 45,
+    "Summer": 25,
+    "Whole Year": 450
+  },
+  "Morbi": {
+    "Kharif": 340,
+    "Rabi": 40,
+    "Summer": 20,
+    "Whole Year": 400
+  },
+  "Mehsana": {
+    "Kharif": 425,
+    "Rabi": 50,
+    "Summer": 25,
+    "Whole Year": 500
+  },
+  "Patan": {
+    "Kharif": 380,
+    "Rabi": 45,
+    "Summer": 25,
+    "Whole Year": 450
+  },
+  "Palanpur": {
+    "Kharif": 510,
+    "Rabi": 60,
+    "Summer": 30,
+    "Whole Year": 600
+  },
+  "Dang": {
+    "Kharif": 1870,
+    "Rabi": 220,
+    "Summer": 110,
+    "Whole Year": 2200
+  },
+  "Vyara": {
+    "Kharif": 1530,
+    "Rabi": 180,
+    "Summer": 90,
+    "Whole Year": 1800
+  },
+  "Godhra": {
+    "Kharif": 765,
+    "Rabi": 90,
+    "Summer": 45,
+    "Whole Year": 900
+  },
+  "Dahod": {
+    "Kharif": 850,
+    "Rabi": 100,
+    "Summer": 50,
+    "Whole Year": 1000
+  }
+}
