@@ -5,9 +5,6 @@ import { useTranslation } from 'react-i18next';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import './LandingPage.css';
-import image01 from '../../assets/01.png';
-import image02 from '../../assets/02.png';
-import image03 from '../../assets/03.png';
 
 const heroSlides = [
   {
@@ -84,7 +81,7 @@ const LandingPage = () => {
       subtitle: t('landing.sustainableHarvests'),
       description: t('landing.sustainableHarvestsDesc'),
       getStarted: t('landing.started'),
-      image: image01,
+      image: 'https://res.cloudinary.com/dpn6jplxx/image/upload/v1772446581/01_r1kwpp.png',
       gradient: "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(46, 125, 50, 0.5) 100%)",
       primaryColor: "rgba(76, 175, 80, 0.03)", // Almost invisible green
       textBgColor: "rgba(0, 0, 0, 0.05)" // Nearly invisible
@@ -94,7 +91,7 @@ const LandingPage = () => {
       subtitle: t('landing.dataDrivenDecisions'),
       description: t('landing.dataDrivenDecisionsDesc'),
       getStarted: t('landing.started'),
-      image: image02,
+      image: 'https://res.cloudinary.com/dpn6jplxx/image/upload/v1772446583/02_w9wrbe.png',
       gradient: "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(2, 136, 209, 0.5) 100%)",
       primaryColor: "rgba(33, 150, 243, 0.03)", // Almost invisible blue
       textBgColor: "rgba(0, 0, 0, 0.05)" // Nearly invisible
@@ -104,7 +101,7 @@ const LandingPage = () => {
       subtitle: t('landing.futureOfAgriculture'),
       description: t('landing.futureOfAgricultureDesc'),
       getStarted: t('landing.started'),
-      image: image03,
+      image: 'https://res.cloudinary.com/dpn6jplxx/image/upload/v1772446584/03_vilfls.png',
       gradient: "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(245, 124, 0, 0.5) 100%)",
       primaryColor: "rgba(255, 152, 0, 0.03)", // Almost invisible orange
       textBgColor: "rgba(0, 0, 0, 0.05)" // Nearly invisible
@@ -274,54 +271,6 @@ const LandingPage = () => {
               <div className="step-icon">🌱</div>
               <h3 className="step-title">{t('landing.step4Title')}</h3>
               <p className="step-description">{t('landing.step4Desc')}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ML Model & Technology Section */}
-      <section className="technology-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-tag">{t('landing.poweredByAI')}</span>
-            <h2 className="section-title">{t('landing.mlModelTitle')}</h2>
-            <p className="section-subtitle">
-              {t('landing.mlModelSubtitle')}
-            </p>
-          </div>
-          
-          <div className="technology-grid">
-            <div className="tech-feature-card">
-              <div className="tech-icon">🧠</div>
-              <h3 className="tech-title">{t('landing.mlAlgorithm')}</h3>
-              <p className="tech-description">{t('landing.mlAlgorithmDesc')}</p>
-              <div className="tech-tags">
-                <span className="tech-tag">Random Forest</span>
-                <span className="tech-tag">XGBoost</span>
-                <span className="tech-tag">Neural Networks</span>
-              </div>
-            </div>
-            
-            <div className="tech-feature-card">
-              <div className="tech-icon">📊</div>
-              <h3 className="tech-title">{t('landing.dataAnalysis')}</h3>
-              <p className="tech-description">{t('landing.dataAnalysisDesc')}</p>
-              <div className="tech-tags">
-                <span className="tech-tag">Weather Data</span>
-                <span className="tech-tag">Soil Analysis</span>
-                <span className="tech-tag">Market Trends</span>
-              </div>
-            </div>
-            
-            <div className="tech-feature-card">
-              <div className="tech-icon">🎯</div>
-              <h3 className="tech-title">{t('landing.accuratePredictions')}</h3>
-              <p className="tech-description">{t('landing.accuratePredictionsDesc')}</p>
-              <div className="tech-tags">
-                <span className="tech-tag">95% Accuracy</span>
-                <span className="tech-tag">Real-time</span>
-                <span className="tech-tag">Validated</span>
-              </div>
             </div>
           </div>
         </div>

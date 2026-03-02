@@ -1,6 +1,6 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { Mail, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Linkedin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import './Page.css';
 
@@ -9,51 +9,35 @@ const OurTeam = () => {
   
   const teamMembers = [
     {
-      name: t('team.member1Name'),
-      role: t('team.member1Role'),
-      image: "👨‍🔬",
-      bio: t('team.member1Bio'),
-      expertise: [t('team.cropScience'), t('team.research'), t('team.sustainability')],
+      key: "shubham",
+      image: "https://res.cloudinary.com/dpn6jplxx/image/upload/v1772454673/shubham_ac80ab.png",
       social: {
-        email: "rajesh.kumar@agrinova.com",
-        linkedin: "#",
-        twitter: "#"
+        email: "shubhampatel2728@gmail.com",
+        linkedin: "https://www.linkedin.com/in/shubham-badresiya/",
       }
     },
     {
-      name: t('team.member2Name'),
-      role: t('team.member2Role'),
-      image: "👩‍💻",
-      bio: t('team.member2Bio'),
-      expertise: [t('team.machineLearning'), t('team.ai'), t('team.dataAnalytics')],
+      key: "hiten",
+      image: "https://res.cloudinary.com/dpn6jplxx/image/upload/v1772454613/hiten_yltcwx.png",
       social: {
-        email: "priya.sharma@agrinova.com",
-        linkedin: "#",
-        twitter: "#"
+        email: "hp040912@gmail.com",
+        linkedin: "https://www.linkedin.com/in/hitenpatel2004/",
       }
     },
     {
-      name: t('team.member3Name'),
-      role: t('team.member3Role'),
-      image: "👨‍💼",
-      bio: t('team.member3Bio'),
-      expertise: [t('team.productStrategy'), t('team.uxDesign'), t('team.agtech')],
+      key: "meet",
+      image: "https://res.cloudinary.com/dpn6jplxx/image/upload/v1772454680/meet_pvwly4.png",
       social: {
-        email: "amit.patel@agrinova.com",
-        linkedin: "#",
-        twitter: "#"
+        email: "meetprajapati5243@gmail.com",
+        linkedin: "https://www.linkedin.com/in/meetprajapati03/",
       }
     },
     {
-      name: t('team.member4Name'),
-      role: t('team.member4Role'),
-      image: "👩‍🎨",
-      bio: t('team.member4Bio'),
-      expertise: [t('team.uiuxDesign'), t('team.userResearch'), t('team.accessibility')],
+      key: "kirtan",
+      image: "https://res.cloudinary.com/dpn6jplxx/image/upload/v1772454646/kirtan_zkcz1s.png",
       social: {
-        email: "sneha.desai@agrinova.com",
-        linkedin: "#",
-        twitter: "#"
+        email: "kdp862005@gmail.com",
+        linkedin: "https://www.linkedin.com/in/kirtan-patel8/",
       }
     }
   ];
@@ -87,15 +71,17 @@ const OurTeam = () => {
         <div className="team-grid-four">
           {teamMembers.map((member, index) => (
             <div key={index} className="team-member-card">
-              <div className="team-member-avatar">{member.image}</div>
+              <div className="team-member-avatar">
+                <img src={member.image} alt={t(`team.members.${member.key}.name`)} />
+              </div>
               <div className="team-member-info">
-                <h3 className="team-member-name">{member.name}</h3>
-                <p className="team-member-role">{member.role}</p>
-                <p className="team-member-bio">{member.bio}</p>
+                <h3 className="team-member-name">{t(`team.members.${member.key}.name`)}</h3>
+                <p className="team-member-role">{t(`team.members.${member.key}.role`)}</p>
+                <p className="team-member-bio">{t(`team.members.${member.key}.bio`)}</p>
                 
                 {/* Expertise Tags */}
                 <div className="team-member-expertise">
-                  {member.expertise.map((skill, i) => (
+                  {t(`team.members.${member.key}.expertise`, { returnObjects: true }).map((skill, i) => (
                     <span key={i} className="expertise-tag">{skill}</span>
                   ))}
                 </div>
@@ -107,9 +93,6 @@ const OurTeam = () => {
                   </a>
                   <a href={member.social.linkedin} className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <Linkedin size={16} />
-                  </a>
-                  <a href={member.social.twitter} className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                    <Twitter size={16} />
                   </a>
                 </div>
               </div>

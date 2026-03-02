@@ -32,6 +32,7 @@ const TermsOfService = () => {
                 <li>{t('legal.terms.disclaimer2')}</li>
                 <li>{t('legal.terms.disclaimer3')}</li>
                 <li>{t('legal.terms.disclaimer4')}</li>
+                <li>{t('legal.terms.disclaimer5')}</li>
               </ul>
             </div>
           </section>

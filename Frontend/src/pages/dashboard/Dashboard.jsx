@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { TrendingUp, Loader, Cloud, MapPin, Droplets, Thermometer } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { TrendingUp, Loader, Cloud, MapPin, Droplets, Thermometer, AlertTriangle, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -271,29 +272,30 @@ const Dashboard = () => {
                 {displayedCrops.map((rec, idx) => (
                   <div key={idx} className="crop-card">
                     <div className="crop-header">
-                      <span className="crop-rank">{idx + 1}</span>
-                      <h3>{translateData('crops', rec.crop)}</h3>
+                      <div className="crop-header-left">
+                        <span className="crop-rank">{idx + 1}</span>
+                        <h3>{translateData('crops', rec.crop)}</h3>
+                      </div>
+                      {/* <div className="crop-match-badge">
+                        {rec.suitability.toFixed(0)}% MATCH
+                      </div> */}
                     </div>
                     <div className="crop-body">
                       <div className="crop-stat">
-                        <span className="stat-label">{t('dashboard.suitability')}</span>
-                        <span className="stat-value">{rec.suitability.toFixed(1)}%</span>
-                      </div>
-                      <div className="crop-stat">
                         <span className="stat-label">{t('dashboard.profitPerAcre')}</span>
-                        <span className="stat-value">{rec.profit_per_acre_formatted || `₹${rec.profit_per_acre.toLocaleString('en-IN', {maximumFractionDigits: 0})}`}</span>
-                      </div>
-                      <div className="crop-stat highlight">
-                        <span className="stat-label">{t('dashboard.totalProfit')}</span>
-                        <span className="stat-value">{rec.total_profit_formatted || `₹${rec.total_profit.toLocaleString('en-IN', {maximumFractionDigits: 0})}`}</span>
+                        <span className="stat-value">{rec.profit_per_acre_formatted?.replace(' ', '') || `₹${rec.profit_per_acre.toLocaleString('en-IN', {maximumFractionDigits: 0})}`}</span>
                       </div>
                       <div className="crop-stat">
                         <span className="stat-label">{t('dashboard.productionPerAcre')}</span>
-                        <span className="stat-value">{rec.expected_production.toFixed(2)} kg</span>
+                        <span className="stat-value">{rec.expected_production.toLocaleString('en-IN', {maximumFractionDigits: 0})} kg</span>
                       </div>
                       <div className="crop-stat">
                         <span className="stat-label">{t('dashboard.avgPrice')}</span>
                         <span className="stat-value">₹{rec.avg_price.toFixed(2)}/kg</span>
+                      </div>
+                      <div className="crop-stat highlight">
+                        <span className="stat-label">{t('dashboard.totalProfit')}</span>
+                        <span className="stat-value">{rec.total_profit_formatted?.replace(' ', '') || `₹${rec.total_profit.toLocaleString('en-IN', {maximumFractionDigits: 0})}`}</span>
                       </div>
                     </div>
                   </div>
@@ -313,6 +315,22 @@ const Dashboard = () => {
               )}
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Disclaimer Section */}
+      <div className="dashboard-disclaimer">
+        <div className="disclaimer-container">
+          <div className="disclaimer-icon">
+            <AlertTriangle size={24} />
+          </div>
+          <div className="disclaimer-content">
+            <h3>{t('dashboard.disclaimer.title')}</h3>
+            <p>{t('dashboard.disclaimer.description')}</p>
+            <p className="disclaimer-footer">
+              {t('dashboard.disclaimer.legal')} <Link to="/terms">{t('dashboard.disclaimer.terms')}</Link> {t('dashboard.disclaimer.and')} <Link to="/privacy">{t('dashboard.disclaimer.privacy')}</Link>.
+            </p>
+          </div>
         </div>
       </div>
 

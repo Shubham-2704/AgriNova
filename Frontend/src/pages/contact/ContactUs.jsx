@@ -181,18 +181,6 @@ const ContactUs = () => {
 
                 <div className="contact-detail-item">
                   <div className="contact-icon">
-                    <Linkedin size={20} />
-                  </div>
-                  <div className="contact-detail-text">
-                    <h4>{t('contact.linkedin')}</h4>
-                    <a href="https://linkedin.com/company/agrinova" target="_blank" rel="noopener noreferrer">
-                      linkedin.com/company/agrinova
-                    </a>
-                  </div>
-                </div>
-
-                <div className="contact-detail-item">
-                  <div className="contact-icon">
                     <MapPin size={20} />
                   </div>
                   <div className="contact-detail-text">

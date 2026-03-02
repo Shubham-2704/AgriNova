@@ -92,12 +92,6 @@ const Footer = () => {
                 <span>{t('footer.location')}</span>
               </li>
               <li className="contact-item">
-                <Linkedin size={16} />
-                <a href="https://linkedin.com/company/agrinova" target="_blank" rel="noopener noreferrer">
-                  linkedin.com/company/agrinova
-                </a>
-              </li>
-              <li className="contact-item">
                 <Mail size={16} />
                 <span>{t('footer.email')}</span>
               </li>

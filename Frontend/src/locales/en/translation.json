@@ -84,7 +84,7 @@
     "dataInsightsTitle": "Real-Time Data Insights for Better Decisions",
     "dataInsightsDescription": "Our platform integrates multiple data sources to provide you with comprehensive insights about your farm. Make informed decisions backed by real-time weather data, soil analysis, and market prices.",
     "weatherIntegration": "Weather Integration",
-    "weatherIntegrationDesc": "Live weather data from OpenWeatherMap API for accurate forecasting",
+    "weatherIntegrationDesc": "Live weather data for accurate forecasting",
     "profitCalculation": "Profit Calculation",
     "profitCalculationDesc": "Detailed profit and production estimates based on current market prices",
     "yieldPrediction": "Yield Prediction",
@@ -177,7 +177,33 @@
     "agtech": "AgTech",
     "uiuxDesign": "UI/UX Design",
     "userResearch": "User Research",
-    "accessibility": "Accessibility"
+    "accessibility": "Accessibility",
+    "members": {
+      "shubham": {
+        "name": "Shubham Badresiya",
+        "role": "AI/ML Developer",
+        "bio": "Specialized in developing AI/ML models for agricultural predictions. Expert in machine learning algorithms and data science.",
+        "expertise": ["Machine Learning", "AI", "Data Science"]
+      },
+      "hiten": {
+        "name": "Hiten Patel",
+        "role": "AI/ML Developer",
+        "bio": "Expert in artificial intelligence and machine learning applications. Focused on building intelligent systems for agriculture.",
+        "expertise": ["Machine Learning", "AI", "Deep Learning"]
+      },
+      "meet": {
+        "name": "Meet Prajapati",
+        "role": "Full Stack Developer",
+        "bio": "Full stack developer building scalable web applications. Expertise in React, Node.js, and modern web technologies.",
+        "expertise": ["React", "Node.js", "Full Stack"]
+      },
+      "kirtan": {
+        "name": "Kirtan Patel",
+        "role": "Full Stack Developer",
+        "bio": "Full stack developer specializing in building responsive and user-friendly web applications for agricultural technology.",
+        "expertise": ["React", "Python", "Full Stack"]
+      }
+    }
   },
   "faq": {
     "title": "Frequently Asked Questions",
@@ -369,17 +395,25 @@
     "topRecommended": "🌟 Top",
     "recommendedCrops": "Recommended Crops",
     "suitability": "⭐ Suitability:",
-    "profitPerAcre": "💰 Profit/Acre:",
-    "totalProfit": "💵 Total Profit:",
-    "productionPerAcre": "📊 Production/Acre:",
-    "avgPrice": "💲 Avg Price:",
+    "profitPerAcre": "Profit/Acre",
+    "totalProfit": "Total Profit",
+    "productionPerAcre": "Production/Acre",
+    "avgPrice": "Avg Price",
     "showLess": "🔼 Show Less",
     "showMore": "🔽 Show 3 More Crops",
     "errorLoadOptions": "Failed to load options. Please make sure the backend is running.",
     "errorRecommendations": "Error getting recommendations",
     "cropPrediction": "Crop Prediction",
     "weatherForecast": "Weather Forecast",
-    "soilAnalysis": "Soil Analysis"
+    "soilAnalysis": "Soil Analysis",
+    "disclaimer": {
+      "title": " Important Disclaimer",
+      "description": "This crop recommendation system is provided for reference purposes only and should not be considered as professional agricultural advice. Predictions are based on historical data and machine learning models.",
+      "legal": "By using this service, you agree to our",
+      "terms": "Terms of Service",
+      "and": "and",
+      "privacy": "Privacy Policy"
+    }
   },
   "data": {
     "seasons": {
@@ -472,11 +506,12 @@
     "terms": {
       "section1Title": "1. Service Description & Disclaimer",
       "importantNotice": "⚠️ Important Notice",
-      "disclaimer": "AgriNova provides AI-powered crop predictions based on historical data. These predictions are NOT guarantees and should NOT replace professional agricultural advice.",
-      "disclaimer1": "Predictions may not account for unforeseen weather, market, or environmental changes",
-      "disclaimer2": "Results vary based on local conditions and farming practices",
-      "disclaimer3": "Always consult qualified agricultural professionals before making farming decisions",
-      "disclaimer4": "AgriNova is a decision-support tool, not a replacement for expertise",
+      "disclaimer": "AgriNova provides AI-powered crop predictions based on historical data (1998-2012 Gujarat weather and crop data). These predictions are NOT guarantees and should NOT replace professional agricultural advice.",
+      "disclaimer1": "Predictions are based on historical data from 1998-2012 and may not reflect current conditions",
+      "disclaimer2": "Predictions may not account for unforeseen weather, market, or environmental changes",
+      "disclaimer3": "Results vary based on local conditions and farming practices",
+      "disclaimer4": "Always consult qualified agricultural professionals before making farming decisions",
+      "disclaimer5": "AgriNova is a decision-support tool, not a replacement for expertise",
       "section2Title": "2. User Responsibilities",
       "section2Text": "By using AgriNova, you agree to provide accurate information, keep your account secure, and not misuse the service. You are responsible for all activities under your account. We reserve the right to suspend accounts that violate these terms.",
       "section3Title": "3. Limitation of Liability",
