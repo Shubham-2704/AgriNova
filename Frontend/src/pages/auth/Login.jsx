@@ -76,7 +76,7 @@ const Login = () => {
         <div className="auth-form-side">
           <div className="auth-form-container">
             <Link to="/" className="auth-logo">
-              <span className="logo-icon">🌾</span>
+              <img src="https://res.cloudinary.com/dpn6jplxx/image/upload/v1772553756/logo_usg4rl.png" alt="AgriNova" className="logo-image" />
               <span className="logo-text">AgriNova</span>
             </Link>
 
@@ -170,7 +170,9 @@ const Login = () => {
         {/* RIGHT SIDE - Image with content */}
         <div className="auth-image-side">
           <div className="auth-image-content">
-            <div className="auth-image-emoji">🌾</div>
+            <div className="auth-image-emoji">
+              <img src="https://res.cloudinary.com/dpn6jplxx/image/upload/v1772553756/logo_usg4rl.png" alt="AgriNova" className="auth-logo-image" />
+            </div>
             <h2 className="auth-image-title">{t('auth.helloFarmer')}</h2>
             <p className="auth-image-text">
               {t('auth.loginImageText')}

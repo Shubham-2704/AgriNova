@@ -469,9 +469,25 @@
 /* How It Works Section */
 .how-it-works-section {
   padding: 6rem 0;
-  background: var(--bg-secondary);
+  background: linear-gradient(135deg, 
+    rgba(232, 245, 233, 0.8) 0%, 
+    rgba(200, 230, 201, 0.6) 25%, 
+    rgba(165, 214, 167, 0.4) 50%, 
+    rgba(129, 199, 132, 0.3) 75%, 
+    rgba(102, 187, 106, 0.2) 100%
+  );
   position: relative;
   overflow: hidden;
+}
+
+.dark .how-it-works-section {
+  background: linear-gradient(135deg, 
+    rgba(27, 58, 30, 0.6) 0%, 
+    rgba(46, 125, 50, 0.4) 25%, 
+    rgba(56, 142, 60, 0.3) 50%, 
+    rgba(67, 160, 71, 0.25) 75%, 
+    rgba(76, 175, 80, 0.2) 100%
+  );
 }
 
 .how-it-works-section::before {

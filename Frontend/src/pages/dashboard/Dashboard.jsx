@@ -496,7 +496,7 @@ const Dashboard = () => {
             <h3>{t('dashboard.disclaimer.title')}</h3>
             <p>{t('dashboard.disclaimer.description')}</p>
             <p className="disclaimer-footer">
-              {t('dashboard.disclaimer.legal')} <Link to="/terms">{t('dashboard.disclaimer.terms')}</Link> {t('dashboard.disclaimer.and')} <Link to="/privacy">{t('dashboard.disclaimer.privacy')}</Link>.
+              {t('dashboard.disclaimer.legal')} <Link to="/terms">{t('dashboard.disclaimer.terms')}</Link> {t('dashboard.disclaimer.and')} <Link to="/privacy-policy">{t('dashboard.disclaimer.privacy')}</Link>.
             </p>
           </div>
         </div>

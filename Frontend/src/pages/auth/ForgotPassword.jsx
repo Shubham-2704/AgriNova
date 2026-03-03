@@ -138,7 +138,7 @@ const ForgotPassword = () => {
         <div className="auth-form-side">
           <div className="auth-form-container">
             <Link to="/" className="auth-logo">
-              <span className="logo-icon">🌾</span>
+              <img src="https://res.cloudinary.com/dpn6jplxx/image/upload/v1772553756/logo_usg4rl.png" alt="AgriNova" className="logo-image" />
               <span className="logo-text">AgriNova</span>
             </Link>
 
