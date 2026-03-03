@@ -26,6 +26,7 @@ import joblib
 import numpy as np
 import requests
 import os
+from dotenv import load_dotenv
 
 # ============================================================================
 # MODEL INITIALIZATION
@@ -434,7 +435,8 @@ async def fetch_weather_data(city: str, state: str, season: str = 'Whole Year') 
     Fetch weather data with realistic Gujarat city and season-specific rainfall data
     Uses pre-defined rainfall values based on both city and season for accuracy
     """
-    api_key = '7c6f9435eddc2f9063fe9233bb6a273a'
+    api_key = os.getenv("OPENWEATHERMAP_API_KEY")
+    print("--------------------api key----------------------")
     url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
     
     # Get realistic rainfall for Gujarat cities based on city AND season
