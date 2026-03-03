@@ -68,6 +68,7 @@
 /* Header */
 .auth-header {
   margin-bottom: 1.2rem;
+  text-align: left;
 }
 
 .auth-header h1 {
@@ -249,6 +250,10 @@
   font-size: 0.9rem !important;
   font-weight: 600 !important;
   margin-top: 0.1rem;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
 }
 
 /* Divider */
@@ -278,9 +283,10 @@
   font-size: 0.9rem !important;
   font-weight: 600 !important;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
   gap: 0.6rem;
   border-radius: 0.6rem;
   cursor: pointer;
@@ -480,68 +486,290 @@
 }
 
 /* ========================================
-   RESPONSIVE DESIGN
+   MOBILE RESPONSIVE DESIGN (768px and below)
    ======================================== */
 @media (max-width: 768px) {
+  .auth-page {
+    position: relative;
+    height: 100%;
+    min-height: 100vh;
+    overflow-y: auto; /* Allow scroll on mobile */
+  }
+
   .auth-container {
-    flex-direction: column-reverse; /* Image on top, form below */
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
   }
 
+  /* Hide right side image completely on mobile */
   .auth-image-side {
-    flex: none;
-    height: 25vh;
-    min-height: 200px;
-  }
-
-  .auth-image-emoji {
-    font-size: 3rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .auth-image-title {
-    font-size: 1.5rem;
-    margin-bottom: 0.2rem;
-  }
-
-  .auth-image-text {
-    font-size: 0.8rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .auth-image-features {
     display: none;
   }
 
+  /* Left side - Form takes full width and centered */
   .auth-form-side {
     flex: none;
-    height: 75vh;
-    padding: 1rem;
-    overflow-y: auto; /* Allow scroll on mobile only */
+    width: 100%;
+    padding: 1.5rem;
+    overflow-y: visible;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .auth-form-container {
-    padding: 0.3rem;
+    max-width: 400px;
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
   }
 
+  /* Center all content */
+  .auth-logo {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .auth-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .auth-header h1 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .auth-header p {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  /* Stack form rows on mobile */
   .form-row {
     grid-template-columns: 1fr; /* Stack on mobile */
+    gap: 0.8rem;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+    justify-content: flex-start;
+  }
+
+  .form-group input {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  /* Center buttons and text */
+  .btn-block {
+    padding: 0.7rem !important;
+    font-size: 1rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 0.5rem;
   }
 
+  .btn-google {
+    padding: 0.7rem !important;
+    font-size: 1rem !important;
+    justify-content: center;
+  }
+
+  .auth-divider {
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .auth-footer {
+    text-align: center;
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .auth-footer a {
+    margin-left: 0.25rem;
+  }
+
+  /* Password requirements compact stays 2 columns on mobile */
+  .password-requirements-compact {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 0.6rem;
+    padding: 0.6rem;
+  }
+
+  .requirement-item-compact {
+    font-size: 0.75rem;
+    justify-content: flex-start;
+  }
+
+  .requirement-item-compact svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Checkbox */
+  .form-group.checkbox {
+    justify-content: center;
+    margin: 0.5rem 0;
+  }
+
+  .form-group.checkbox label {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    text-align: left;
+  }
+
+  /* Forgot Password Page Specific */
+  .otp-group {
+    gap: 0.4rem;
+    margin: 1.5rem 0;
+    justify-content: center;
+  }
+
+  .otp-input {
+    width: 45px;
+    height: 55px;
+    font-size: 1.3rem;
+  }
+
+  .timer-text {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .resend-link {
+    text-align: center;
+  }
+
+  .resend-link button {
+    font-size: 0.9rem;
+  }
+
+  .success-message {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .success-message svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .success-message p {
+    font-size: 0.9rem;
+  }
+
+  /* Reset Password Page */
+  .password-match-indicator {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+    justify-content: center;
+  }
+
+  .back-to-login {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .back-to-login a {
+    font-size: 0.9rem;
+    justify-content: center;
+  }
+}
+
+/* Small Mobile (480px and below) */
+@media (max-width: 480px) {
+  .auth-form-side {
+    padding: 1.25rem;
+  }
+
+  .auth-form-container {
+    max-width: 360px;
+  }
+
   .auth-logo {
-    margin-bottom: 0.8rem;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .auth-logo .logo-icon {
+    font-size: 1.8rem;
   }
 
   .auth-header h1 {
     font-size: 1.6rem;
   }
+
+  .auth-header p {
+    font-size: 0.85rem;
+  }
+
+  .form-group label {
+    font-size: 0.8rem;
+  }
+
+  .form-group input {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .password-requirements-compact {
+    grid-template-columns: 1fr; /* Stack in one column on very small */
+  }
+
+  .otp-input {
+    width: 40px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .btn-block {
+    padding: 0.6rem !important;
+    font-size: 0.95rem !important;
+  }
+
+  .auth-footer {
+    font-size: 0.85rem;
+  }
 }
 
-/* Add to existing Auth.css */
+/* Very Small Mobile (360px and below) */
+@media (max-width: 360px) {
+  .auth-form-side {
+    padding: 1rem;
+  }
+
+  .auth-logo {
+    font-size: 1.4rem;
+  }
+
+  .auth-logo .logo-icon {
+    font-size: 1.6rem;
+  }
+
+  .auth-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .otp-input {
+    width: 35px;
+    height: 45px;
+    font-size: 1rem;
+  }
+}
 
 /* ========================================
-   FORGOT & RESET PASSWORD PAGES
+   FORGOT & RESET PASSWORD PAGES - ADDITIONS
    ======================================== */
 
 /* Success Message */
@@ -644,7 +872,7 @@
   text-decoration: none;
 }
 
-/* Password Requirements */
+/* Password Requirements - Full Version */
 .password-requirements {
   background: var(--bg-secondary);
   border-radius: 0.5rem;

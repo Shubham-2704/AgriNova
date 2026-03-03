@@ -1,75 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Star, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import './LandingPage.css';
-
-const heroSlides = [
-  {
-    title: "Transform Your Farming with AI",
-    subtitle: "Get intelligent crop recommendations based on real-time weather data and soil conditions",
-    image: "🌾",
-    gradient: "linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)"
-  },
-  {
-    title: "Maximize Your Crop Yield",
-    subtitle: "Data-driven insights to help you make informed decisions and increase productivity",
-    image: "📈",
-    gradient: "linear-gradient(135deg, #0288D1 0%, #01579B 100%)"
-  },
-  {
-    title: "Smart Agriculture for Everyone",
-    subtitle: "Join thousands of farmers using AgriNova to revolutionize their farming operations",
-    image: "🚜",
-    gradient: "linear-gradient(135deg, #F57C00 0%, #E65100 100%)"
-  }
-];
-
-const features = [
-  {
-    icon: "🤖",
-    title: "AI-Powered Predictions",
-    description: "Advanced machine learning algorithms analyze your farm conditions to recommend the best crops"
-  },
-  {
-    icon: "🌤️",
-    title: "Real-Time Weather Data",
-    description: "Live weather integration ensures recommendations are based on current conditions"
-  },
-  {
-    icon: "💰",
-    title: "Profit Optimization",
-    description: "Calculate expected profits and production to make data-driven financial decisions"
-  },
-  {
-    icon: "📊",
-    title: "Detailed Analytics",
-    description: "Comprehensive reports on suitability, production estimates, and market prices"
-  }
-];
-
-const testimonials = [
-  {
-    quote: "AgriNova transformed our farming operations. The AI recommendations helped increase our yield by 40%.",
-    author: "Rajesh Patel",
-    role: "Commercial Farmer",
-    rating: 5
-  },
-  {
-    quote: "The weather integration and profit calculations are incredibly accurate. Best investment for our farm.",
-    author: "Priya Sharma",
-    role: "Agricultural Consultant",
-    rating: 5
-  },
-  {
-    quote: "Managing multiple farms has never been easier. AgriNova streamlined our entire operation.",
-    author: "Amit Desai",
-    role: "Cooperative Manager",
-    rating: 5
-  }
-];
 
 const LandingPage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -83,8 +18,8 @@ const LandingPage = () => {
       getStarted: t('landing.started'),
       image: 'https://res.cloudinary.com/dpn6jplxx/image/upload/v1772446581/01_r1kwpp.png',
       gradient: "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(46, 125, 50, 0.5) 100%)",
-      primaryColor: "rgba(76, 175, 80, 0.03)", // Almost invisible green
-      textBgColor: "rgba(0, 0, 0, 0.05)" // Nearly invisible
+      primaryColor: "rgba(76, 175, 80, 0.03)",
+      textBgColor: "rgba(0, 0, 0, 0.05)"
     },
     {
       title: t('landing.aiPoweredAgriculture'),
@@ -93,8 +28,8 @@ const LandingPage = () => {
       getStarted: t('landing.started'),
       image: 'https://res.cloudinary.com/dpn6jplxx/image/upload/v1772446583/02_w9wrbe.png',
       gradient: "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(2, 136, 209, 0.5) 100%)",
-      primaryColor: "rgba(33, 150, 243, 0.03)", // Almost invisible blue
-      textBgColor: "rgba(0, 0, 0, 0.05)" // Nearly invisible
+      primaryColor: "rgba(33, 150, 243, 0.03)",
+      textBgColor: "rgba(0, 0, 0, 0.05)"
     },
     {
       title: t('landing.precisionFarming'),
@@ -103,8 +38,8 @@ const LandingPage = () => {
       getStarted: t('landing.started'),
       image: 'https://res.cloudinary.com/dpn6jplxx/image/upload/v1772446584/03_vilfls.png',
       gradient: "linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(245, 124, 0, 0.5) 100%)",
-      primaryColor: "rgba(255, 152, 0, 0.03)", // Almost invisible orange
-      textBgColor: "rgba(0, 0, 0, 0.05)" // Nearly invisible
+      primaryColor: "rgba(255, 152, 0, 0.03)",
+      textBgColor: "rgba(0, 0, 0, 0.05)"
     }
   ];
 
@@ -149,6 +84,51 @@ const LandingPage = () => {
       author: t('landing.testimonial3Author'),
       role: t('landing.testimonial3Role'),
       rating: 5
+    }
+  ];
+
+  const steps = [
+    {
+      number: "1",
+      icon: "📝",
+      title: t('landing.step1Title'),
+      description: t('landing.step1Desc')
+    },
+    {
+      number: "2",
+      icon: "🌍",
+      title: t('landing.step2Title'),
+      description: t('landing.step2Desc')
+    },
+    {
+      number: "3",
+      icon: "🤖",
+      title: t('landing.step3Title'),
+      description: t('landing.step3Desc')
+    },
+    {
+      number: "4",
+      icon: "🌱",
+      title: t('landing.step4Title'),
+      description: t('landing.step4Desc')
+    }
+  ];
+
+  const insights = [
+    {
+      icon: "🌡️",
+      title: t('landing.weatherIntegration'),
+      description: t('landing.weatherIntegrationDesc')
+    },
+    {
+      icon: "💹",
+      title: t('landing.profitCalculation'),
+      description: t('landing.profitCalculationDesc')
+    },
+    {
+      icon: "📈",
+      title: t('landing.yieldPrediction'),
+      description: t('landing.yieldPredictionDesc')
     }
   ];
 
@@ -245,33 +225,14 @@ const LandingPage = () => {
           </div>
           
           <div className="steps-grid">
-            <div className="step-card">
-              <div className="step-number">1</div>
-              <div className="step-icon">📝</div>
-              <h3 className="step-title">{t('landing.step1Title')}</h3>
-              <p className="step-description">{t('landing.step1Desc')}</p>
-            </div>
-            
-            <div className="step-card">
-              <div className="step-number">2</div>
-              <div className="step-icon">🌍</div>
-              <h3 className="step-title">{t('landing.step2Title')}</h3>
-              <p className="step-description">{t('landing.step2Desc')}</p>
-            </div>
-            
-            <div className="step-card">
-              <div className="step-number">3</div>
-              <div className="step-icon">🤖</div>
-              <h3 className="step-title">{t('landing.step3Title')}</h3>
-              <p className="step-description">{t('landing.step3Desc')}</p>
-            </div>
-            
-            <div className="step-card">
-              <div className="step-number">4</div>
-              <div className="step-icon">🌱</div>
-              <h3 className="step-title">{t('landing.step4Title')}</h3>
-              <p className="step-description">{t('landing.step4Desc')}</p>
-            </div>
+            {steps.map((step, index) => (
+              <div key={index} className="step-card">
+                <div className="step-number">{step.number}</div>
+                <div className="step-icon">{step.icon}</div>
+                <h3 className="step-title">{step.title}</h3>
+                <p className="step-description">{step.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -288,29 +249,15 @@ const LandingPage = () => {
               </p>
               
               <div className="insights-features">
-                <div className="insight-item">
-                  <div className="insight-icon">🌡️</div>
-                  <div className="insight-content">
-                    <h4>{t('landing.weatherIntegration')}</h4>
-                    <p>{t('landing.weatherIntegrationDesc')}</p>
+                {insights.map((insight, index) => (
+                  <div key={index} className="insight-item">
+                    <div className="insight-icon">{insight.icon}</div>
+                    <div className="insight-content">
+                      <h4>{insight.title}</h4>
+                      <p>{insight.description}</p>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="insight-item">
-                  <div className="insight-icon">💹</div>
-                  <div className="insight-content">
-                    <h4>{t('landing.profitCalculation')}</h4>
-                    <p>{t('landing.profitCalculationDesc')}</p>
-                  </div>
-                </div>
-                
-                <div className="insight-item">
-                  <div className="insight-icon">📈</div>
-                  <div className="insight-content">
-                    <h4>{t('landing.yieldPrediction')}</h4>
-                    <p>{t('landing.yieldPredictionDesc')}</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
             

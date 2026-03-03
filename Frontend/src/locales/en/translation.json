@@ -400,7 +400,7 @@
     "productionPerAcre": "Production/Acre",
     "avgPrice": "Avg Price",
     "showLess": "🔼 Show Less",
-    "showMore": "🔽 Show 3 More Crops",
+    "showMore": "🔽 Show More Crops",
     "errorLoadOptions": "Failed to load options. Please make sure the backend is running.",
     "errorRecommendations": "Error getting recommendations",
     "cropPrediction": "Crop Prediction",

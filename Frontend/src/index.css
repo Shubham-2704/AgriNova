@@ -109,6 +109,7 @@ body {
   font-size: 1rem;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   text-decoration: none;
   pointer-events: auto;
@@ -116,6 +117,7 @@ body {
   z-index: 10;
   white-space: nowrap;
   writing-mode: horizontal-tb;
+  text-align: center;
 }
 
 .btn-primary {

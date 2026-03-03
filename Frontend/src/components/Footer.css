@@ -271,10 +271,12 @@
   color: var(--primary);
 }
 
-/* RESPONSIVE */
+/* ========== RESPONSIVE STYLES ========== */
+
+/* Tablet Landscape (1024px and below) */
 @media (max-width: 1024px) {
   .footer-container {
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
 
   .footer-main {
@@ -286,15 +288,20 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
+
+  .footer-description {
+    max-width: 100%;
+  }
 }
 
+/* Tablet Portrait (768px and below) */
 @media (max-width: 768px) {
   .footer {
     padding: 3rem 0 1.5rem;
   }
 
   .footer-container {
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
   
   .footer-main {
@@ -306,8 +313,45 @@
     gap: 2rem;
   }
 
-  .footer-description {
-    max-width: 100%;
+  .footer-links-section {
+    text-align: left;
+  }
+
+  .footer-links-section h3 {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-links a {
+    font-size: 0.9rem;
+  }
+
+  .footer-right {
+    grid-column: span 2;
+    margin-top: 0.5rem;
+  }
+
+  .footer-right h3 {
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .contact-item {
+    font-size: 0.9rem;
+  }
+
+  .newsletter {
+    grid-column: span 2;
+    margin-top: 1rem;
+  }
+
+  .newsletter-input {
+    max-width: 400px;
   }
 
   .footer-bottom {
@@ -324,26 +368,223 @@
   }
 }
 
+/* Mobile Large (480px and below) - EXACT LAYOUT AS IMAGE */
 @media (max-width: 480px) {
   .footer {
-    padding: 2.5rem 0 1.5rem;
+    padding: 2rem 0 1rem;
   }
 
+  .footer-container {
+    padding: 0 1.25rem;
+  }
+
+  .footer-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Logo and Description - Left aligned as in image */
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+  }
+
+  .footer-logo {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    justify-content: flex-start;
+  }
+
+  .footer-logo .logo-icon {
+    font-size: 1.8rem;
+  }
+
+  .footer-description {
+    display: block;
+    font-size: 0.9rem;
+    max-width: 100%;
+    margin: 0 0 1rem 0;
+    text-align: left;
+  }
+
+  /* Hide social links on mobile if needed */
+  .social-links {
+    display: none;
+  }
+
+  /* COMPANY and LEGAL side by side - As in image */
+  .footer-center {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-links-section {
+    text-align: left;
+  }
+
+  .footer-links-section h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left;
+  }
+
+  .footer-links {
+    gap: 0.4rem;
+    align-items: flex-start;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: left;
+  }
+
+  /* COMPLETELY HIDE CONTACT US AND RESOURCES SECTIONS ON MOBILE */
+  .footer-right {
+    display: none !important;
+  }
+
+  /* Hide Resources section if it exists separately */
+  .footer-links-section.resources {
+    display: none;
+  }
+
+  /* Make sure Legal section is in the right column */
+  .footer-links-section.legal {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  /* Hide newsletter on mobile */
+  .newsletter {
+    display: none;
+  }
+
+  /* Copyright section - Left aligned as in image */
+  .footer-bottom {
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .copyright {
+    font-size: 0.8rem;
+    text-align: left;
+    width: 100%;
+    color: var(--text-tertiary);
+  }
+
+  /* COMPLETELY HIDE the three bottom links on mobile */
+  .footer-bottom-links {
+    display: none !important;
+  }
+}
+
+/* Small Mobile (360px and below) */
+@media (max-width: 360px) {
   .footer-container {
     padding: 0 1rem;
   }
 
+  .footer-logo {
+    font-size: 1.3rem;
+  }
+
+  .footer-logo .logo-icon {
+    font-size: 1.6rem;
+  }
+
+  .footer-description {
+    font-size: 0.85rem;
+  }
+
+  .footer-links-section h3 {
+    font-size: 0.85rem;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+  }
+
+  .copyright {
+    font-size: 0.75rem;
+  }
+}
+
+/* Landscape Mode */
+@media (max-width: 768px) and (orientation: landscape) {
   .footer-main {
     gap: 2rem;
   }
 
   .footer-center {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
   }
 
+  .footer-right {
+    grid-column: span 3;
+  }
+
+  .contact-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .newsletter {
+    grid-column: span 3;
+  }
+
+  .newsletter-input {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .social-link:hover,
+  .footer-links a:hover,
+  .contact-item a:hover,
+  .newsletter-input button:hover,
+  .footer-bottom-links a:hover {
+    transform: none;
+  }
+
+  .social-link:active,
+  .footer-links a:active,
+  .contact-item a:active,
+  .newsletter-input button:active,
+  .footer-bottom-links a:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .footer {
+    background: none;
+    border-top: 1px solid #000;
+    padding: 2rem 0;
+  }
+
+  .social-links,
+  .newsletter,
   .footer-bottom-links {
-    flex-direction: column;
-    gap: 0.75rem;
+    display: none;
   }
 }

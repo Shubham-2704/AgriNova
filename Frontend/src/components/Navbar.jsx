@@ -31,6 +31,17 @@ const Navbar = () => {
     setIsUserMenuOpen(false);
   }, [location]);
 
+  // Close mobile menu when screen is resized to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -59,8 +70,8 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* CENTER SECTION - Navigation Links */}
-        <div className="navbar-center">
+        {/* CENTER SECTION - Navigation Links (Desktop only) */}
+        <div className="navbar-center desktop-only">
           <div className="nav-links">
             {navLinks.map((link) => (
               <Link
@@ -76,14 +87,16 @@ const Navbar = () => {
 
         {/* RIGHT SECTION - Actions */}
         <div className="navbar-right">
-          <LanguageSwitcher />
+          <div className="desktop-only">
+            <LanguageSwitcher />
+          </div>
           
           <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
             {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </button>
 
           {user ? (
-            <div className="user-menu" onClick={toggleUserMenu}>
+            <div className="user-menu desktop-only" onClick={toggleUserMenu}>
               <div className="user-avatar">
                 {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
               </div>
@@ -111,7 +124,7 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            <div className="auth-buttons">
+            <div className="auth-buttons desktop-only">
               <Link to="/login" className="btn btn-outline">{t('nav.login')}</Link>
               <Link to="/signup" className="btn btn-primary">{t('nav.signup')}</Link>
             </div>
@@ -129,40 +142,67 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {/* Mobile Language Switcher */}
+          <div className="mobile-language">
+            <LanguageSwitcher />
+          </div>
 
+          {/* Mobile Navigation Links */}
+          <div className="mobile-nav-links">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`mobile-nav-link ${location.pathname === link.path ? 'active' : ''}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile Auth Section */}
           {user ? (
-            <>
-              <Link to="/dashboard" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-                <LayoutDashboard size={16} style={{ marginRight: '8px' }} />
+            <div className="mobile-auth-section">
+              <div className="mobile-user-info">
+                <div className="mobile-user-avatar">
+                  {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                </div>
+                <span className="mobile-user-name">{user.name || 'User'}</span>
+              </div>
+              <Link 
+                to="/dashboard" 
+                className="mobile-nav-link with-icon" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <LayoutDashboard size={18} />
                 {t('nav.dashboard')}
               </Link>
               <button 
-                className="nav-link logout" 
+                className="mobile-nav-link with-icon logout" 
                 onClick={() => {
                   handleLogout();
                   setIsMobileMenuOpen(false);
                 }}
               >
-                <LogOut size={16} style={{ marginRight: '8px' }} />
+                <LogOut size={18} />
                 {t('nav.logout')}
               </button>
-            </>
+            </div>
           ) : (
             <div className="mobile-buttons">
-              <Link to="/login" className="btn btn-outline btn-block" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link 
+                to="/login" 
+                className="mobile-btn mobile-btn-outline" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 {t('nav.login')}
               </Link>
-              <Link to="/signup" className="btn btn-primary btn-block" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link 
+                to="/signup" 
+                className="mobile-btn mobile-btn-primary" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 {t('nav.signup')}
               </Link>
             </div>
