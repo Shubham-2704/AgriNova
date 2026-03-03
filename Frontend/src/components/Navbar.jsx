@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Sun, Moon, Menu, X, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react';
+import { Sun, Moon, Menu, X, LogOut, LayoutDashboard, ChevronDown, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
@@ -116,6 +116,10 @@ const Navbar = () => {
                     <LayoutDashboard size={16} />
                     {t('nav.dashboard')}
                   </Link>
+                  <Link to="/history" className="dropdown-item">
+                    <Clock size={16} />
+                    {t('nav.history')}
+                  </Link>
                   <button className="dropdown-item logout" onClick={handleLogout}>
                     <LogOut size={16} />
                     {t('nav.logout')}
@@ -177,6 +181,14 @@ const Navbar = () => {
               >
                 <LayoutDashboard size={18} />
                 {t('nav.dashboard')}
+              </Link>
+              <Link 
+                to="/history" 
+                className="mobile-nav-link with-icon" 
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Clock size={18} />
+                {t('nav.history')}
               </Link>
               <button 
                 className="mobile-nav-link with-icon logout" 

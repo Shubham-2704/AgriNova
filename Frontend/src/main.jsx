@@ -5,6 +5,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import App from './App.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
+import { PredictionProvider } from './context/PredictionContext.jsx'
 import { ToastProvider } from './components/ToastContainer.jsx'
 import './i18n'
 import './index.css'
@@ -17,9 +18,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <ThemeProvider>
           <AuthProvider>
-            <ToastProvider>
-              <App />
-            </ToastProvider>
+            <PredictionProvider>
+              <ToastProvider>
+                <App />
+              </ToastProvider>
+            </PredictionProvider>
           </AuthProvider>
         </ThemeProvider>
       </BrowserRouter>

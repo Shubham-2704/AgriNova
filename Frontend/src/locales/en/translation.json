@@ -8,6 +8,7 @@
     "login": "Login",
     "signup": "Sign Up",
     "dashboard": "Dashboard",
+    "history": "History",
     "logout": "Logout"
   },
   "footer": {
@@ -413,7 +414,36 @@
       "terms": "Terms of Service",
       "and": "and",
       "privacy": "Privacy Policy"
-    }
+    },
+    "weather": {
+      "temp": "Temperature",
+      "rain": "Rainfall",
+      "cloud": "Cloud Cover",
+      "vapor": "Vapor Pressure"
+    },
+    "location": "Location",
+    "allCrops": "All Crops",
+    "acres": "acres",
+    "predictionHistory": "Prediction History",
+    "yourInputSummary": "Your Input Summary",
+    "viewHistory": "View History"
+  },
+  "history": {
+    "title": "Prediction History",
+    "subtitle": "View all your past crop predictions and analysis",
+    "backToDashboard": "Back to Dashboard",
+    "noPredictions": "No Predictions Yet",
+    "noPredictionsDesc": "You haven't made any crop predictions yet. Go to the dashboard to get started!",
+    "goToDashboard": "Go to Dashboard",
+    "totalPredictions": "Total Predictions",
+    "lastPrediction": "Last Prediction"
+  },
+  "notfound": {
+    "title": "Page Not Found",
+    "description": "Sorry, the page you're looking for doesn't exist. It might have been moved or deleted.",
+    "goHome": "Go Home",
+    "goBack": "Go Back",
+    "suggestions": "You might want to visit:"
   },
   "data": {
     "seasons": {
@@ -422,6 +452,9 @@
       "Summer": "Summer",
       "Winter": "Winter",
       "Whole Year": "Whole Year"
+    },
+    "states": {
+      "Gujarat": "Gujarat"
     },
     "soilTypes": {
       "Black": "Black",

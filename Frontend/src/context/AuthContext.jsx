@@ -39,6 +39,8 @@ export const AuthProvider = ({ children }) => {
   const clearUser = () => {
     setUser(null)
     localStorage.removeItem('token')
+    // Clear predictions on logout
+    localStorage.removeItem('predictions')
     setLoading(false)
   }
 

@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { TrendingUp, Loader, Cloud, MapPin, Droplets, Thermometer, AlertTriangle, ExternalLink } from 'lucide-react';
+import { TrendingUp, Loader, Cloud, Droplets, Thermometer, AlertTriangle, Trash2, Calendar, MapPin as MapPinIcon, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
+import { usePrediction } from '../../context/PredictionContext';
 import './Dashboard.css';
 
 const Dashboard = () => {
   const { t } = useTranslation();
+  const { predictions, savePrediction, removePrediction } = usePrediction();
   const [formData, setFormData] = useState({
     state: 'Gujarat',
     city: '',
@@ -33,6 +35,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [loadingWeather, setLoadingWeather] = useState(false);
   const [error, setError] = useState('');
+  const [selectedCrop, setSelectedCrop] = useState(null);
+  const [lastPredictionData, setLastPredictionData] = useState(null);
 
   useEffect(() => {
     fetchOptions();
@@ -99,6 +103,26 @@ const Dashboard = () => {
 
       const response = await axiosInstance.post(API_PATHS.PREDICTION.PREDICT_CROPS, payload);
       setRecommendations(response.data);
+      
+      // Save prediction data for display
+      setLastPredictionData({
+        formData,
+        weatherData
+      });
+      
+      // Save to localStorage with weather data
+      savePrediction(formData, response.data, weatherData);
+      
+      // Clear form inputs and weather data
+      setFormData({
+        state: formData.state,
+        city: '',
+        season: '',
+        soil_type: '',
+        water_availability: '',
+        area: ''
+      });
+      setWeatherData(null);
     } catch (err) {
       setError(err.response?.data?.detail || t('dashboard.errorRecommendations'));
     } finally {
@@ -108,13 +132,23 @@ const Dashboard = () => {
 
   const displayedCrops = showAllCrops ? recommendations : recommendations.slice(0, 3);
   const hasMoreCrops = recommendations.length > 3;
-
-  // Helper function to translate dynamic data
   const translateData = (category, value) => {
     const key = `data.${category}.${value}`;
     const translated = t(key);
     // If translation key doesn't exist, return original value
     return translated === key ? value : translated;
+  };
+
+  // Format date and time
+  const formatPredictionTime = (isoString) => {
+    const date = new Date(isoString);
+    return date.toLocaleString('en-IN', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
 
   return (
@@ -130,7 +164,14 @@ const Dashboard = () => {
         <div className="dashboard-content">
           {/* Form Section */}
           <form onSubmit={handleSubmit} className="prediction-form">
-            <h2>{t('dashboard.farmDetails')}</h2>
+            <div className="farm-details-header">
+              <h2>{t('dashboard.farmDetails')}</h2>
+              {predictions.length > 0 && (
+                <Link to="/history" className="btn btn-secondary">
+                  {t('dashboard.viewHistory')}
+                </Link>
+              )}
+            </div>
             
             <div className="form-grid">
               <div className="form-group">
@@ -266,11 +307,75 @@ const Dashboard = () => {
           {/* Recommendations */}
           {recommendations.length > 0 && (
             <div className="recommendations-section">
+              {/* Input Summary Card */}
+              {lastPredictionData && (
+                <div className="input-summary-card">
+                  <h3>📋 {t('dashboard.yourInputSummary')}</h3>
+                  <div className="summary-grid">
+                    <div className="summary-item">
+                      <span className="summary-label">{t('dashboard.location')}:</span>
+                      <span className="summary-value">
+                        {translateData('cities', lastPredictionData.formData.city)}, {t(`data.states.${lastPredictionData.formData.state}`) || lastPredictionData.formData.state}
+                      </span>
+                    </div>
+                    <div className="summary-item">
+                      <span className="summary-label">{t('dashboard.season')}:</span>
+                      <span className="summary-value">{lastPredictionData.formData.season ? translateData('seasons', lastPredictionData.formData.season) : '-'}</span>
+                    </div>
+                    <div className="summary-item">
+                      <span className="summary-label">{t('dashboard.soilType')}:</span>
+                      <span className="summary-value">{lastPredictionData.formData.soil_type ? translateData('soilTypes', lastPredictionData.formData.soil_type) : '-'}</span>
+                    </div>
+                    <div className="summary-item">
+                      <span className="summary-label">{t('dashboard.waterAvailability')}:</span>
+                      <span className="summary-value">{lastPredictionData.formData.water_availability ? translateData('waterAvailability', lastPredictionData.formData.water_availability) : '-'}</span>
+                    </div>
+                    <div className="summary-item">
+                      <span className="summary-label">{t('dashboard.landSize')}:</span>
+                      <span className="summary-value">{lastPredictionData.formData.area} {t('dashboard.acres')}</span>
+                    </div>
+                  </div>
+
+                  {lastPredictionData.weatherData && (
+                    <div className="summary-weather">
+                      <h4>{t('dashboard.liveWeather')} {translateData('cities', lastPredictionData.formData.city)}</h4>
+                      <div className="weather-summary-grid">
+                        <div className="weather-summary-item">
+                          <span className="weather-summary-label">
+                            <Thermometer size={14} />
+                            {t('dashboard.weather.temp')}
+                          </span>
+                          <span className="weather-summary-value">{lastPredictionData.weatherData.avg_temp}°C</span>
+                        </div>
+                        <div className="weather-summary-item">
+                          <span className="weather-summary-label">
+                            <Droplets size={14} />
+                            {t('dashboard.weather.rain')}
+                          </span>
+                          <span className="weather-summary-value">{lastPredictionData.weatherData.rainfall} mm</span>
+                        </div>
+                        <div className="weather-summary-item">
+                          <span className="weather-summary-label">
+                            <Cloud size={14} />
+                            {t('dashboard.weather.cloud')}
+                          </span>
+                          <span className="weather-summary-value">{lastPredictionData.weatherData.cloud_cover}%</span>
+                        </div>
+                        <div className="weather-summary-item">
+                          <span className="weather-summary-label">{t('dashboard.weather.vapor')}</span>
+                          <span className="weather-summary-value">{lastPredictionData.weatherData.vap_pressure} mm</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
               <h2>{t('dashboard.topRecommended')} {showAllCrops ? '6' : '3'} {t('dashboard.recommendedCrops')}</h2>
               
               <div className="crops-grid">
                 {displayedCrops.map((rec, idx) => (
-                  <div key={idx} className="crop-card">
+                  <div key={idx} className="crop-card" onClick={() => setSelectedCrop(rec)}>
                     <div className="crop-header">
                       <div className="crop-header-left">
                         <span className="crop-rank">{idx + 1}</span>
@@ -317,6 +422,69 @@ const Dashboard = () => {
           )}
         </div>
       </div>
+
+      {/* Crop Detail Modal */}
+      {selectedCrop && (
+        <div className="modal-overlay" onClick={() => setSelectedCrop(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="modal-close"
+              onClick={() => setSelectedCrop(null)}
+            >
+              <X size={24} />
+            </button>
+            
+            <div className="modal-header">
+              <h2>{translateData('crops', selectedCrop.crop)}</h2>
+            </div>
+
+            <div className="modal-body">
+              <div className="detail-grid">
+                <div className="detail-box">
+                  <span className="detail-title">Profit Per Acre</span>
+                  <span className="detail-amount">₹{selectedCrop.profit_per_acre.toLocaleString('en-IN', {maximumFractionDigits: 0})}</span>
+                </div>
+                <div className="detail-box">
+                  <span className="detail-title">Expected Production</span>
+                  <span className="detail-amount">{selectedCrop.expected_production.toLocaleString('en-IN', {maximumFractionDigits: 0})} kg</span>
+                </div>
+                <div className="detail-box">
+                  <span className="detail-title">Average Price</span>
+                  <span className="detail-amount">₹{selectedCrop.avg_price.toFixed(2)}/kg</span>
+                </div>
+                <div className="detail-box highlight">
+                  <span className="detail-title">Total Profit</span>
+                  <span className="detail-amount">₹{selectedCrop.total_profit.toLocaleString('en-IN', {maximumFractionDigits: 0})}</span>
+                </div>
+              </div>
+
+              {weatherData && (
+                <div className="weather-section">
+                  <h3>Live Weather Data</h3>
+                  <div className="weather-detail-grid">
+                    <div className="weather-detail-box">
+                      <span className="weather-detail-label">{t('dashboard.weather.temp')}</span>
+                      <span className="weather-detail-value">{weatherData.avg_temp}°C</span>
+                    </div>
+                    <div className="weather-detail-box">
+                      <span className="weather-detail-label">{t('dashboard.weather.rain')}</span>
+                      <span className="weather-detail-value">{weatherData.rainfall} mm</span>
+                    </div>
+                    <div className="weather-detail-box">
+                      <span className="weather-detail-label">{t('dashboard.weather.cloud')}</span>
+                      <span className="weather-detail-value">{weatherData.cloud_cover}%</span>
+                    </div>
+                    <div className="weather-detail-box">
+                      <span className="weather-detail-label">{t('dashboard.weather.vapor')}</span>
+                      <span className="weather-detail-value">{weatherData.vap_pressure} mm</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Disclaimer Section */}
       <div className="dashboard-disclaimer">

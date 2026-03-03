@@ -6,11 +6,13 @@ import Signup from './pages/auth/Signup';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import Dashboard from './pages/dashboard/Dashboard';
+import { PredictionHistory } from './pages/history';
 import AboutUs from './pages/info/AboutUs';
 import OurTeam from './pages/info/OurTeam';
 import FAQ from './pages/info/FAQ';
 import { PrivacyPolicy, TermsOfService, CookiePolicy } from './pages/legal';
 import { ContactUs } from './pages/contact';
+import NotFound from './pages/notfound/NotFound';
 import CookieConsent from './components/CookieConsent';
 import './App.css';
 
@@ -58,6 +60,15 @@ function App() {
             </ProtectedRoute>
           } 
         />
+        <Route 
+          path="/history" 
+          element={
+            <ProtectedRoute>
+              <PredictionHistory />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
