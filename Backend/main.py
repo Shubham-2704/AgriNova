@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from config.database import lifespan
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,11 +8,21 @@ from routes.contact_routes import router as contact_router
 
 app = FastAPI(title="AgriNova Crop Recommendation API", lifespan=lifespan)
 
+# Production CORS settings
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+if ENVIRONMENT == "production":
+    allowed_origins = [
+        "https://agrinova.me",
+        "https://www.agrinova.me",
+    ]
+else:
+    allowed_origins = ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
 
