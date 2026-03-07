@@ -4,7 +4,7 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-blue)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-18+-blue)](https://reactjs.org)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache-yellow)](LICENSE)
 
 > **Gujarat's first profit-focused AI farming advisor with explainable recommendations and hyperlocal intelligence.**
 
