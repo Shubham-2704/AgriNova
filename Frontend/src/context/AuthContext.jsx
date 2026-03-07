@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
         const response = await axiosInstance.get(API_PATHS.AUTH.GET_PROFILE)
         setUser(response.data)
       } catch (error) {
-        console.error('Failed to fetch user profile:', error)
         clearUser()
       } finally {
         setLoading(false)
