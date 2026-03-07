@@ -23,47 +23,48 @@ def generate_token(user_id: str):
 def decode_token(token: str):
     return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
 
+
 async def verify_google_token(token: str) -> Optional[Dict]:
     """
-    Verify Google OAuth ID token (industry standard)
-    Uses Google's tokeninfo endpoint for validation
+    Verify Google OAuth access token using userinfo endpoint
+    Works with useGoogleLogin hook from @react-oauth/google
     """
     try:
-        async with httpx.AsyncClient(timeout=10.0) as client:
-            # Verify ID token using Google's tokeninfo endpoint
-            response = await client.get(
-                f"https://oauth2.googleapis.com/tokeninfo?id_token={token}"
-            )
-            
-            if response.status_code != 200:
-                print(f"Token verification failed: {response.status_code}")
-                return None
-            
-            token_info = response.json()
-            
-            # Verify the token is for our app
-            if GOOGLE_CLIENT_ID and token_info.get("aud") != GOOGLE_CLIENT_ID:
-                print("Token audience mismatch")
-                return None
-            
-            # Verify token is not expired
-            exp = token_info.get("exp")
-            if exp and int(exp) < datetime.now().timestamp():
-                print("Token expired")
-                return None
-            
-            # Return user info
-            return {
-                "email": token_info.get("email"),
-                "name": token_info.get("name"),
-                "picture": token_info.get("picture"),
-                "sub": token_info.get("sub"),  # Google user ID
-                "email_verified": token_info.get("email_verified") == "true"
+        print(f"Verifying Google access token...")
+        
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            # Use Authorization header with Bearer token
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/json"
             }
             
-    except httpx.TimeoutException:
-        print("Google API timeout")
-        return None
+            # Try Google's userinfo v2 endpoint
+            response = await client.get(
+                "https://www.googleapis.com/oauth2/v2/userinfo",
+                headers=headers
+            )
+            
+            if response.status_code == 200:
+                user_info = response.json()
+                
+                # Check if we have email (required field)
+                email = user_info.get("email")
+                if email:
+                    result = {
+                        "email": email,
+                        "name": user_info.get("name", email.split('@')[0]),
+                        "picture": user_info.get("picture"),
+                        "sub": user_info.get("id"),
+                        "email_verified": user_info.get("verified_email", True)
+                    }
+                    return result
+                else:
+                    return None
+            else:
+                return None
+            
     except Exception as e:
-        print(f"Google token verification error: {e}")
+        import traceback
+        traceback.print_exc()
         return None

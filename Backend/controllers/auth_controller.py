@@ -268,25 +268,22 @@ async def reset_password(data: ResetPasswordRequest):
 #  Google Auth (handles both login and signup)
 async def google_auth(data: GoogleSignupRequest):
     """
-    Industry-standard Google OAuth handler
-    - Automatically handles both login and signup
-    - Uses Google ID token for security
-    - Validates email verification
-    - Creates or updates user as needed
+    Google OAuth handler - handles both login and signup
     """
     try:
+        print(f"Google auth request received")
+        
         # Verify Google token
         google_user = await verify_google_token(data.token)
         
         if not google_user:
-            return error_response(401, "Invalid or expired Google token")
+            print("Google token verification failed")
+            return error_response(401, "Invalid Google token")
         
-        # Ensure email is verified by Google
-        if not google_user.get("email_verified", False):
-            return error_response(400, "Please use a verified Google account")
+        print(f"Google user verified: {google_user.get('email')}")
         
         email = google_user["email"]
-        name = google_user.get("name", "").strip() or email.split('@')[0]
+        name = google_user.get("name", email.split('@')[0])
         picture = google_user.get("picture")
         google_id = google_user.get("sub")
         
@@ -296,19 +293,15 @@ async def google_auth(data: GoogleSignupRequest):
         existing_user = await users.find_one({"email": email})
         
         if existing_user:
-            # LOGIN: User exists
-            
-            # � BLOCK: If user has email/password account, don't allow Google login
-            if existing_user.get("authProvider") != "google":
-                return error_response(400, "An account with this email already exists. Please login with your email and password.")
-            
-            # Regular Google login - update last login
+            # Update last login and auth provider
             await users.update_one(
                 {"_id": existing_user["_id"]},
                 {"$set": {
                     "updatedAt": now,
                     "lastLogin": now,
-                    "profileImageUrl": picture
+                    "profileImageUrl": picture,
+                    "authProvider": "google",
+                    "googleId": google_id
                 }}
             )
             
@@ -322,11 +315,10 @@ async def google_auth(data: GoogleSignupRequest):
                 role=existing_user.get("role", "user")
             )
         else:
-            # SIGNUP: Create new user
             new_user = {
                 "name": name,
                 "email": email,
-                "password": None,  # No password for Google auth users
+                "password": None,
                 "profileImageUrl": picture,
                 "authProvider": "google",
                 "googleId": google_id,
@@ -339,7 +331,7 @@ async def google_auth(data: GoogleSignupRequest):
             
             result = await users.insert_one(new_user)
             user_id = str(result.inserted_id)
-            
+
             return UserResponse(
                 id=user_id,
                 name=name,
@@ -351,5 +343,4 @@ async def google_auth(data: GoogleSignupRequest):
             )
             
     except Exception as e:
-        print(f"Google auth error: {e}")
-        return error_response(500, "Authentication failed. Please try again.")
+        return error_response(500, "Authentication failed")
