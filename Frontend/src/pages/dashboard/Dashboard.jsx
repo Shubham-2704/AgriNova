@@ -59,7 +59,6 @@ const Dashboard = () => {
         }));
       }
     } catch (err) {
-      console.error('Error fetching options:', err);
       setError(t('dashboard.errorLoadOptions'));
     }
   };
@@ -72,7 +71,6 @@ const Dashboard = () => {
       );
       setWeatherData(response.data);
     } catch (err) {
-      console.error('Error fetching weather:', err);
     } finally {
       setLoadingWeather(false);
     }

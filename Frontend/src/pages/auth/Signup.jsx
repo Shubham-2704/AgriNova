@@ -80,7 +80,6 @@ const Signup = () => {
   const handleGoogleSuccess = async (tokenResponse) => {
     setGoogleLoading(true);
     try {
-      console.log('Google signup success:', tokenResponse);
       
       const response = await axiosInstance.post(API_PATHS.AUTH.GOOGLE_AUTH, {
         token: tokenResponse.access_token
@@ -90,7 +89,6 @@ const Signup = () => {
       success('Account created successfully!');
       navigate('/dashboard');
     } catch (err) {
-      console.error('Google signup error:', err);
       showError(err.response?.data?.message || 'Google signup failed');
     } finally {
       setGoogleLoading(false);
@@ -100,7 +98,6 @@ const Signup = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: handleGoogleSuccess,
     onError: (error) => {
-      console.error('Google signup error:', error);
       showError('Google signup failed');
       setGoogleLoading(false);
     }

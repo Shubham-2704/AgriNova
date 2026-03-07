@@ -15,7 +15,6 @@ export const PredictionProvider = ({ children }) => {
         try {
           setPredictions(JSON.parse(stored))
         } catch (error) {
-          console.error('Error loading predictions:', error)
         }
       }
     } else {
