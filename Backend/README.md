@@ -65,7 +65,7 @@ Create a `.env` file in the Backend directory:
 
 ```env
 # Database
-MONGODB_URL=mongodb+srv://username:password@cluster.mongodb.net/
+MONGODB_URL=YOUR_MONGODB_URL
 
 # JWT Security
 JWT_SECRET_KEY=your_super_secret_jwt_key_here
